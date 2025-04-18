@@ -1,0 +1,135 @@
+/* ベース設定 */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 40px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ffd5;
+  }
+  
+  nav ul {
+    padding-right: 60px;
+    list-style: none;
+    display: flex;
+    gap: 25px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s;
+  }
+  
+  nav a:hover {
+    color: #00ffd5;
+  }
+  
+  /* Hero セクション */
+  .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: url('https://images.unsplash.com/photo-1600267166115-d6b1b1c8b4c3') no-repeat center center/cover;
+    position: relative;
+  }
+  
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #00ffd5;
+    color: #000;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background: #00bfa5;
+  }
+  
+  /* セクション共通 */
+  .section {
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .section h2 {
+    font-size: 2em;
+    margin-bottom: 30px;
+  }
+  
+  .dark {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .service-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* フッター */
+  footer {
+    padding: 30px 20px;
+    background: #000;
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+  }
+  

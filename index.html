@@ -1,71 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>株式会社グローバルビューティー</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ネオ・テック | 公式ホームページ</title>
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <header>
-        <div class="logo">🌸 Global Beauty</div>
-        <nav>
-            <ul>
-                <li><a href="#home">ホーム</a></li>
-                <li><a href="#products">製品</a></li>
-                <li><a href="#about">会社概要</a></li>
-                <li><a href="#contact">お問い合わせ</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div class="logo">NeoTech</div>
+    <nav>
+      <ul>
+        <li><a href="#home">ホーム</a></li>
+        <li><a href="companyInfo.html">会社概要</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section class="banner" id="home">
-        <div class="banner-text">
-            <h1>世界へ、美の力を。</h1>
-            <p>高品質な日本製コスメを、世界中のお客様へ。</p>
-        </div>
-    </section>
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>未来を創造するテクノロジー</h1>
+      <p>AI・Web・クラウドで、ビジネスの可能性を広げる</p>
+      <a href="#contact" class="btn">お問い合わせはこちら</a>
+    </div>
+  </section>
 
-    <section class="products" id="products">
-        <h2>主な製品</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1583779142338-4b3c1b80d227?auto=format&fit=crop&w=400&q=80" alt="リップ">
-                <p>長持ちリップスティック</p>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1620520410672-61f5742eeae0?auto=format&fit=crop&w=400&q=80" alt="アイシャドウ">
-                <p>多色アイシャドウパレット</p>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1596464716121-8ec34d8c56d6?auto=format&fit=crop&w=400&q=80" alt="ファンデーション">
-                <p>ナチュラルファンデーション</p>
-            </div>
-        </div>
-    </section>
+  <section id="about" class="section">
+    <h2>会社概要</h2>
+    <p>株式会社ネオ・テックは、AI開発、Webアプリケーション制作、ITコンサルティングを提供する最先端企業です。</p>
+  </section>
 
-    <section class="about" id="about">
-        <h2>会社概要</h2>
-        <p>
-            株式会社グローバルビューティーは、日本製化粧品を世界に届けることを使命とする外貿会社です。<br>
-            アジア、欧州、北米を中心に高品質な製品を提供しております。
-        </p>
-        <p><strong>代表取締役：</strong> 屈 寧（くつ ねい）</p>
-        <p><strong>所在地：</strong> 東京都港区南青山</p>
-    </section>
+  <section id="services" class="section dark">
+    <h2>サービス</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <h3>AIソリューション</h3>
+        <p>AIを活用した業務効率化・分析サービス</p>
+      </div>
+      <div class="service-card">
+        <h3>Web開発</h3>
+        <p>モダンで使いやすいWebアプリの設計・構築</p>
+      </div>
+      <div class="service-card">
+        <h3>ITコンサル</h3>
+        <p>IT戦略立案、システム導入支援、技術相談など</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="contact" id="contact">
-        <h2>お問い合わせ</h2>
-        <form>
-            <input type="text" placeholder="お名前" required>
-            <input type="email" placeholder="メールアドレス" required>
-            <textarea placeholder="ご用件" required></textarea>
-            <button type="submit">送信</button>
-        </form>
-    </section>
+  <section id="contact" class="section">
+    <h2>お問い合わせ</h2>
+    <p>ご質問やご相談など、お気軽にお問い合わせください。</p>
+    <a href="mailto:info@neotech.jp" class="btn">メールを送る</a>
+  </section>
 
-    <footer>
-        <p>&copy; 2025 株式会社グローバルビューティー - Global Beauty Co., Ltd. All rights reserved.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2025 NeoTech Inc. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
