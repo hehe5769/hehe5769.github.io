@@ -1,73 +1,71 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glow美妆</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社グローバルビューティー</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>Glow 美妆</h1>
-      <nav>
-        <a href="#about">关于我们</a>
-        <a href="#products">产品展示</a>
-        <a href="#contact">联系我们</a>
-      </nav>
-    </div>
-  </header>
+    <header>
+        <div class="logo">🌸 Global Beauty</div>
+        <nav>
+            <ul>
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#products">製品</a></li>
+                <li><a href="#about">会社概要</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section class="hero">
-    <div class="hero-text">
-      <h2>焕发你的自然之美</h2>
-      <p>天然 · 温和 · 高效 —— 每一滴都是呵护</p>
-    </div>
-  </section>
-
-  <section id="about" class="section">
-    <div class="container">
-      <h2>关于我们</h2>
-      <p>Glow美妆品牌专注于提供纯净、天然且高效的护肤与彩妆产品。我们的使命是让每一位女性都能焕发内在光彩，展现最真实的自我。</p>
-    </div>
-  </section>
-
-  <section id="products" class="section">
-    <div class="container">
-      <h2>明星产品</h2>
-      <div class="cards">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1585238341986-4c0a56c9b8b0" alt="洁面乳">
-          <h3>氨基酸洁面乳</h3>
-          <p>温和清洁，不紧绷，适合敏感肌</p>
+    <section class="banner" id="home">
+        <div class="banner-text">
+            <h1>世界へ、美の力を。</h1>
+            <p>高品質な日本製コスメを、世界中のお客様へ。</p>
         </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1613112728033-b62b17f3e93f" alt="精华液">
-          <h3>玻尿酸精华液</h3>
-          <p>深层补水，修护肌底，持久保湿</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1618379142033-47ec3d888ba3" alt="口红">
-          <h3>哑光口红</h3>
-          <p>高显色，持久不脱妆，点亮双唇</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact" class="section contact">
-    <div class="container">
-      <h2>联系我们</h2>
-      <p>客服热线：400-123-4567</p>
-      <p>邮箱：support@glowbeauty.com</p>
-      <p>地址：上海市静安区时尚大道88号</p>
-    </div>
-  </section>
+    <section class="products" id="products">
+        <h2>主な製品</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1583779142338-4b3c1b80d227?auto=format&fit=crop&w=400&q=80" alt="リップ">
+                <p>長持ちリップスティック</p>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1620520410672-61f5742eeae0?auto=format&fit=crop&w=400&q=80" alt="アイシャドウ">
+                <p>多色アイシャドウパレット</p>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1596464716121-8ec34d8c56d6?auto=format&fit=crop&w=400&q=80" alt="ファンデーション">
+                <p>ナチュラルファンデーション</p>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Glow 美妆. All rights reserved.</p>
-    </div>
-  </footer>
+    <section class="about" id="about">
+        <h2>会社概要</h2>
+        <p>
+            株式会社グローバルビューティーは、日本製化粧品を世界に届けることを使命とする外貿会社です。<br>
+            アジア、欧州、北米を中心に高品質な製品を提供しております。
+        </p>
+        <p><strong>代表取締役：</strong> 屈 寧（くつ ねい）</p>
+        <p><strong>所在地：</strong> 東京都港区南青山</p>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>お問い合わせ</h2>
+        <form>
+            <input type="text" placeholder="お名前" required>
+            <input type="email" placeholder="メールアドレス" required>
+            <textarea placeholder="ご用件" required></textarea>
+            <button type="submit">送信</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 株式会社グローバルビューティー - Global Beauty Co., Ltd. All rights reserved.</p>
+    </footer>
 </body>
 </html>

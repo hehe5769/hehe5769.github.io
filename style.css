@@ -1,106 +1,129 @@
-/* Reset & 基础样式 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
+  font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
   background-color: #fff;
   color: #333;
-}
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: auto;
+  line-height: 1.6;
 }
 
-/* Header */
 header {
-  background-color: #ffcad4;
-  padding: 20px 0;
-  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff5f8;
+  padding: 20px 40px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-header h1 {
-  float: left;
-  margin-left: 20px;
-  font-size: 28px;
+
+.logo {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #d63384;
 }
-nav {
-  float: right;
-  margin-right: 20px;
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
 }
+
 nav a {
-  color: #333;
   text-decoration: none;
-  margin-left: 20px;
+  color: #333;
   font-weight: bold;
 }
-header::after {
-  content: "";
-  display: block;
-  clear: both;
-}
 
-/* Hero Section */
-.hero {
-  background-image: url('https://images.unsplash.com/photo-1616077168071-e4f7a4360ad4');
+.banner {
+  background-image: url('https://images.unsplash.com/photo-1599940824395-3223c7c63b6f?auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
   background-position: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   text-align: center;
-  padding: 120px 20px;
-}
-.hero-text h2 {
-  font-size: 2.8em;
-  margin-bottom: 10px;
-}
-.hero-text p {
-  font-size: 1.2em;
+  padding: 20px;
 }
 
-/* Section */
-.section {
-  padding: 60px 0;
-  background-color: #fefefe;
+.banner-text h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
 }
-.section h2 {
+
+.products {
+  padding: 60px 40px;
+  background-color: #fff;
   text-align: center;
+}
+
+.products h2 {
+  font-size: 2em;
   margin-bottom: 30px;
 }
 
-/* Cards */
-.cards {
+.product-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
-}
-.card {
-  background-color: #fff0f3;
-  border-radius: 10px;
-  width: 280px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-.card img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
-/* Contact */
-.contact {
-  background-color: #fff5f7;
+.product-card {
+  width: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+}
+
+.product-card p {
+  padding: 15px;
+  font-weight: bold;
+}
+
+.about, .contact {
+  padding: 60px 40px;
+  background-color: #fff0f6;
   text-align: center;
 }
 
-/* Footer */
+.contact form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact input, .contact textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact button {
+  padding: 10px;
+  background-color: #d63384;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 footer {
-  background-color: #333;
+  background-color: #222;
   color: #fff;
-  padding: 20px 0;
   text-align: center;
+  padding: 20px;
 }
