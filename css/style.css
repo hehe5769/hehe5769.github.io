@@ -74,3 +74,52 @@ li {
     margin-top: 15px;
   }
 }
+
+
+#partners {
+  padding: 60px 20px;
+  background: #f9f9f9;
+  color: #333;
+}
+
+#partners h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.torihikiScroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 30px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.torihikiItem {
+  flex: 0 0 auto;
+  min-width: 180px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  scroll-snap-align: start;
+}
+
+.torihikiImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.torihikiItem p {
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+}
+
