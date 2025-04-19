@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メール送信フォーム</title>
+    <link rel="stylesheet" href="css/recruit.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>お問い合わせフォーム</h1>
+        <form id="contact-form">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">message</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">送信</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init({
+                publicKey: "_6p4VdkpehfWYdLvz",
+            });
+        })();
+    </script>
+</body>
+
+</html>
