@@ -14,16 +14,7 @@ header {
   padding: 20px 40px;
   position: fixed;
   width: 100%;
-  position: fixed;
-  /* 固定定位 */
-  top: 0;
-  /* 使其固定在页面顶部 */
-  left: 0;
-  /* 背景色设置为白色，防止内容滚动时遮挡 */
-  padding: 10px 0;
-  /* 给 header 添加一些内边距 */
   z-index: 1000;
-  /* 确保 header 在其他元素之上 */
 }
 
 .logo {
