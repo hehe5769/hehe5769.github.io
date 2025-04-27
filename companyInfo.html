@@ -13,8 +13,10 @@
 <body>
   <header>
     <div class="logo">東日株式会社</div>
+    <!-- 汉堡菜单按钮 -->
+    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
     <nav>
-      <ul>
+      <ul id="navList">
         <li><a href="index.html">ホーム</a></li>
         <li><a href="companyInfo.html">会社概要</a></li>
         <li><a href="#services">サービス</a></li>
@@ -24,36 +26,38 @@
     </nav>
   </header>
 
-  <div class="container">
-    <section class="company-info">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
       <h1>会社概要</h1>
-      <ul>
-        <li><strong>会社名：</strong> 東日株式会社</li>
-        <li><strong>設立：</strong> 1997年1月1日</li>
-        <li><strong>資本金：</strong> 100億</li>
-        <li><strong>所在地：</strong> 東京都千代田区丸の内1-1-1</li>
-        <li><strong>事業内容：</strong> AI開発 / Webアプリ制作 / ITコンサルティング</li>
-      </ul>
-    </section>
+      <p>会社名： 東日株式会社</p>
+      <p>設立： 1997年1月1日</p>
+      <p>資本金： 100億</p>
+      <p>所在地： 東京都千代田区丸の内1-1-1</p>
+      <p>事業内容： AI開発 / Webアプリ制作 / ITコンサルティング</p>
+      <p>私たちは最高のソリューションを提供します。</p>
+      <a href="#services" class="btn">サービスを見る</a>
+    </div>
+  </section>
 
-    <section class="president-info">
-      <h2>社長紹介</h2>
-      <div class="president-card">
-        <div class="president-photo">
+  <!-- Main Content -->
+  <div class="container">
+    <h2>社長紹介</h2>
+    <div class="president-card">
+      <div class="president-photo">
 
-          <img src="images/8323975c468febc6361665ccfeb308e.jpg" alt="社長 ">
-        </div>
-        <div class="president-text">
-          <h3>東日（Tungri）</h3>
-          <p>
-            中国・広東省珠海出身。
-            20歳で単身来日、アルバイト三昧の日々を経て、AIスタートアップ「東日株式会社」を創業。
-            資金ゼロ、人脈ゼロからの挑戦。今では東証上場企業をクライアントに持つ、注目の若手CEO。</p>
-        </div>
+        <img src="images/8323975c468febc6361665ccfeb308e.jpg" alt="社長">
       </div>
-    </section>
-    <section id="partners">
-      <h2>取引先企業</h2>
+      <div class="president-text">
+        <h3>東日（Tungri）</h3>
+        <p>中国・広東省珠海出身。
+          20歳で単身来日、アルバイト三昧の日々を経て、AIスタートアップ「東日株式会社」を創業。
+          資金ゼロ、人脈ゼロからの挑戦。今では東証上場企業をクライアントに持つ、注目の若手CEO。</p>
+      </div>
+    </div>
+
+    <div id="partners">
+      <h2>パートナー企業</h2>
       <div class="torihikiScroll">
         <div class="torihikiItem">
           <img src="images/jr.png" alt="JR東海" class="torihikiImage">
@@ -71,12 +75,24 @@
           <img src="images/jrWest.jpg" alt="NTT" class="torihikiImage">
           <p>JR西日本</p>
         </div>
-        <!-- 更多取引先可以继续添加 -->
+        <!-- More partner items -->
       </div>
-    </section>
-
-
+    </div>
   </div>
+
+  <footer>
+    <p>© 2025 東日株式会社 | All Rights Reserved.</p>
+  </footer>
+
 </body>
 
 </html>
+
+<script>
+
+  function toggleMenu() {
+    const navList = document.getElementById('navList');
+    navList.classList.toggle('active');
+  }
+
+</script>
