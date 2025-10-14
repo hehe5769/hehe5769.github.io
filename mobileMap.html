@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>ログイン地点マップ（無料住所入力）</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f7fa;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: linear-gradient(90deg, #4a90e2, #357ABD);
+      color: #fff;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 16px
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .small-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 6px 8px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600
+    }
+
+    .map-area {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+      position: relative
+    }
+
+    #map {
+      flex: 1;
+      height: 100%;
+      width: 100%
+    }
+
+    .side {
+      position: absolute;
+      top: 64px;
+      left: 12px;
+      z-index: 1000;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      max-width: 340px;
+      width: 300px;
+      max-height: 60vh;
+      overflow: auto;
+      padding: 10px;
+      transition: all 0.3s ease;
+      transform: translateX(0);
+    }
+
+    .side.hidden {
+      transform: translateX(-110%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .side h3 {
+      margin: 0 0 8px 0;
+      font-size: 14px
+    }
+
+    .input {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #e6e9ef;
+      font-size: 14px;
+      flex: 1;
+      min-width: 14rem
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .item {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #eef2f7;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #6b7280
+    }
+
+    .chip {
+      background: #f1f5f9;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px
+    }
+
+    .popup .title {
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    .popup .small {
+      font-size: 13px;
+      color: #6b7280
+    }
+
+    /* モバイル向けスタイル */
+    @media (max-width:768px) {
+      .side {
+        top: auto;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 90%;
+        max-height: 50%;
+        border-radius: 12px 12px 0 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">マップ</div>
+      <div class="controls">
+        <input id="addressInput" class="input" placeholder="日本語で住所を入力（丁目まで）">
+        <button class="small-btn" id="btnAdd">地点を追加</button>
+        <button class="small-btn" id="btnFit">すべての地点を表示</button>
+        <button class="small-btn" id="toggleListBtnDesktop">リスト表示切替</button>
+      </div>
+    </div>
+    <div class="map-area">
+      <div id="map"></div>
+      <aside class="side hidden" id="side">
+        <h3>ログイン履歴リスト</h3>
+        <div class="list" id="list"></div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script>
+    let fakeData = [
+      { id: 1, username: "zhangsan", location: "東京都千代田区1-1", lat: 35.6938, lng: 139.7530, status: "OK" },
+      { id: 2, username: "lisi", location: "東京都新宿区西新宿2-8-1", lat: 35.6895, lng: 139.6917, status: "OK" },
+      { id: 3, username: "wangwu", location: "東京都港区芝公園4-2-8", lat: 35.6586, lng: 139.7454, status: "OK" }
+    ];
+    let nextId = fakeData.length + 1;
+
+    const map = L.map('map').setView([35.68, 139.76], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+
+    const markers = L.markerClusterGroup();
+    const markerMap = new Map();
+
+    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
+
+    function addMarkers(data) {
+      markers.clearLayers(); markerMap.clear();
+      data.forEach(item => {
+        const m = L.marker([item.lat, item.lng]);
+        const popupHtml = `<div class="popup">
+      <div class="title">${escapeHtml(item.username)} <span style="font-size:12px;color:#6b7280">#${item.id}</span></div>
+      <div class="small">住所: ${escapeHtml(item.location)}</div>
+      <div style="margin-top:6px"><strong>ステータス:</strong> <span style="padding:4px 8px;border-radius:6px;background:${item.status === "OK" ? "#e6ffed" : "#fff2f2"}">${item.status}</span></div>
+      <div style="margin-top:8px">
+        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.location)}" target="_blank" style="color:#357ABD;text-decoration:none;font-weight:600">📍 Googleマップで見る</a>
+      </div>
+    </div>`;
+        m.bindPopup(popupHtml);
+        m.on('click', () => highlightListItem(item.id));
+        markers.addLayer(m);
+        markerMap.set(item.id, m);
+      });
+      map.addLayer(markers);
+    }
+
+    function fitAll() {
+      if (markerMap.size === 0) return;
+      const group = L.featureGroup(Array.from(markerMap.values()));
+      map.fitBounds(group.getBounds().pad(0.2));
+    }
+
+    function renderList(data) {
+      const list = document.getElementById('list'); list.innerHTML = '';
+      data.forEach(item => {
+        const node = document.createElement('div'); node.className = 'item';
+        node.innerHTML = `<div style="flex:1">
+      <div style="font-weight:700">${escapeHtml(item.username)} <span style="color:#6b7280;font-weight:600;margin-left:6px">#${item.id}</span></div>
+      <div class="meta">${escapeHtml(item.location)}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+      <div class="chip">${item.status}</div>
+      <button style="margin-top:6px;padding:6px 8px;border-radius:6px;border:1px solid #e6e9ef;background:#fff;cursor:pointer" onclick="zoomTo(${item.id})">地図で見る</button>
+    </div>`;
+        list.appendChild(node);
+      });
+    }
+
+    function highlightListItem(id) {
+      const list = document.getElementById('list');
+      const items = Array.from(list.children);
+      const target = items.find(it => it.innerHTML.includes(`#${id}`));
+      if (target) { target.style.boxShadow = '0 0 0 2px rgba(53,122,189,0.12)'; setTimeout(() => target.style.boxShadow = '', 1500); target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+
+    function zoomTo(id) {
+      const m = markerMap.get(id);
+      if (!m) return;
+      map.setView(m.getLatLng(), 13, { animate: true });
+      m.openPopup();
+    }
+
+    // 地点追加
+    document.getElementById('btnAdd').addEventListener('click', addAddress);
+    document.getElementById('addressInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') addAddress(); });
+
+    function addAddress() {
+      const addr = document.getElementById('addressInput').value.trim();
+      if (!addr) { alert('住所を入力してください'); return; }
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&q=${encodeURIComponent(addr)}`)
+        .then(res => res.json())
+        .then(res => {
+          if (res.length === 0) { alert('住所が見つかりません'); return; }
+          const loc = res[0];
+          const newItem = { id: nextId++, username: '新しいユーザー', location: addr, lat: parseFloat(loc.lat), lng: parseFloat(loc.lon), status: 'OK' };
+          fakeData.push(newItem);
+          addMarkers(fakeData);
+          renderList(fakeData);
+          zoomTo(newItem.id);
+          document.getElementById('addressInput').value = '';
+        })
+        .catch(err => { alert('住所検索に失敗しました'); console.error(err); });
+    }
+
+    addMarkers(fakeData);
+    renderList(fakeData);
+    fitAll();
+    document.getElementById('btnFit').addEventListener('click', fitAll);
+    window.zoomTo = zoomTo;
+
+    // 上部ボタンでリスト表示切替
+    document.getElementById('toggleListBtnDesktop').addEventListener('click', () => {
+      document.getElementById('side').classList.toggle('hidden');
+    });
+
+    // モバイルでスワイプ操作に対応
+    let startY = 0;
+    let side = document.getElementById('side');
+    side.addEventListener('touchstart', e => {
+      if (e.touches.length === 1) startY = e.touches[0].clientY;
+    });
+    side.addEventListener('touchend', e => {
+      if (e.changedTouches.length === 1) {
+        let endY = e.changedTouches[0].clientY;
+        let delta = endY - startY;
+        // 下にスワイプ >50px → 閉じる
+        if (delta > 50) side.classList.remove('show');
+        // 上にスワイプ >50px → 開く
+        else if (delta < -50) side.classList.add('show');
+      }
+    });
+  </script>
+</body>
+
+</html>

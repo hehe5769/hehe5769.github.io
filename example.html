@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>成品展示ページ</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, #74ABE2, #5563DE);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            font-size: 15px;
+            color: #e0e0e0;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .btn {
+            background: #fff;
+            color: #333;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 240px;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #f1f5f9;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>成品展示ページ</h1>
+        <p>以下のボタンから、それぞれの完成品デモページにアクセスできます。</p>
+        <div class="buttons">
+            <a href="mobileMap.html" class="btn">🗺️ 地点マップ</a>
+            <a href="exampleShow.html" class="btn">🧑‍💻 中古車デモ</a>
+        </div>
+        <div class="footer">© 2025 Tungri Ho | デモページ</div>
+    </div>
+</body>
+
+</html>
