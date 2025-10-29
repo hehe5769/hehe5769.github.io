@@ -7,7 +7,8 @@ body {
   padding: 0;
 }
 
-/* 头部 */
+
+
 header {
   display: flex;
   justify-content: space-between;
@@ -26,6 +27,7 @@ header {
 }
 
 nav ul {
+  padding-right: 60px;
   list-style: none;
   display: flex;
   gap: 25px;
@@ -41,37 +43,9 @@ nav a:hover {
   color: #00ffd5;
 }
 
-/* 汉堡菜单样式 */
-.menu-toggle {
-  display: none;
-  font-size: 30px;
-  cursor: pointer;
-}
 
-/* 移动端菜单样式 */
-@media screen and (max-width: 768px) {
-  header {
-    padding: 15px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  nav ul {
-    display: none;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    margin-top: 10px;
-  }
 
-  nav ul.active {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-}
 
 /* Hero Section */
 .hero {
@@ -219,37 +193,6 @@ nav a:hover {
 /* 响应式设计 */
 @media screen and (max-width: 768px) {
 
-  /* Header for mobile */
-  header {
-    padding: 15px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  header nav ul {
-    display: none;
-    /* Initially hide the menu */
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  header nav ul.active {
-    display: flex;
-    /* Show the menu when active */
-  }
-
-  header .logo {
-    font-size: 20px;
-  }
-
-  /* Toggle menu for mobile */
-  .menu-toggle {
-    display: block;
-    font-size: 30px;
-    cursor: pointer;
-  }
 
   /* Hero Section */
   .hero h1 {

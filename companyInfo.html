@@ -5,18 +5,80 @@
   <meta charset="UTF-8">
   <title>会社概要 | 株式会社Jptungri・tech</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="css/style.css">
 
 </head>
+<style>
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    background: white;
+    height: 3px;
+    width: 25px;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+
+  @media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 41%;
+      transform: translateX(-50%);
+      background: #1e2a38;
+      border-radius: 8px;
+      width: 80%;
+      /* 宽度为屏幕的80% */
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 15px 0;
+    }
+
+    nav ul.active {
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 10px 0;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+  }
+</style>
 
 <body>
   <header>
     <div class="logo">Jptungri株式会社</div>
-    <!-- 汉堡菜单按钮 -->
-    <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
-    <nav style="padding-right: 3rem;">
-      <ul id="navList">
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav>
+      <ul id="nav-links">
         <li><a href="index.html">ホーム</a></li>
         <li><a href="companyInfo.html">会社概要</a></li>
         <li><a href="example.html">サンプル</a></li>
@@ -89,10 +151,12 @@
 </html>
 
 <script>
+  // 汉堡菜单开关
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
 
-  function toggleMenu() {
-    const navList = document.getElementById('navList');
-    navList.classList.toggle('active');
-  }
-
+  menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("active");
+    navLinks.classList.toggle("active");
+  });
 </script>

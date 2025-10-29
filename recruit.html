@@ -10,12 +10,76 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
 </head>
+<style>
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .menu-toggle span {
+        background: white;
+        height: 3px;
+        width: 25px;
+        margin: 4px 0;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        nav ul {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 41%;
+            transform: translateX(-50%);
+            background: #1e2a38;
+            border-radius: 8px;
+            width: 80%;
+            /* 宽度为屏幕的80% */
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px 0;
+        }
+
+        nav ul.active {
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        .menu-toggle {
+            display: flex;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+        }
+    }
+</style>
 
 <body class="recruit">
     <header>
         <div class="logo">Jptungri株式会社</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <nav>
-            <ul>
+            <ul id="nav-links">
                 <li><a href="index.html">ホーム</a></li>
                 <li><a href="companyInfo.html">会社概要</a></li>
                 <li><a href="example.html">サンプル</a></li>
@@ -55,6 +119,16 @@
                 publicKey: "_6p4VdkpehfWYdLvz",
             });
         })();
+    </script>
+    <script>
+        // 汉堡菜单开关
+        const menuToggle = document.getElementById("menu-toggle");
+        const navLinks = document.getElementById("nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
     </script>
 </body>
 
