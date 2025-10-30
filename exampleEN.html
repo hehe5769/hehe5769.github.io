@@ -267,7 +267,7 @@
 <body>
     <!-- ======== Header ======== -->
     <header>
-        <div class="logo">Jptungri株式会社</div>
+        <div class="logo">Jptungri Inc.</div>
         <div class="menu-toggle" id="menu-toggle">
             <span></span>
             <span></span>
@@ -275,18 +275,18 @@
         </div>
         <nav>
             <ul id="nav-links">
-                <li><a href="index.html">ホーム</a></li>
-                <li><a href="companyInfo.html">会社概要</a></li>
-                <li><a href="example.html">サンプル</a></li>
-                <li><a href="recruit.html">お問い合わせ</a></li>
-                <li><a href="https://warehouse.jptungri.store" target="_blank">予約管理システム</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="companyInfo.html">Company Info</a></li>
+                <li><a href="example.html">Examples</a></li>
+                <li><a href="recruit.html">Contact</a></li>
+                <li><a href="https://warehouse.jptungri.store" target="_blank">Reservation Management System</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- ======== Main ======== -->
     <main>
-        <h1>成品展示ページ</h1>
+        <h1>Completed Projects Showcase</h1>
         <span style="
     margin-left: auto;
     align-items: center;
@@ -302,110 +302,129 @@
             <a href="exampleEN.html"
                 style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">EN</a>
         </span>
-        <p>以下のボタンから、それぞれの完成品デモページにアクセスできます。<br>サーバーの起動に時間がかかるため、アクセス時に1〜2分お待ちいただく場合があります。ご了承ください。</p>
+        <p>You can access each demo page of our completed projects using the buttons below.<br>
+            Please note that the server may take 1–2 minutes to start, so access might be slightly delayed. Thank you
+            for your patience.</p>
+
         <div class="buttons">
-            <!-- <a href="mobileMap.html" class="btn">🗺️ 地点マップ</a>
-            <a href="exampleShow.html" class="btn">🧑‍💻 ロシア中古車デモ</a> -->
-            <a href="https://warehouse.jptungri.store" class="btn">予約管理システム</a>
+            <!-- <a href="mobileMap.html" class="btn">🗺️ Location Map</a>
+            <a href="exampleShow.html" class="btn">🧑‍💻 Russian Used Car Demo</a> -->
+            <a href="https://warehouse.jptungri.store" class="btn">Reservation Management System</a>
         </div>
 
-        <!-- ======== 予約管理システム紹介セクション ======== -->
+        <!-- ======== Reservation Management System Section ======== -->
         <section class="system-intro">
-            <h2>📅 予約管理システムのご紹介</h2>
-            <p> 弊社独自開発の「予約管理システム」は、<strong>Spring Boot</strong> と <strong>PostgreSQL</strong>
-                を基盤とした三層構造（顧客・業者・管理者）により、効率的で安全な予約運営を実現します。 </p>
-            <p> 顧客はオンラインで予約を作成・変更・キャンセルでき、業者は地図または検索機能から最適な案件を素早く特定。管理者はダッシュボードで全体状況をリアルタイムで把握できます。 </p>
-            <p> 直感的なUIとシンプルな操作性により、業務効率を大幅に向上させ、人的ミスを最小限に抑えます。 </p>
+            <h2>📅 Introduction to the Reservation Management System</h2>
+            <p>Our custom-developed "Reservation Management System" is built on <strong>Spring Boot</strong> and
+                <strong>PostgreSQL</strong>,
+                structured in three layers (Customer, Contractor, Administrator) to enable efficient and secure
+                reservation management.
+            </p>
+            <p>Customers can create, modify, or cancel reservations online, contractors can quickly locate the best
+                projects using maps or search functions, and administrators can monitor overall system status in real
+                time via the dashboard.</p>
+            <p>Its intuitive UI and simple operations significantly improve work efficiency while minimizing human
+                errors.</p>
 
-            <!-- ======== 图片预留区 ======== -->
+            <!-- ======== Image Placeholder ======== -->
             <div class="system-images">
-                <!-- 👇 在这里粘贴你的截图 -->
-
-                <img src="images/emplyoeeMap.png" alt="顧客画面デモ" style="height: 36rem; width: 58rem;">
-                <img src="images/mainRV.png" alt="管理画面デモ">
+                <img src="images/emplyoeeMap.png" alt="Customer Interface Demo" style="height: 36rem; width: 58rem;">
+                <img src="images/mainRV.png" alt="Admin Dashboard Demo">
             </div>
         </section>
+
         <div class="feature-list">
-            <h3>主要機能：</h3>
+            <h3>Main Features:</h3>
             <ul>
-                <li><strong>顧客ポータル：</strong>
-                    顧客自身で予約の作成・変更・キャンセルを直感的に操作可能。メール通知機能により、ステータス更新を即時把握。最もコストパフォーマンスの高い見積書を自動比較・選択できます。</li>
-                <li><strong>業者向けインターフェース：</strong> 地図上または検索機能から、条件に合う案件を迅速かつ正確に特定可能。距離・エリア・案件内容を直感的に確認でき、最適な案件マッチングを実現。
+                <li><strong>Customer Portal:</strong> Customers can easily create, modify, and cancel reservations.
+                    Email notifications instantly inform them of status updates. They can also automatically compare and
+                    select the most cost-effective quotes.</li>
+                <li><strong>Contractor Interface:</strong> Quickly and accurately identify suitable projects via map or
+                    search. View distance, area, and project details intuitively to achieve optimal project matching.
                 </li>
-                <li><strong>管理者ダッシュボード：</strong> 顧客・業者・予約データをリアルタイムで可視化。ステータス別の統計表示やCSVエクスポートにも対応し、運営状況を一目で把握できます。</li>
-                <li><strong>多層セキュリティ認証：</strong> Spring Securityによる堅牢な認証・権限制御を実装。顧客・業者・管理者ごとに適切なアクセスレベルを確保。</li>
-                <li><strong>ステータス管理システム：</strong> 「新規・確認中・確認済み・完了」などの状態をワンクリックで即時更新。進捗状況をチーム全体でリアルタイム共有。</li>
-                <li><strong>レスポンシブデザイン：</strong> PC・タブレット・スマートフォンの全デバイスに完全対応。どこからでもスムーズに操作可能。</li>
-                <li><strong>自動メール通知：</strong> 予約確認・完了報告・更新情報などを自動送信。顧客とのコミュニケーションを効率化し、サービス品質を向上。</li>
+                <li><strong>Administrator Dashboard:</strong> Real-time visualization of customer, contractor, and
+                    reservation data. Supports status-based statistics and CSV export for easy management overview.</li>
+                <li><strong>Multi-layer Security:</strong> Robust authentication and access control via Spring Security,
+                    ensuring proper access levels for customers, contractors, and administrators.</li>
+                <li><strong>Status Management:</strong> Instantly update statuses like "New, Pending, Confirmed,
+                    Completed" with one click, sharing progress in real time across teams.</li>
+                <li><strong>Responsive Design:</strong> Fully compatible with PCs, tablets, and smartphones, enabling
+                    smooth operation from any device.</li>
+                <li><strong>Automated Email Notifications:</strong> Automatically send reservation confirmations,
+                    completion reports, and updates, improving customer communication and service quality.</li>
             </ul>
 
-            <h3>今後の拡張予定：</h3>
+            <h3>Future Enhancements:</h3>
             <ul>
-
-                <li>グラフによる統計分析（予約件数、顧客傾向など）</li>
-                <li>多言語対応（日本語／英語／中国語）</li>
+                <li>Graphical analytics (reservation numbers, customer trends, etc.)</li>
+                <li>Multi-language support (Japanese / English / Chinese)</li>
             </ul>
         </div>
 
-
+        <!-- ======== Customer Page Section ======== -->
         <section class="system-intro">
-            <h2>👤 顧客用ページのご紹介</h2>
-            <p> 「予約管理システム」の顧客ページでは、利用者がオンライン上で<strong>予約の作成・確認・キャンセル</strong>を簡単に行えます。<br><br>
-                シンプルで直感的なデザインを採用しており、初めての方でも迷うことなくスムーズに操作可能。予約内容はリアルタイムで反映され、変更やキャンセルもワンクリックで完了します。<br><br>
-                また、<strong>ログイン認証・メール確認・パスワード保護</strong>など、セキュリティ面にも万全を期しており、安心してご利用いただけます。<br><br>
-                さらに、複数の見積書の中から<strong>最もコストパフォーマンスの高いプラン</strong>を比較・選択できる機能も搭載。<br> ※
-                無料プランのサーバーを使用しているため、アクセス時に1〜2分ほどお待ちいただく場合があります。あらかじめご了承ください。 </p> <!-- ======== 顧客ページ画像预留区 ======== -->
+            <h2>👤 Customer Page Overview</h2>
+            <p>The customer page of the "Reservation Management System" allows users to <strong>create, view, and cancel
+                    reservations</strong> online easily.<br><br>
+                The design is simple and intuitive, so even first-time users can navigate smoothly. Reservation details
+                are reflected in real time, and modifications or cancellations can be done with a single click.<br><br>
+                Strong security measures, including <strong>login authentication, email verification, and password
+                    protection</strong>, ensure safe and smooth usage.<br><br>
+                Users can also compare and choose <strong>the most cost-effective plan</strong> from multiple
+                quotes.<br>
+                ※ Free server hosting may cause 1–2 minute delay on access. Please be patient.</p>
+
             <div class="system-images">
-                <figure> <img src="images/clientBook.png" alt="顧客予約作成画面">
-                    <figcaption>予約作成画面：オンラインで簡単に予約を登録できます</figcaption>
+                <figure>
+                    <img src="images/clientBook.png" alt="Customer Reservation Creation">
+                    <figcaption>Reservation Creation: Easily register reservations online</figcaption>
                 </figure>
-                <figure> <img src="images/clientHistory.png" alt="顧客予約履歴画面">
-                    <figcaption>予約履歴画面：過去の予約やキャンセル状況をいつでも確認可能</figcaption>
+                <figure>
+                    <img src="images/clientHistory.png" alt="Customer Reservation History">
+                    <figcaption>Reservation History: Check past reservations and cancellations anytime</figcaption>
                 </figure>
-                <figure> <img src="images/clientChoose.png" alt="見積書選択画面">
-                    <figcaption>見積書選択画面：複数の見積から最もお得なプランを選択</figcaption>
+                <figure>
+                    <img src="images/clientChoose.png" alt="Quote Selection">
+                    <figcaption>Quote Selection: Choose the most cost-effective plan from multiple quotes</figcaption>
                 </figure>
             </div>
         </section>
 
-
-
+        <!-- ======== Contractor Page Section ======== -->
         <section class="system-intro">
-            <h2>👷 業者用ページのご紹介</h2>
-            <p> 「予約管理システム」の業者ページでは、<strong>担当案件の確認・管理・対応</strong>をリアルタイムで行えます。<br><br>
-                地図上または検索機能から条件に合う案件をすぐに見つけられるほか、見積書の作成やステータス更新、対応履歴の記録も直感的に操作可能。日々の業務効率を大幅に向上させます。<br><br>
-                また、顧客の予約内容や変更履歴を確認し、必要に応じて迅速な対応・調整を行うことができます。<br> 安全なログイン認証と権限管理により、機密情報を確実に保護します。<br><br> ※
-                無料サーバーを使用しているため、アクセス時に1〜2分ほどお待ちいただく場合があります。ご了承ください。 </p>
+            <h2>👷 Contractor Page Overview</h2>
+            <p>The contractor page allows <strong>real-time review, management, and handling of assigned
+                    projects</strong>.<br><br>
+                Projects matching specific criteria can be quickly located using the map or search functions. Quotes can
+                be created, statuses updated, and task history recorded with intuitive operations, greatly improving
+                daily work efficiency.<br><br>
+                Contractors can also review customer reservations and changes, providing prompt responses and
+                adjustments. Secure login authentication and access control protect sensitive information.<br><br>
+                ※ Free server hosting may cause 1–2 minute delay on access. Please be patient.</p>
 
-            <!-- ======== 業者页面图片预留区 ======== -->
             <div class="system-images">
                 <figure>
-                    <img src="images/emplyoeeMap1.png" alt="予約Map">
-                    <figcaption>予約Mapから仕事を探す</figcaption>
+                    <img src="images/emplyoeeMap1.png" alt="Reservation Map">
+                    <figcaption>Locate jobs via Reservation Map</figcaption>
                 </figure>
                 <figure>
-                    <img src="images/emplyoeeBook.png" alt="予約画面">
-                    <figcaption>見積書を作り</figcaption>
+                    <img src="images/emplyoeeBook.png" alt="Quote Creation">
+                    <figcaption>Create Quotes</figcaption>
                 </figure>
                 <figure>
-                    <img src="images/emplyoeeHistory.png" alt="予約画面">
-                    <figcaption>見積書を作り</figcaption>
+                    <img src="images/emplyoeeHistory.png" alt="Quote History">
+                    <figcaption>View Quote History</figcaption>
                 </figure>
             </div>
         </section>
-
-
-
 
         <div class="system-images">
-            <img src="images/dashboard_demo.jpg" alt="管理画面デモ">
+            <img src="images/dashboard_demo.jpg" alt="Admin Dashboard Demo">
         </div>
     </main>
 
-
-
     <script>
-        // 汉堡菜单开关
+        // Hamburger Menu Toggle
         const menuToggle = document.getElementById("menu-toggle");
         const navLinks = document.getElementById("nav-links");
 
