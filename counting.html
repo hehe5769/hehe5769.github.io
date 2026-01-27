@@ -1,276 +1,262 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
+
 <head>
-<meta charset="UTF-8">
-<title>送货汇总系统（增删改查）</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能商品桶数统计系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-<style>
-body {
-    font-family: "Segoe UI", "PingFang SC", sans-serif;
-    background: #f4f6f9;
-    padding: 15px;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    background: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.1);
-}
-
-h2 {
-    margin-bottom: 10px;
-}
-
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-input, select {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    flex: 1;
-    min-width: 120px;
-}
-
-button {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #4f46e5;
-    color: #fff;
-}
-
-button.secondary {
-    background: #6b7280;
-}
-
-button.danger {
-    background: #dc2626;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-th, td {
-    padding: 6px;
-    border-bottom: 1px solid #eee;
-    text-align: center;
-}
-
-.summary {
-    margin-top: 20px;
-    background: #f9fafb;
-    padding: 12px;
-    border-radius: 10px;
-}
-
-.stop {
-    color: red;
-    font-weight: bold;
-}
-</style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 1);
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-gray-50 min-h-screen pb-12">
 
-<div class="container">
-    <h2>📦 送货记录系统</h2>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📦 智能商品桶数统计</h1>
+            <p class="text-gray-600">输入自然语言描述，AI 自动为您提取商品和桶数</p>
+        </header>
 
-    <!-- 输入区 -->
-    <div class="form-row">
-        <input type="date" id="date">
-        <input id="product" placeholder="品名">
-        <input id="bucket" placeholder="桶型">
-        <input id="count" type="number" placeholder="数量">
-        <select id="stop">
-            <option value="false">正常</option>
-            <option value="true">停发</option>
-        </select>
-        <button onclick="saveRecord()">保存</button>
-        <button class="secondary" onclick="resetForm()">清空</button>
+        <!-- AI Input Section -->
+        <div class="glass-card rounded-2xl p-6 shadow-sm mb-8">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">智能输入框</label>
+            <textarea id="aiInput" rows="4"
+                class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                placeholder="例如：今天进货了10桶涂料，下午又到了5桶洗洁精和2桶涂料..."></textarea>
+
+            <div class="mt-4 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex gap-2">
+                    <button id="processBtn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2">
+                        <span id="btnText">开始 AI 识别</span>
+                        <div id="loader"
+                            class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin">
+                        </div>
+                    </button>
+                    <button id="clearInputBtn"
+                        class="text-gray-500 hover:bg-100 px-4 py-2.5 rounded-lg transition-colors">
+                        重置
+                    </button>
+                </div>
+                <p class="text-xs text-gray-400">* AI 将自动汇总同名商品数量</p>
+            </div>
+        </div>
+
+        <!-- Dashboard / Table Section -->
+        <div class="glass-card rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white">
+                <h2 class="text-xl font-bold text-gray-800">统计结果汇总</h2>
+                <button id="resetTableBtn"
+                    class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-md text-sm transition-colors">
+                    清空数据表
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-gray-500 text-sm uppercase">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold">商品名称</th>
+                            <th class="px-6 py-4 font-semibold">总桶数</th>
+                            <th class="px-6 py-4 font-semibold text-right">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody" class="divide-y divide-gray-100">
+                        <!-- Data rows will appear here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="py-12 text-center">
+                <p class="text-gray-400">暂无数据，请在上方输入文字进行统计</p>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div id="statusMsg" class="mt-4 hidden p-4 rounded-xl text-center text-sm"></div>
     </div>
 
-    <!-- 列表 -->
-    <table>
-        <thead>
-            <tr>
-                <th>日期</th>
-                <th>品名</th>
-                <th>桶型</th>
-                <th>数量</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody id="list"></tbody>
-    </table>
+    <script>
+        /**
+         * 注意：如果您在本地运行此文件，请在下方手动填入您的 API Key。
+         * 在当前预览环境中，系统会自动处理密钥。
+         */
+        const apiKey = "AIzaSyDYvs2h5nQckZWfemkM9eREj1IwO82K_CY";
+        let inventory = {};
 
-    <button style="margin-top:15px" onclick="generateSummary()">📊 生成汇总</button>
+        const aiInput = document.getElementById('aiInput');
+        const processBtn = document.getElementById('processBtn');
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
+        const inventoryBody = document.getElementById('inventoryBody');
+        const emptyState = document.getElementById('emptyState');
+        const clearInputBtn = document.getElementById('clearInputBtn');
+        const resetTableBtn = document.getElementById('resetTableBtn');
+        const statusMsg = document.getElementById('statusMsg');
 
-    <div class="summary" id="summary"></div>
-</div>
-
-<script>
-let data = [];
-let editIndex = null;
-
-/* ========= 本地存储 ========= */
-function saveToLocal() {
-    localStorage.setItem("deliveryData", JSON.stringify(data));
-}
-
-function loadFromLocal() {
-    const saved = localStorage.getItem("deliveryData");
-    if (saved) {
-        data = JSON.parse(saved);
-    }
-}
-
-/* ========= 初始化 ========= */
-document.getElementById("date").valueAsDate = new Date();
-loadFromLocal();
-renderList();
-
-/* ========= CRUD ========= */
-function saveRecord() {
-    const record = {
-        date: date.value,
-        product: product.value.trim(),
-        bucket: bucket.value.trim(),
-        count: Number(count.value),
-        stop: stop.value === "true"
-    };
-
-    if (!record.date || !record.product || !record.bucket || !record.count) {
-        alert("请填写完整信息");
-        return;
-    }
-
-    if (editIndex !== null) {
-        data[editIndex] = record;
-        editIndex = null;
-    } else {
-        data.push(record);
-    }
-
-    saveToLocal();
-    resetForm();
-    renderList();
-}
-
-function renderList() {
-    list.innerHTML = "";
-    data.forEach((d, i) => {
-        list.innerHTML += `
-            <tr>
-                <td>${d.date}</td>
-                <td>${d.product}</td>
-                <td>${d.bucket}</td>
-                <td>${d.count}</td>
-                <td class="${d.stop ? 'stop' : ''}">
-                    ${d.stop ? '停发' : '正常'}
-                </td>
-                <td>
-                    <button onclick="editRecord(${i})">编辑</button>
-                    <button class="danger" onclick="deleteRecord(${i})">删除</button>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-function editRecord(i) {
-    const d = data[i];
-    date.value = d.date;
-    product.value = d.product;
-    bucket.value = d.bucket;
-    count.value = d.count;
-    stop.value = d.stop;
-    editIndex = i;
-}
-
-function deleteRecord(i) {
-    if (confirm("确定删除这条记录？")) {
-        data.splice(i, 1);
-        saveToLocal();
-        renderList();
-    }
-}
-
-function resetForm() {
-    product.value = "";
-    bucket.value = "";
-    count.value = "";
-    stop.value = "false";
-    editIndex = null;
-}
-
-/* ========= 汇总 ========= */
-function generateSummary() {
-    let result = {};
-    let stopped = {};
-
-    data.forEach(d => {
-        if (!result[d.date]) {
-            result[d.date] = {};
-            stopped[d.date] = [];
-        }
-
-        if (d.stop) {
-            stopped[d.date].push(d);
-            return;
-        }
-
-        if (!result[d.date][d.product]) {
-            result[d.date][d.product] = {};
-        }
-
-        if (!result[d.date][d.product][d.bucket]) {
-            result[d.date][d.product][d.bucket] = 0;
-        }
-
-        result[d.date][d.product][d.bucket] += d.count;
-    });
-
-    let html = "<h3>📋 汇总结果</h3>";
-
-    for (let date in result) {
-        html += `<strong>📅 ${date}</strong><br><br>`;
-
-        for (let p in result[date]) {
-            html += `<strong>${p}</strong><br>`;
-            for (let b in result[date][p]) {
-                html += `&nbsp;&nbsp;${b}：${result[date][p][b]} 桶<br>`;
+        // 指数退避重试逻辑
+        async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return await response.json();
+            } catch (err) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, backoff));
+                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
+                }
+                throw err;
             }
-            html += "<br>";
         }
 
-        if (stopped[date].length) {
-            html += "<span class='stop'>停发：</span><br>";
-            stopped[date].forEach(s => {
-                html += `${s.bucket}${s.product} ${s.count} 桶<br>`;
-            });
+        async function analyzeTextWithAI(text) {
+            if (!apiKey && typeof __initial_auth_token === 'undefined') {
+                showStatus('错误：未检测到 API Key。请在代码中配置密钥后再在本地运行。', 'error');
+                return null;
+            }
+
+            const systemPrompt = `你是一个库存提取助手。请从用户输入的文字中提取出所有的“商品名称”和对应的“桶数”。
+            如果文字中提到同一个商品多次，请将它们的数量相加。
+            输出格式必须为 JSON 对象，键是商品名，值是整数（桶数）。
+            例如：{"花生油": 5, "酱油": 3}。不要包含任何其他文字。`;
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            temperature: 0.1
+                        }
+                    })
+                });
+
+                const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                return JSON.parse(resultText);
+            } catch (error) {
+                console.error('AI Error:', error);
+                showStatus('AI 分析请求失败，请检查网络或 API 配置', 'error');
+                return null;
+            }
         }
 
-        html += "<hr>";
-    }
+        function updateUI() {
+            const items = Object.keys(inventory);
+            if (items.length === 0) {
+                inventoryBody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
 
-    summary.innerHTML = html;
-}
-</script>
+            emptyState.classList.add('hidden');
+            inventoryBody.innerHTML = items.map(name => `
+                <tr class="hover:bg-blue-50 transition-colors">
+                    <td class="px-6 py-4 font-medium text-gray-800">${name}</td>
+                    <td class="px-6 py-4 text-gray-600">
+                        <input type="number" value="${inventory[name]}" 
+                            onchange="updateItemQuantity('${name}', this.value)"
+                            class="w-20 bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none font-semibold">
+                        <span class="text-sm text-gray-400 ml-1">桶</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="removeItem('${name}')" class="text-red-400 hover:text-red-600 font-medium">
+                            移除
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
+        function updateItemQuantity(name, val) {
+            const num = parseInt(val);
+            if (isNaN(num) || num < 0) return;
+            inventory[name] = num;
+            showStatus(`已更新 ${name} 的数量`, 'success');
+        }
+
+        function removeItem(name) {
+            delete inventory[name];
+            updateUI();
+            showStatus(`已移除商品: ${name}`, 'info');
+        }
+
+        function showStatus(msg, type) {
+            statusMsg.textContent = msg;
+            statusMsg.className = `mt-4 p-4 rounded-xl text-center text-sm block `;
+
+            if (type === 'success') statusMsg.classList.add('bg-green-100', 'text-green-700');
+            else if (type === 'error') statusMsg.classList.add('bg-red-100', 'text-red-700');
+            else statusMsg.classList.add('bg-blue-100', 'text-blue-700');
+
+            setTimeout(() => {
+                statusMsg.classList.add('hidden');
+            }, 5000);
+        }
+
+        processBtn.addEventListener('click', async () => {
+            const text = aiInput.value.trim();
+            if (!text) {
+                showStatus('请输入文字内容', 'error');
+                return;
+            }
+
+            processBtn.disabled = true;
+            btnText.textContent = 'AI 正在分析...';
+            loader.classList.remove('hidden');
+
+            const extractedData = await analyzeTextWithAI(text);
+
+            if (extractedData) {
+                for (const [name, qty] of Object.entries(extractedData)) {
+                    if (inventory[name]) {
+                        inventory[name] += qty;
+                    } else {
+                        inventory[name] = qty;
+                    }
+                }
+                updateUI();
+                aiInput.value = '';
+                showStatus('统计完成！', 'success');
+            }
+
+            processBtn.disabled = false;
+            btnText.textContent = '开始 AI 识别';
+            loader.classList.add('hidden');
+        });
+
+        clearInputBtn.addEventListener('click', () => {
+            aiInput.value = '';
+        });
+
+        resetTableBtn.addEventListener('click', () => {
+            if (confirm('确定要清空所有统计数据吗？')) {
+                inventory = {};
+                updateUI();
+                showStatus('已清空所有数据', 'info');
+            }
+        });
+
+        updateUI();
+    </script>
 </body>
+
 </html>
