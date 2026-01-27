@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>送货汇总系统（增删改查）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: "Segoe UI", "PingFang SC", sans-serif;
+    background: #f4f6f9;
+    padding: 15px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+input, select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #4f46e5;
+    color: #fff;
+}
+
+button.secondary {
+    background: #6b7280;
+}
+
+button.danger {
+    background: #dc2626;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 6px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.summary {
+    margin-top: 20px;
+    background: #f9fafb;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.stop {
+    color: red;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📦 送货记录系统</h2>
+
+    <!-- 输入区 -->
+    <div class="form-row">
+        <input type="date" id="date">
+        <input id="product" placeholder="品名">
+        <input id="bucket" placeholder="桶型">
+        <input id="count" type="number" placeholder="数量">
+        <select id="stop">
+            <option value="false">正常</option>
+            <option value="true">停发</option>
+        </select>
+        <button onclick="saveRecord()">保存</button>
+        <button class="secondary" onclick="resetForm()">清空</button>
+    </div>
+
+    <!-- 列表 -->
+    <table>
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>品名</th>
+                <th>桶型</th>
+                <th>数量</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="list"></tbody>
+    </table>
+
+    <button style="margin-top:15px" onclick="generateSummary()">📊 生成汇总</button>
+
+    <div class="summary" id="summary"></div>
+</div>
+
+<script>
+let data = [];
+let editIndex = null;
+
+/* ========= 本地存储 ========= */
+function saveToLocal() {
+    localStorage.setItem("deliveryData", JSON.stringify(data));
+}
+
+function loadFromLocal() {
+    const saved = localStorage.getItem("deliveryData");
+    if (saved) {
+        data = JSON.parse(saved);
+    }
+}
+
+/* ========= 初始化 ========= */
+document.getElementById("date").valueAsDate = new Date();
+loadFromLocal();
+renderList();
+
+/* ========= CRUD ========= */
+function saveRecord() {
+    const record = {
+        date: date.value,
+        product: product.value.trim(),
+        bucket: bucket.value.trim(),
+        count: Number(count.value),
+        stop: stop.value === "true"
+    };
+
+    if (!record.date || !record.product || !record.bucket || !record.count) {
+        alert("请填写完整信息");
+        return;
+    }
+
+    if (editIndex !== null) {
+        data[editIndex] = record;
+        editIndex = null;
+    } else {
+        data.push(record);
+    }
+
+    saveToLocal();
+    resetForm();
+    renderList();
+}
+
+function renderList() {
+    list.innerHTML = "";
+    data.forEach((d, i) => {
+        list.innerHTML += `
+            <tr>
+                <td>${d.date}</td>
+                <td>${d.product}</td>
+                <td>${d.bucket}</td>
+                <td>${d.count}</td>
+                <td class="${d.stop ? 'stop' : ''}">
+                    ${d.stop ? '停发' : '正常'}
+                </td>
+                <td>
+                    <button onclick="editRecord(${i})">编辑</button>
+                    <button class="danger" onclick="deleteRecord(${i})">删除</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function editRecord(i) {
+    const d = data[i];
+    date.value = d.date;
+    product.value = d.product;
+    bucket.value = d.bucket;
+    count.value = d.count;
+    stop.value = d.stop;
+    editIndex = i;
+}
+
+function deleteRecord(i) {
+    if (confirm("确定删除这条记录？")) {
+        data.splice(i, 1);
+        saveToLocal();
+        renderList();
+    }
+}
+
+function resetForm() {
+    product.value = "";
+    bucket.value = "";
+    count.value = "";
+    stop.value = "false";
+    editIndex = null;
+}
+
+/* ========= 汇总 ========= */
+function generateSummary() {
+    let result = {};
+    let stopped = {};
+
+    data.forEach(d => {
+        if (!result[d.date]) {
+            result[d.date] = {};
+            stopped[d.date] = [];
+        }
+
+        if (d.stop) {
+            stopped[d.date].push(d);
+            return;
+        }
+
+        if (!result[d.date][d.product]) {
+            result[d.date][d.product] = {};
+        }
+
+        if (!result[d.date][d.product][d.bucket]) {
+            result[d.date][d.product][d.bucket] = 0;
+        }
+
+        result[d.date][d.product][d.bucket] += d.count;
+    });
+
+    let html = "<h3>📋 汇总结果</h3>";
+
+    for (let date in result) {
+        html += `<strong>📅 ${date}</strong><br><br>`;
+
+        for (let p in result[date]) {
+            html += `<strong>${p}</strong><br>`;
+            for (let b in result[date][p]) {
+                html += `&nbsp;&nbsp;${b}：${result[date][p][b]} 桶<br>`;
+            }
+            html += "<br>";
+        }
+
+        if (stopped[date].length) {
+            html += "<span class='stop'>停发：</span><br>";
+            stopped[date].forEach(s => {
+                html += `${s.bucket}${s.product} ${s.count} 桶<br>`;
+            });
+        }
+
+        html += "<hr>";
+    }
+
+    summary.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
