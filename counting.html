@@ -151,9 +151,6 @@
         let inventory = {};
 
         const aiInput = document.getElementById('aiInput');
-        const processBtn = document.getElementById('processBtn');
-        const btnText = document.getElementById('btnText');
-        const loader = document.getElementById('loader');
         const inventoryBody = document.getElementById('inventoryBody');
         const emptyState = document.getElementById('emptyState');
         const clearInputBtn = document.getElementById('clearInputBtn');
@@ -180,45 +177,94 @@
             }
         }
 
+        // async function analyzeTextWithAI(text) {
+        //     if (!apiKey && typeof __initial_auth_token === 'undefined') {
+        //         showStatus('提示：API Key 未配置。请在代码头部或环境中设置。', 'error');
+        //         return null;
+        //     }
+
+        //     const systemPrompt = `你是一个专业的库存与财务提取助手。请从用户描述中提取：
+        //     1. name (商品名): 如果有“大颗”字样，末尾加“【大颗菜】”。“无叶”、“免切”应作为独立品项。
+        //     2. weight (重量): 数字。
+        //     3. quantity (桶数): 整数。
+        //     4. price (单价): 识别单价（如果有），否则默认为 0。
+
+        //     输出格式必须为 JSON 数组: [{"name": "品名", "weight": 数字, "quantity": 数字, "price": 数字}]。
+        //     只返回 JSON 数组，严禁其他解释性文字。`;
+
+        //     // 建议使用 Flash-Lite 以获得更多免费次数（虽然截图显示也是20，但在API调用中通常更宽松）
+        //     // 建议先尝试这个最稳定的 ID
+        //     // 修改后的 URL 指向 gemma-3-12b
+        //     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-12b-it:generateContent?key=${apiKey}`;
+
+        //     try {
+        //         const data = await fetchWithRetry(url, {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({
+        //                 contents: [{ parts: [{ text: text }] }],
+        //                 systemInstruction: { parts: [{ text: systemPrompt }] },
+        //                 generationConfig: {
+        //                     responseMimeType: "application/json",
+        //                     temperature: 0.1
+        //                 }
+        //             })
+        //         });
+
+        //         const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        //         return JSON.parse(resultText);
+        //     } catch (error) {
+        //         console.error('AI Error:', error);
+        //         showStatus('网络异常，无法连接 AI 服务', 'error');
+        //         return null;
+        //     }
+        // }
         async function analyzeTextWithAI(text) {
-            if (!apiKey && typeof __initial_auth_token === 'undefined') {
-                showStatus('提示：API Key 未配置。请在代码头部或环境中设置。', 'error');
-                return null;
-            }
+            // 强制要求输出格式，并提醒不要废话
+            const prompt = `Task: Extract inventory data to JSON array.
+    Format: [{"name": "string", "weight": number, "quantity": number, "price": number}]
+    Rules: If "大颗" in name, add "【大颗菜】".
+    Data to process: ${text}
+    Important: Output ONLY the raw JSON array starting with [ and ending with ]. No explanation.`;
 
-            const systemPrompt = `你是一个专业的库存与财务提取助手。请从用户描述中提取：
-            1. name (商品名): 如果有“大颗”字样，末尾加“【大颗菜】”。“无叶”、“免切”应作为独立品项。
-            2. weight (重量): 数字。
-            3. quantity (桶数): 整数。
-            4. price (单价): 识别单价（如果有），否则默认为 0。
-            
-            输出格式必须为 JSON 数组: [{"name": "品名", "weight": 数字, "quantity": 数字, "price": 数字}]。
-            只返回 JSON 数组，严禁其他解释性文字。`;
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // 切换到性能更强的 27b
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${apiKey}`;
 
             try {
-                const data = await fetchWithRetry(url, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: text }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        contents: [{ parts: [{ text: prompt }] }],
                         generationConfig: {
-                            responseMimeType: "application/json",
-                            temperature: 0.1
+                            temperature: 0.1, // 降低随机性，使格式更固定
+                            maxOutputTokens: 1000 // 限制输出长度，防止 Token 溢出导致的任务中断
                         }
                     })
                 });
 
-                const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                return JSON.parse(resultText);
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error?.message || 'API Error');
+
+                let resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                // --- 强力提取 JSON 数组 ---
+                const start = resultText.indexOf('[');
+                const end = resultText.lastIndexOf(']');
+
+                if (start === -1 || end === -1) {
+                    throw new Error("AI 返回内容不包含有效的 JSON 数组");
+                }
+
+                const cleanJson = resultText.substring(start, end + 1);
+                return JSON.parse(cleanJson);
             } catch (error) {
-                console.error('AI Error:', error);
-                showStatus('网络异常，无法连接 AI 服务', 'error');
+                console.error('Error:', error);
+                showStatus('识别失败：' + error.message, 'error');
                 return null;
             }
         }
+
 
         function calculateSummary() {
             const keys = Object.keys(inventory);
