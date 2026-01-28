@@ -40,11 +40,19 @@
     <div class="max-w-5xl mx-auto px-4 py-8">
         <header class="mb-8 text-center">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">📦 智能商品库存与金额统计</h1>
-            <p class="text-gray-600">基于 Gemma-3-27B 模型，支持本地自动保存与 CSV 导出。</p>
+            <p class="text-gray-600">支持本地自动保存与 CSV 导出。</p>
         </header>
 
         <div class="glass-card rounded-2xl p-6 shadow-sm mb-8">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">智能录入（支持语音转文字粘贴或手动输入）</label>
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">智能录入（支持语音转文字粘贴或手动输入）</label>
+                <!-- 加载测试数据按钮 -->
+                <button id="loadTestBtn"
+                    class="text-xs flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-100 transition-all hover:shadow-sm">
+                    <span>💡</span> 加载测试数据
+                </button>
+            </div>
+
             <textarea id="aiInput" rows="4"
                 class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 placeholder="例如：3桶无叶酸菜42斤，单价50元；5桶大颗免切酸菜单价45元..."></textarea>
@@ -291,6 +299,23 @@
             setTimeout(() => statusMsg.classList.add('hidden'), 5000);
         }
 
+        const elements = {
+            aiInput: document.getElementById('aiInput')
+        };
+
+        document.getElementById('loadTestBtn').addEventListener('click', () => {
+            const testData = `金，178952-1114，江苏省苏州市太（1桶小桶34斤酸萝卜贴【酸萝卜标签】）
+翁，1848012713，福建省福州市平潭县潭，电话1350（2桶小叶酸菜42斤贴新店标签）
+浙江省路1号（农85英乐）（1桶小叶酸菜42斤贴新店标签）
+金姗，15786408-1552，浙江江口街（10桶小叶酸菜42斤贴新店标签）
+胡，18413-2443，浙江省河coco探面（不要放快递柜）（1桶小叶酸菜34斤贴新店标签）
+王，184663653，广东省早中晚餐（3桶小叶酸菜42斤【大颗菜】贴新店标签）
+尹，17854163892，山东省济南川烤鱼店（1桶大桶40斤酸萝卜贴【酸萝卜标签】🔥）
+石，1754961933，吉林省吉林市龙（2桶小叶酸菜42斤贴新店标签）`;
+
+            elements.aiInput.value = testData;
+            showStatus('已填入测试样例文本', 'success');
+        });
         // 按钮监听
         processBtn.addEventListener('click', async () => {
             const text = aiInput.value.trim();
