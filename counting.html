@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能商品库存与金额统计系统</title>
+    <title>智能库存与财务统计系统 - Gemma 版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -38,18 +38,16 @@
 <body class="bg-gray-50 min-h-screen pb-12">
 
     <div class="max-w-5xl mx-auto px-4 py-8">
-        <!-- Header -->
         <header class="mb-8 text-center">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">📦 智能商品库存与金额统计</h1>
-            <p class="text-gray-600">自动识别规格与属性，支持单价设置、金额结算及 CSV 导出。</p>
+            <p class="text-gray-600">基于 Gemma-3-27B 模型，支持本地自动保存与 CSV 导出。</p>
         </header>
 
-        <!-- AI Input Section -->
         <div class="glass-card rounded-2xl p-6 shadow-sm mb-8">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">智能输入框</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">智能录入（支持语音转文字粘贴或手动输入）</label>
             <textarea id="aiInput" rows="4"
-                class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                placeholder="例如：3桶无叶酸菜42斤，单价50元；5桶免切酸菜单价45元..."></textarea>
+                class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                placeholder="例如：3桶无叶酸菜42斤，单价50元；5桶大颗免切酸菜单价45元..."></textarea>
 
             <div class="mt-4 flex flex-wrap gap-3 items-center justify-between">
                 <div class="flex gap-2">
@@ -61,32 +59,21 @@
                         </div>
                     </button>
                     <button id="clearInputBtn"
-                        class="text-gray-500 hover:bg-gray-100 px-4 py-2.5 rounded-lg transition-colors">
-                        重置输入
-                    </button>
+                        class="text-gray-500 hover:bg-gray-100 px-4 py-2.5 rounded-lg transition-colors">重置输入</button>
                 </div>
-                <p class="text-xs text-gray-400">* 填写单价可自动计算金额</p>
+                <p class="text-xs text-gray-400">* 系统会自动合并同名且同规格的商品</p>
             </div>
         </div>
 
-        <!-- Dashboard / Table Section -->
         <div class="glass-card rounded-2xl shadow-sm overflow-hidden mb-6">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white">
                 <h2 class="text-xl font-bold text-gray-800">库存明细</h2>
                 <div class="flex gap-2">
                     <button id="exportCsvBtn"
-                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-md text-sm transition-colors flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        导出 CSV
-                    </button>
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-md text-sm transition-colors flex items-center gap-1">导出
+                        CSV</button>
                     <button id="resetTableBtn"
-                        class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-md text-sm transition-colors">
-                        清空数据表
-                    </button>
+                        class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-md text-sm transition-colors">清空本地存储</button>
                 </div>
             </div>
 
@@ -102,37 +89,31 @@
                             <th class="px-6 py-4 font-semibold text-right">操作</th>
                         </tr>
                     </thead>
-                    <tbody id="inventoryBody" class="divide-y divide-gray-100">
-                        <!-- Data rows will appear here -->
-                    </tbody>
+                    <tbody id="inventoryBody" class="divide-y divide-gray-100"></tbody>
                 </table>
             </div>
 
-            <!-- Empty State -->
-            <div id="emptyState" class="py-12 text-center">
+            <div id="emptyState" class="py-12 text-center hidden">
                 <p class="text-gray-400 text-lg">暂无数据，请尝试智能输入</p>
             </div>
         </div>
 
-        <!-- Total Summary Footer -->
         <div id="summaryCard" class="total-banner rounded-2xl p-6 text-white shadow-xl hidden">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                 <div class="text-center md:text-left">
                     <h3 class="text-lg font-semibold opacity-90">数据实时统计</h3>
-                    <p class="text-sm opacity-60">Inventory & Financial Summary</p>
+                    <p class="text-sm opacity-60">数据已保存至浏览器本地</p>
                 </div>
-
                 <div class="flex justify-center gap-12 border-x border-white/10">
                     <div class="text-center">
                         <div class="text-xs uppercase tracking-widest opacity-60 mb-1">总品项</div>
-                        <div id="totalTypes" class="text-3xl font-bold italic">0</div>
+                        <div id="totalTypes" class="text-3xl font-bold">0</div>
                     </div>
                     <div class="text-center">
                         <div class="text-xs uppercase tracking-widest opacity-60 mb-1">累计桶数</div>
-                        <div id="totalBuckets" class="text-3xl font-bold italic">0</div>
+                        <div id="totalBuckets" class="text-3xl font-bold">0</div>
                     </div>
                 </div>
-
                 <div class="text-center md:text-right">
                     <div class="text-xs uppercase tracking-widest opacity-60 mb-1">总计金额 (CNY)</div>
                     <div class="text-4xl font-black text-yellow-400">
@@ -142,93 +123,40 @@
             </div>
         </div>
 
-        <!-- Footer Info -->
         <div id="statusMsg" class="mt-4 hidden p-4 rounded-xl text-center text-sm font-medium"></div>
     </div>
 
     <script>
+        // 配置区 - 请确保 API Key 正确
         const apiKey = "AIzaSyD52sNOXplSIh2yS9QGbzWNymvcFwApkhE";
-        let inventory = {};
+        const modelId = "gemma-3-27b-it";
+
+        // 状态初始化：优先从 LocalStorage 读取
+        let inventory = JSON.parse(localStorage.getItem('inventoryData')) || {};
 
         const aiInput = document.getElementById('aiInput');
+        const processBtn = document.getElementById('processBtn');
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
         const inventoryBody = document.getElementById('inventoryBody');
         const emptyState = document.getElementById('emptyState');
-        const clearInputBtn = document.getElementById('clearInputBtn');
-        const resetTableBtn = document.getElementById('resetTableBtn');
-        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        const summaryCard = document.getElementById('summaryCard');
         const statusMsg = document.getElementById('statusMsg');
 
-        const summaryCard = document.getElementById('summaryCard');
-        const totalTypes = document.getElementById('totalTypes');
-        const totalBuckets = document.getElementById('totalBuckets');
-        const totalAmount = document.getElementById('totalAmount');
-
-        async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
-            try {
-                const response = await fetch(url, options);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return await response.json();
-            } catch (err) {
-                if (retries > 0) {
-                    await new Promise(resolve => setTimeout(resolve, backoff));
-                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
-                }
-                throw err;
-            }
+        // 持久化保存
+        function saveToLocal() {
+            localStorage.setItem('inventoryData', JSON.stringify(inventory));
         }
 
-        // async function analyzeTextWithAI(text) {
-        //     if (!apiKey && typeof __initial_auth_token === 'undefined') {
-        //         showStatus('提示：API Key 未配置。请在代码头部或环境中设置。', 'error');
-        //         return null;
-        //     }
-
-        //     const systemPrompt = `你是一个专业的库存与财务提取助手。请从用户描述中提取：
-        //     1. name (商品名): 如果有“大颗”字样，末尾加“【大颗菜】”。“无叶”、“免切”应作为独立品项。
-        //     2. weight (重量): 数字。
-        //     3. quantity (桶数): 整数。
-        //     4. price (单价): 识别单价（如果有），否则默认为 0。
-
-        //     输出格式必须为 JSON 数组: [{"name": "品名", "weight": 数字, "quantity": 数字, "price": 数字}]。
-        //     只返回 JSON 数组，严禁其他解释性文字。`;
-
-        //     // 建议使用 Flash-Lite 以获得更多免费次数（虽然截图显示也是20，但在API调用中通常更宽松）
-        //     // 建议先尝试这个最稳定的 ID
-        //     // 修改后的 URL 指向 gemma-3-12b
-        //     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-12b-it:generateContent?key=${apiKey}`;
-
-        //     try {
-        //         const data = await fetchWithRetry(url, {
-        //             method: 'POST',
-        //             headers: { 'Content-Type': 'application/json' },
-        //             body: JSON.stringify({
-        //                 contents: [{ parts: [{ text: text }] }],
-        //                 systemInstruction: { parts: [{ text: systemPrompt }] },
-        //                 generationConfig: {
-        //                     responseMimeType: "application/json",
-        //                     temperature: 0.1
-        //                 }
-        //             })
-        //         });
-
-        //         const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        //         return JSON.parse(resultText);
-        //     } catch (error) {
-        //         console.error('AI Error:', error);
-        //         showStatus('网络异常，无法连接 AI 服务', 'error');
-        //         return null;
-        //     }
-        // }
+        // AI 核心函数
         async function analyzeTextWithAI(text) {
-            // 强制要求输出格式，并提醒不要废话
-            const prompt = `Task: Extract inventory data to JSON array.
-    Format: [{"name": "string", "weight": number, "quantity": number, "price": number}]
-    Rules: If "大颗" in name, add "【大颗菜】".
-    Data to process: ${text}
-    Important: Output ONLY the raw JSON array starting with [ and ending with ]. No explanation.`;
+            const prompt = `你是一个专业的财务与库存提取助手。
+            任务：从文本中提取：name(品名), weight(单桶斤数), quantity(桶数), price(单价)。
+            规则：如果品名含“大颗”，末尾加“【大颗菜】”。
+            输出格式：必须且仅返回一个 JSON 数组，例如: [{"name":"无叶酸菜","weight":42,"quantity":3,"price":50}]。
+            文本内容：${text}`;
 
-            // 切换到性能更强的 27b
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${apiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`;
 
             try {
                 const response = await fetch(url, {
@@ -236,222 +164,197 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: {
-                            temperature: 0.1, // 降低随机性，使格式更固定
-                            maxOutputTokens: 1000 // 限制输出长度，防止 Token 溢出导致的任务中断
-                        }
+                        generationConfig: { temperature: 0.1, maxOutputTokens: 1000 }
                     })
                 });
 
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.error?.message || 'API Error');
+                if (!response.ok) throw new Error(data.error?.message || '请求失败');
 
-                let resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const match = rawText.match(/\[\s*\{.*\}\s*\]/s);
+                if (!match) throw new Error("AI 返回格式非标准 JSON");
 
-                // --- 强力提取 JSON 数组 ---
-                const start = resultText.indexOf('[');
-                const end = resultText.lastIndexOf(']');
-
-                if (start === -1 || end === -1) {
-                    throw new Error("AI 返回内容不包含有效的 JSON 数组");
-                }
-
-                const cleanJson = resultText.substring(start, end + 1);
-                return JSON.parse(cleanJson);
+                return JSON.parse(match[0]);
             } catch (error) {
-                console.error('Error:', error);
-                showStatus('识别失败：' + error.message, 'error');
+                console.error('AI Error:', error);
+                showStatus('AI 识别错误: ' + error.message, 'error');
                 return null;
             }
         }
 
-
-        function calculateSummary() {
-            const keys = Object.keys(inventory);
-            let totalQty = 0;
-            let totalSum = 0;
-
-            keys.forEach(key => {
-                const item = inventory[key];
-                totalQty += (item.quantity || 0);
-                totalSum += (item.quantity * item.price);
-            });
-
-            if (keys.length > 0) {
-                summaryCard.classList.remove('hidden');
-                totalTypes.textContent = keys.length;
-                totalBuckets.textContent = totalQty;
-                totalAmount.textContent = totalSum.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            } else {
-                summaryCard.classList.add('hidden');
-            }
-        }
-
+        // UI 渲染与汇总
         function updateUI() {
+            saveToLocal();
             const keys = Object.keys(inventory);
+
             if (keys.length === 0) {
                 inventoryBody.innerHTML = '';
                 emptyState.classList.remove('hidden');
-                calculateSummary();
+                summaryCard.classList.add('hidden');
                 return;
             }
 
             emptyState.classList.add('hidden');
+            summaryCard.classList.remove('hidden');
+
+            let totalBucketsVal = 0;
+            let totalAmountVal = 0;
+
             inventoryBody.innerHTML = keys.map(key => {
                 const item = inventory[key];
                 const isLarge = item.weight >= 40;
-                const badgeClass = isLarge ? 'badge-large' : 'badge-small';
-                const rowTotal = (item.quantity * item.price).toFixed(2);
+                const subtotal = item.quantity * item.price;
+                totalBucketsVal += item.quantity;
+                totalAmountVal += subtotal;
 
                 return `
-                    <tr class="hover:bg-blue-50/50 transition-colors border-b border-gray-100 last:border-0">
+                    <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4">
                             <div class="font-bold text-gray-800">${item.name}</div>
-                            <div class="text-xs text-gray-400">${item.weight > 0 ? item.weight + '斤/桶' : '重量未标'}</div>
+                            <div class="text-xs text-gray-400">${item.weight}斤/桶</div>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase ${badgeClass}">
+                            <span class="px-2 py-1 rounded-full text-[10px] font-bold ${isLarge ? 'badge-large' : 'badge-small'}">
                                 ${isLarge ? '大桶' : '小桶'}
                             </span>
                         </td>
                         <td class="px-6 py-4">
-                            <input type="number" value="${item.quantity}" 
-                                oninput="updateField('${key}', 'quantity', this.value)"
-                                class="w-16 bg-white border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-blue-400 outline-none">
+                            <input type="number" value="${item.quantity}" oninput="updateField('${key}', 'quantity', this.value)"
+                                class="w-16 border rounded px-2 py-1 outline-none focus:ring-1 focus:ring-blue-400">
                         </td>
                         <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <span class="text-gray-400 mr-1 text-sm">¥</span>
-                                <input type="number" step="0.01" value="${item.price}" 
-                                    oninput="updateField('${key}', 'price', this.value)"
-                                    class="w-20 bg-white border border-gray-200 rounded px-2 py-1 focus:ring-1 focus:ring-blue-400 outline-none">
-                            </div>
+                            <input type="number" step="0.01" value="${item.price}" oninput="updateField('${key}', 'price', this.value)"
+                                class="w-20 border rounded px-2 py-1 outline-none focus:ring-1 focus:ring-blue-400">
                         </td>
-                        <td class="px-6 py-4 font-mono font-bold text-gray-700">
-                            ¥${rowTotal}
-                        </td>
+                        <td class="px-6 py-4 font-mono font-bold">¥${subtotal.toFixed(2)}</td>
                         <td class="px-6 py-4 text-right">
-                            <button onclick="removeItem('${key}')" class="text-red-300 hover:text-red-600 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                            <button onclick="removeItem('${key}')" class="text-red-300 hover:text-red-500 transition-colors">删除</button>
                         </td>
-                    </tr>
-                `;
+                    </tr>`;
             }).join('');
 
-            calculateSummary();
+            document.getElementById('totalTypes').textContent = keys.length;
+            document.getElementById('totalBuckets').textContent = totalBucketsVal;
+            document.getElementById('totalAmount').textContent = totalAmountVal.toLocaleString('zh-CN', { minimumFractionDigits: 2 });
         }
 
+        // 字段更新
+        // 字段更新：优化版，不触发全量重绘
         function updateField(key, field, val) {
-            const num = parseFloat(val);
-            if (isNaN(num) || num < 0) return;
-            inventory[key][field] = num;
-            calculateSummary();
-            const rowTotalEl = document.querySelector(`tr:has(input[oninput*="'${key}'"]) td:nth-child(5)`);
-            if (rowTotalEl) {
-                rowTotalEl.textContent = `¥${(inventory[key].quantity * inventory[key].price).toFixed(2)}`;
+            const n = parseFloat(val) || 0;
+            inventory[key][field] = n;
+
+            // 1. 只更新当前行的小计
+            const rowTotal = inventory[key].quantity * inventory[key].price;
+            // 找到当前输入框所在的行
+            const inputEl = event.target;
+            const row = inputEl.closest('tr');
+            const subtotalEl = row.querySelector('td:nth-child(5)');
+            if (subtotalEl) {
+                subtotalEl.textContent = `¥${rowTotal.toFixed(2)}`;
             }
+
+            // 2. 更新底部的总计卡片（不重绘表格）
+            refreshSummaryOnly();
+
+            // 3. 异步保存到本地，不影响输入体验
+            saveToLocal();
         }
 
+        // 专门用于局部更新总计数值
+        function refreshSummaryOnly() {
+            const keys = Object.keys(inventory);
+            let totalBucketsVal = 0;
+            let totalAmountVal = 0;
+
+            keys.forEach(key => {
+                totalBucketsVal += (inventory[key].quantity || 0);
+                totalAmountVal += (inventory[key].quantity * inventory[key].price || 0);
+            });
+
+            document.getElementById('totalTypes').textContent = keys.length;
+            document.getElementById('totalBuckets').textContent = totalBucketsVal;
+            document.getElementById('totalAmount').textContent = totalAmountVal.toLocaleString('zh-CN', { minimumFractionDigits: 2 });
+        }
+
+        // 删除项
         function removeItem(key) {
             delete inventory[key];
             updateUI();
-            showStatus(`已移除商品项`, 'info');
         }
 
+        // 状态提示
         function showStatus(msg, type) {
             statusMsg.textContent = msg;
-            statusMsg.className = `mt-4 p-4 rounded-xl text-center text-sm block `;
-            if (type === 'success') statusMsg.classList.add('bg-green-100', 'text-green-700');
-            else if (type === 'error') statusMsg.classList.add('bg-red-100', 'text-red-700');
-            else statusMsg.classList.add('bg-blue-100', 'text-blue-700');
+            statusMsg.className = `mt-4 p-4 rounded-xl text-center text-sm block ${type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
             setTimeout(() => statusMsg.classList.add('hidden'), 5000);
         }
 
-        function exportCSV() {
-            const keys = Object.keys(inventory);
-            if (keys.length === 0) return showStatus('没有可导出的数据', 'error');
-
-            let csvContent = "\uFEFF"; // UTF-8 BOM for Excel
-            csvContent += "商品名称,规格类型,重量(斤),数量(桶),单价(元),小计(元)\n";
-
-            keys.forEach(key => {
-                const item = inventory[key];
-                const type = item.weight >= 40 ? "大桶" : "小桶";
-                const total = (item.quantity * item.price).toFixed(2);
-                csvContent += `"${item.name}","${type}",${item.weight},${item.quantity},${item.price},${total}\n`;
-            });
-
-            // Add total row
-            let totalQty = 0;
-            let totalSum = 0;
-            keys.forEach(k => {
-                totalQty += inventory[k].quantity;
-                totalSum += (inventory[k].quantity * inventory[k].price);
-            });
-            csvContent += `\n"总计",,,${totalQty},,"${totalSum.toFixed(2)}"\n`;
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            const date = new Date().toISOString().slice(0, 10);
-
-            link.setAttribute("href", url);
-            link.setAttribute("download", `库存明细_${date}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showStatus('CSV 文件已生成并下载', 'success');
-        }
-
+        // 按钮监听
         processBtn.addEventListener('click', async () => {
             const text = aiInput.value.trim();
-            if (!text) return showStatus('请输入文字内容', 'error');
+            if (!text) return;
+
+            // --- 新增逻辑：点击识别时先清空旧库存和本地存储 ---
+            if (Object.keys(inventory).length > 0) {
+                inventory = {}; // 清空内存数据
+                localStorage.removeItem('inventoryData'); // 清空本地缓存
+                updateUI(); // 渲染空界面
+            }
 
             processBtn.disabled = true;
-            btnText.textContent = 'AI 正在核算中...';
             loader.classList.remove('hidden');
+            btnText.textContent = '识别中...';
 
             const results = await analyzeTextWithAI(text);
-
-            if (results && Array.isArray(results)) {
+            if (results) {
                 results.forEach(item => {
-                    const isLarge = item.weight >= 40;
-                    const typeKey = `${item.name}-${isLarge ? 'L' : 'S'}`;
+                    // 生成唯一键：品名 + 规格(L/S)
+                    const key = `${item.name}-${item.weight >= 40 ? 'L' : 'S'}`;
 
-                    if (inventory[typeKey]) {
-                        inventory[typeKey].quantity += item.quantity;
-                        if (item.price > 0 && inventory[typeKey].price === 0) {
-                            inventory[typeKey].price = item.price;
-                        }
+                    // 因为上面已经清空了，这里其实直接赋值即可，
+                    // 但保留逻辑判断可以兼容未来“追加模式”的扩展
+                    if (inventory[key]) {
+                        inventory[key].quantity += item.quantity;
+                        if (item.price > 0) inventory[key].price = item.price;
                     } else {
-                        inventory[typeKey] = item;
+                        inventory[key] = item;
                     }
                 });
-                updateUI();
                 aiInput.value = '';
-                showStatus('识别并汇总核算完成！', 'success');
+                updateUI(); // 识别完成后统一渲染
+                showStatus('新数据已核算完成', 'success');
             }
-
             processBtn.disabled = false;
-            btnText.textContent = '开始 AI 识别';
             loader.classList.add('hidden');
+            btnText.textContent = '开始 AI 识别';
         });
-
-        clearInputBtn.addEventListener('click', () => aiInput.value = '');
-        resetTableBtn.addEventListener('click', () => {
-            if (confirm('确定要清空所有数据吗？此操作不可恢复。')) {
+        document.getElementById('clearInputBtn').addEventListener('click', () => aiInput.value = '');
+        document.getElementById('resetTableBtn').addEventListener('click', () => {
+            if (confirm('确定清空所有本地存储的数据吗？')) {
                 inventory = {};
                 updateUI();
-                showStatus('数据已重置', 'info');
             }
         });
 
-        exportCsvBtn.addEventListener('click', exportCSV);
+        document.getElementById('exportCsvBtn').addEventListener('click', () => {
+            const keys = Object.keys(inventory);
+            if (keys.length === 0) return;
+            let csv = "\uFEFF品名,重量,规格,数量,单价,小计\n";
+            keys.forEach(k => {
+                const i = inventory[k];
+                csv += `"${i.name}",${i.weight},${i.weight >= 40 ? '大桶' : '小桶'},${i.quantity},${i.price},${(i.quantity * i.price).toFixed(2)}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `库存统计_${new Date().toLocaleDateString()}.csv`;
+            a.click();
+        });
 
+        // 首次加载渲染
         updateUI();
     </script>
 </body>
