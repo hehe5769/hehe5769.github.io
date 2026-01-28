@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インテリジェント在庫・財務統計システム - Gemma版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 1);
+        }
+
+        .badge-large {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-small {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .total-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen pb-12">
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📦 AI在庫・金額統計システム</h1>
+            <p class="text-gray-600">ローカル自動保存 ＆ CSVエクスポート対応</p>
+        </header>
+
+        <div class="glass-card rounded-2xl p-6 shadow-sm mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">インテリジェント入力（音声文字起こしや自由形式のテキスト）</label>
+                <button id="loadTestBtn"
+                    class="text-xs flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-100 transition-all hover:shadow-sm">
+                    <span>💡</span> テストデータを読み込む
+                </button>
+            </div>
+            <textarea id="aiInput" rows="4"
+                class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                placeholder="例：酸菜3樽（各42斤）、単価50円。大玉のカットなし酸菜を5樽、単価45円..."></textarea>
+            <div class="mt-4 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex gap-2">
+                    <button id="processBtn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2">
+                        <span id="btnText">AIで解析・更新</span>
+                        <div id="loader"
+                            class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin">
+                        </div>
+                    </button>
+                    <button id="clearInputBtn"
+                        class="text-gray-500 hover:bg-gray-100 px-4 py-2.5 rounded-lg transition-colors">入力をリセット</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-2xl shadow-sm overflow-hidden mb-6">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white">
+                <h2 class="text-xl font-bold text-gray-800">在庫明細</h2>
+                <div class="flex gap-2">
+                    <button id="exportCsvBtn"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-md text-sm transition-colors flex items-center gap-1">CSV出力</button>
+                    <button id="resetTableBtn"
+                        class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-md text-sm transition-colors">全データ削除</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-gray-500 text-sm uppercase">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold">商品名</th>
+                            <th class="px-6 py-4 font-semibold text-center">規格</th>
+                            <th class="px-6 py-4 font-semibold">数量 (樽)</th>
+                            <th class="px-6 py-4 font-semibold">単価 (円)</th>
+                            <th class="px-6 py-4 font-semibold">小計 (円)</th>
+                            <th class="px-6 py-4 font-semibold text-right">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="py-12 text-center hidden">
+                <p class="text-gray-400 text-lg">データがありません。テキストを入力してください。</p>
+            </div>
+        </div>
+
+        <div id="summaryCard" class="total-banner rounded-2xl p-6 text-white shadow-xl hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-semibold opacity-90">リアルタイム統計</h3>
+                    <p class="text-sm opacity-60">自動保存中</p>
+                </div>
+                <div class="flex justify-center gap-12 border-x border-white/10">
+                    <div class="text-center">
+                        <div class="text-xs uppercase tracking-widest opacity-60 mb-1">商品種別</div>
+                        <div id="totalTypes" class="text-3xl font-bold">0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs uppercase tracking-widest opacity-60 mb-1">合計数量</div>
+                        <div id="totalBuckets" class="text-3xl font-bold">0</div>
+                    </div>
+                </div>
+                <div class="text-center md:text-right">
+                    <div class="text-xs uppercase tracking-widest opacity-60 mb-1">総合計金額 (JPY)</div>
+                    <div class="text-4xl font-black text-yellow-400">
+                        <span class="text-xl mr-1">¥</span><span id="totalAmount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="statusMsg" class="mt-4 hidden p-4 rounded-xl text-center text-sm font-medium"></div>
+    </div>
+
+    <script>
+        const apiKey = "AIzaSyD52sNOXplSIh2yS9QGbzWNymvcFwApkhE";
+        const modelId = "gemma-3-27b-it";
+        let inventory = JSON.parse(localStorage.getItem('inventoryData')) || {};
+
+        const aiInput = document.getElementById('aiInput');
+        const processBtn = document.getElementById('processBtn');
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
+        const inventoryBody = document.getElementById('inventoryBody');
+        const emptyState = document.getElementById('emptyState');
+        const summaryCard = document.getElementById('summaryCard');
+        const statusMsg = document.getElementById('statusMsg');
+
+        function saveToLocal() { localStorage.setItem('inventoryData', JSON.stringify(inventory)); }
+
+        async function analyzeTextWithAI(text) {
+            const prompt = `あなたはプロの財務・在庫管理アシスタントです。抽出項目：品名(name), 重量(weight), 数量(quantity), 単価(price)。ルール：品名に「大玉」や「大顆」が含まれる場合、末尾に「【大玉】」を付与。必ずJSON配列のみ返却。例: [{"name":"無葉酸菜","weight":42,"quantity":3,"price":50}]。テキスト：${text}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.1 } })
+                });
+                const data = await response.json();
+                const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const match = rawText.match(/\[\s*\{.*\}\s*\]/s);
+                return match ? JSON.parse(match[0]) : null;
+            } catch (e) { return null; }
+        }
+
+        function updateUI() {
+            saveToLocal();
+            const keys = Object.keys(inventory);
+            if (keys.length === 0) {
+                inventoryBody.innerHTML = ''; emptyState.classList.remove('hidden'); summaryCard.classList.add('hidden'); return;
+            }
+            emptyState.classList.add('hidden'); summaryCard.classList.remove('hidden');
+            let totalBucketsVal = 0, totalAmountVal = 0;
+            inventoryBody.innerHTML = keys.map(key => {
+                const item = inventory[key];
+                const subtotal = item.quantity * item.price;
+                totalBucketsVal += item.quantity; totalAmountVal += subtotal;
+                return `<tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4"><div class="font-bold text-gray-800">${item.name}</div><div class="text-xs text-gray-400">${item.weight}斤/樽</div></td>
+                    <td class="px-6 py-4 text-center"><span class="px-2 py-1 rounded-full text-[10px] font-bold ${item.weight >= 40 ? 'badge-large' : 'badge-small'}">${item.weight >= 40 ? '大樽' : '小樽'}</span></td>
+                    <td class="px-6 py-4"><input type="number" value="${item.quantity}" oninput="updateField('${key}', 'quantity', this.value)" class="w-16 border rounded px-2 py-1 outline-none"></td>
+                    <td class="px-6 py-4"><input type="number" value="${item.price}" oninput="updateField('${key}', 'price', this.value)" class="w-24 border rounded px-2 py-1 outline-none"></td>
+                    <td class="px-6 py-4 font-mono font-bold">¥${subtotal.toLocaleString()}</td>
+                    <td class="px-6 py-4 text-right"><button onclick="removeItem('${key}')" class="text-red-300 hover:text-red-500">削除</button></td>
+                </tr>`;
+            }).join('');
+            document.getElementById('totalTypes').textContent = keys.length;
+            document.getElementById('totalBuckets').textContent = totalBucketsVal;
+            document.getElementById('totalAmount').textContent = totalAmountVal.toLocaleString();
+        }
+
+        function updateField(key, field, val) {
+            inventory[key][field] = parseFloat(val) || 0;
+            const subtotal = inventory[key].quantity * inventory[key].price;
+            event.target.closest('tr').querySelector('td:nth-child(5)').textContent = `¥${subtotal.toLocaleString()}`;
+            refreshSummaryOnly();
+            saveToLocal();
+        }
+
+        function refreshSummaryOnly() {
+            let tb = 0, ta = 0;
+            Object.values(inventory).forEach(i => { tb += i.quantity; ta += (i.quantity * i.price); });
+            document.getElementById('totalBuckets').textContent = tb;
+            document.getElementById('totalAmount').textContent = ta.toLocaleString();
+        }
+
+        function removeItem(key) { if (confirm('削除しますか？')) { delete inventory[key]; updateUI(); } }
+
+        function showStatus(msg, type) {
+            statusMsg.textContent = msg; statusMsg.className = `mt-4 p-4 rounded-xl text-center text-sm block ${type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+            setTimeout(() => statusMsg.classList.add('hidden'), 3000);
+        }
+
+        processBtn.addEventListener('click', async () => {
+            const text = aiInput.value.trim();
+            if (!text) return;
+
+            // --- 关键修改：点击识别时先清空内存和本地缓存 ---
+            inventory = {};
+            localStorage.removeItem('inventoryData');
+            updateUI();
+
+            processBtn.disabled = true; loader.classList.remove('hidden'); btnText.textContent = '解析中...';
+            const results = await analyzeTextWithAI(text);
+            if (results) {
+                results.forEach(item => {
+                    const key = `${item.name}-${item.weight >= 40 ? 'L' : 'S'}`;
+                    inventory[key] = item;
+                });
+                aiInput.value = ''; updateUI(); showStatus('解析が完了しました', 'success');
+            }
+            processBtn.disabled = false; loader.classList.add('hidden'); btnText.textContent = 'AIで解析・更新';
+        });
+
+        document.getElementById('loadTestBtn').addEventListener('click', () => {
+            aiInput.value = `山田 太郎　090-1234-5678
+〒150-0001 東京都渋谷区神宮前4-12-10
+小葉酸菜　42斤を3樽、単価50円
+大玉酸菜　45斤を5樽、単価60円
+
+佐藤 花子　080-2345-6789
+〒530-0001 大阪府大阪市北区梅田2-5-25
+小葉酸菜　42斤を2樽、単価50円
+脆口酸菜　20斤を4樽、単価38円
+
+鈴木 一郎　070-3456-7890
+〒460-0008 愛知県名古屋市中区栄3-18-1
+大玉免切酸菜　50斤を6樽、単価55円
+
+高橋 美咲　090-8765-4321
+〒812-0011 福岡県福岡市博多区博多駅前1-9-3
+小葉酸菜　42斤を1樽、単価50円
+酸萝卜　40斤を2樽、単価45円
+
+田中 健二　080-9988-7766
+〒980-0811 宮城県仙台市青葉区一番町4-7-12
+脆口酸菜　20斤を5樽、単価38円`;
+
+            showStatus('テストデータを入力しました', 'success');
+        });
+
+        document.getElementById('resetTableBtn').addEventListener('click', () => { if (confirm('データを全削除しますか？')) { inventory = {}; updateUI(); } });
+        document.getElementById('clearInputBtn').addEventListener('click', () => aiInput.value = '');
+
+        document.getElementById('exportCsvBtn').addEventListener('click', () => {
+            let csv = "\uFEFF商品名,重量,規格,数量,単価,小計\n";
+            Object.values(inventory).forEach(i => { csv += `"${i.name}",${i.weight},${i.weight >= 40 ? '大樽' : '小樽'},${i.quantity},${i.price},${(i.quantity * i.price)}\n`; });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `在庫_${new Date().toLocaleDateString()}.csv`; a.click();
+        });
+
+        updateUI();
+    </script>
+</body>
+
+</html>
