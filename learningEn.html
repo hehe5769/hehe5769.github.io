@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语词汇 AI 高效学习器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Microsoft YaHei', sans-serif;
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen">
+
+    <div id="app" class="max-w-md mx-auto p-4 min-h-screen flex flex-col">
+        <header class="flex justify-between items-center py-4">
+            <div>
+                <h1 class="text-xl font-bold text-slate-800">Vocab Master</h1>
+                <p id="statsDisplay" class="text-xs text-slate-500 font-medium">Mastered: 0 | Learning: 0</p>
+            </div>
+            <div class="flex gap-2">
+                <select id="levelSelect"
+                    class="bg-white border rounded-lg px-2 py-1 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    <option value="GRE">GRE</option>
+                    <option value="TOEFL" selected>TOEFL</option>
+                    <option value="IELTS">IELTS</option>
+                    <option value="CET6">CET-6</option>
+                </select>
+                <button id="showHistory" class="p-2 bg-white rounded-lg shadow-sm border hover:bg-gray-50">📊</button>
+            </div>
+        </header>
+
+        <div class="mb-6">
+            <div class="flex justify-between text-[10px] text-slate-400 mb-1 px-1">
+                <span class="uppercase tracking-wider font-semibold">Session Progress</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div id="progressBar" class="bg-blue-600 h-full rounded-full transition-all duration-500 w-0"></div>
+            </div>
+        </div>
+
+        <div id="studyView" class="flex-1 flex flex-col">
+            <div id="cardContainer" class="word-card w-full aspect-[3/4] mb-8">
+                <div class="card-inner relative w-full h-full shadow-xl rounded-[2rem] bg-white">
+
+                    <div
+                        class="card-face card-front absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                        <span class="text-[10px] text-blue-400 mb-4 uppercase tracking-[0.2em] font-bold">Recall the
+                            meaning</span>
+                        <div id="frontWord" class="text-5xl font-bold text-slate-800 break-words w-full">...</div>
+                        <div class="mt-12 text-blue-500 animate-bounce">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                        </div>
+                        <p class="text-slate-400 text-xs mt-4">Tap to flip</p>
+                    </div>
+
+                    <div
+                        class="card-face card-back absolute inset-0 flex flex-col p-8 bg-white rounded-[2rem] overflow-y-auto">
+                        <div id="backIPA" class="text-blue-500 text-sm font-mono text-center mb-1"></div>
+                        <div id="backWord"
+                            class="text-3xl font-bold text-slate-800 text-center mb-6 border-b border-slate-100 pb-4">
+                        </div>
+
+                        <div class="space-y-5">
+                            <div>
+                                <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                    Definition</h4>
+                                <p id="meaning" class="text-lg text-slate-700 font-medium leading-tight"></p>
+                            </div>
+
+                            <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                                <h4 class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-2">AI
+                                    Context</h4>
+                                <p id="exEn" class="text-slate-800 mb-2 leading-relaxed italic"></p>
+                                <p id="exCn" class="text-slate-500 text-sm"></p>
+                            </div>
+                        </div>
+
+                        <button id="speakBtn"
+                            class="mt-auto self-center flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-bold transition-transform active:scale-95 shadow-lg">
+                            <span>🔊</span> Pronounce
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="controlGroup"
+                class="grid grid-cols-2 gap-4 opacity-0 pointer-events-none transition-all duration-300 translate-y-4">
+                <button id="failBtn"
+                    class="flex flex-col items-center justify-center py-4 bg-white text-rose-500 rounded-2xl border-2 border-rose-50 shadow-sm hover:border-rose-200">
+                    <span class="text-lg font-bold">Forgot</span>
+                    <span class="text-[10px] uppercase opacity-60">Review later</span>
+                </button>
+                <button id="passBtn"
+                    class="flex flex-col items-center justify-center py-4 bg-white text-emerald-500 rounded-2xl border-2 border-emerald-50 shadow-sm hover:border-emerald-200">
+                    <span class="text-lg font-bold">Got it</span>
+                    <span class="text-[10px] uppercase opacity-60">Next word</span>
+                </button>
+            </div>
+        </div>
+
+        <section id="historyView" class="hidden flex-1">
+            <div class="flex items-center justify-between mb-6">
+                <button id="backBtn" class="text-blue-600 font-bold flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                            clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <h2 class="font-bold text-slate-800">Hard Words</h2>
+                <button id="clearBtn" class="text-xs text-rose-400 font-bold">CLEAR</button>
+            </div>
+            <div id="historyList" class="space-y-3 pb-8"></div>
+        </section>
+    </div>
+
+    <div id="globalLoader" class="fixed inset-0 bg-white/95 z-50 flex flex-col items-center justify-center hidden">
+        <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-4 text-blue-600 font-bold tracking-widest text-xs uppercase">AI Tutor Generating...</p>
+    </div>
+
+    <script type="module">
+        // 建议在正式环境中使用环境变量
+        const apiKey = "AIzaSyD52sNOXplSIh2yS9QGbzWNymvcFwApkhE";
+
+        const dictionary = {
+            TOEFL: ["subsidize", "resilient", "proliferation", "paradigm", "mitigate", "incentive", "fluctuate", "empirical", "deteriorate", "consensus"],
+            GRE: ["anomalous", "cacophony", "enervate", "garrulous", "loquacious", "misanthrope", "obdurate", "philanthropic", "venerate", "waver"],
+            IELTS: ["sustainable", "significant", "prevalent", "noteworthy", "infrastructure", "hazardous", "feasible", "detrimental", "ambiguous", "advantageous"],
+            CET6: ["acknowledge", "boundary", "complement", "deprive", "eliminate", "fostering", "guarantee", "hospitality", "incidentally", "justification"]
+        };
+
+        let state = {
+            level: 'TOEFL',
+            currentWord: null,
+            isFlipped: false,
+            records: JSON.parse(localStorage.getItem('en_vocab_records') || '{}'),
+            sessionCount: 0
+        };
+
+        const els = {
+            container: document.getElementById('cardContainer'),
+            studyView: document.getElementById('studyView'),
+            historyView: document.getElementById('historyView'),
+            frontWord: document.getElementById('frontWord'),
+            backWord: document.getElementById('backWord'),
+            backIPA: document.getElementById('backIPA'),
+            meaning: document.getElementById('meaning'),
+            exEn: document.getElementById('exEn'),
+            exCn: document.getElementById('exCn'),
+            controls: document.getElementById('controlGroup'),
+            passBtn: document.getElementById('passBtn'),
+            failBtn: document.getElementById('failBtn'),
+            loader: document.getElementById('globalLoader'),
+            stats: document.getElementById('statsDisplay'),
+            progress: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            historyList: document.getElementById('historyList'),
+            level: document.getElementById('levelSelect'),
+            clearBtn: document.getElementById('clearBtn')
+        };
+
+        async function fetchWordAI(word) {
+            const prompt = `You are an English expert. For the word "${word}", return a JSON object (no other text):
+            {"ipa": "/phonetic transcription/", "meaning": "Chinese meaning with word class", "exampleEn": "A natural, high-level example sentence", "exampleCn": "Chinese translation of the example"}`;
+
+            try {
+                // 使用 gemma-3-27b-it 或 gemma-3-12b-it
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${apiKey}`;
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.1, maxOutputTokens: 250 }
+                    })
+                });
+
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error?.message || 'API Error');
+
+                let text = result.candidates[0].content.parts[0].text;
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                return JSON.parse(jsonMatch[0]);
+
+            } catch (err) {
+                console.error(err);
+                return {
+                    ipa: "/.../",
+                    meaning: "AI 响应异常",
+                    exampleEn: "Please check your network or API key configuration.",
+                    exampleCn: "请检查网络或 API Key 配置。"
+                };
+            }
+        }
+
+        async function nextWord() {
+            state.isFlipped = false;
+            els.container.classList.remove('card-flipped');
+            els.controls.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            els.loader.classList.remove('hidden');
+
+            const learningWords = Object.keys(state.records).filter(k => state.records[k].status === 'learning');
+            let word;
+
+            // 40% chance to show a word you previously forgot
+            if (learningWords.length > 0 && Math.random() < 0.4) {
+                word = learningWords[Math.floor(Math.random() * learningWords.length)];
+            } else {
+                const list = dictionary[state.level];
+                word = list[Math.floor(Math.random() * list.length)];
+            }
+
+            const data = await fetchWordAI(word);
+            state.currentWord = { word, ...data };
+
+            els.frontWord.textContent = word;
+            els.backWord.textContent = word;
+            els.backIPA.textContent = data.ipa;
+            els.meaning.textContent = data.meaning;
+            els.exEn.textContent = data.exampleEn;
+            els.exCn.textContent = data.exampleCn;
+
+            els.loader.classList.add('hidden');
+            updateUI();
+        }
+
+        function handleFeedback(isPositive) {
+            const word = state.currentWord.word;
+            state.records[word] = {
+                status: isPositive ? 'mastered' : 'learning',
+                data: state.currentWord,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('en_vocab_records', JSON.stringify(state.records));
+            state.sessionCount++;
+            nextWord();
+        }
+
+        function updateUI() {
+            const all = Object.values(state.records);
+            const mastered = all.filter(r => r.status === 'mastered').length;
+            const learning = all.filter(r => r.status === 'learning').length;
+            els.stats.textContent = `Mastered: ${mastered} | Learning: ${learning}`;
+
+            const progress = Math.min((state.sessionCount / 10) * 100, 100);
+            els.progress.style.width = `${progress}%`;
+            els.progressText.textContent = `${Math.round(progress)}% (Session)`;
+        }
+
+        function renderHistory() {
+            els.historyList.innerHTML = '';
+            const learningOnes = Object.values(state.records).filter(r => r.status === 'learning');
+
+            if (learningOnes.length === 0) {
+                els.historyList.innerHTML = '<div class="text-center py-20 text-slate-400 text-sm italic">No words in your review list yet. Great job!</div>';
+                return;
+            }
+
+            learningOnes.sort((a, b) => b.timestamp - a.timestamp).forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center";
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-baseline gap-2">
+                            <span class="font-bold text-slate-800 text-lg">${item.data.word}</span>
+                            <span class="text-xs font-mono text-blue-400">${item.data.ipa}</span>
+                        </div>
+                        <p class="text-sm text-slate-500 mt-1">${item.data.meaning}</p>
+                    </div>
+                    <button class="ml-4 text-slate-300 hover:text-rose-500 transition-colors" onclick="window.deleteRecord('${item.data.word}')">✕</button>
+                `;
+                els.historyList.appendChild(div);
+            });
+        }
+
+        // --- Interaction ---
+        els.container.addEventListener('click', () => {
+            if (!state.isFlipped) {
+                state.isFlipped = true;
+                els.container.classList.add('card-flipped');
+                els.controls.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }
+        });
+
+        els.passBtn.addEventListener('click', (e) => { e.stopPropagation(); handleFeedback(true); });
+        els.failBtn.addEventListener('click', (e) => { e.stopPropagation(); handleFeedback(false); });
+
+        document.getElementById('speakBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const u = new SpeechSynthesisUtterance(state.currentWord.word);
+            u.lang = 'en-US';
+            u.rate = 0.9;
+            window.speechSynthesis.speak(u);
+        });
+
+        document.getElementById('showHistory').addEventListener('click', () => {
+            renderHistory();
+            els.studyView.classList.add('hidden');
+            els.historyView.classList.remove('hidden');
+        });
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            els.historyView.classList.add('hidden');
+            els.studyView.classList.remove('hidden');
+        });
+
+        els.level.addEventListener('change', (e) => {
+            state.level = e.target.value;
+            nextWord();
+        });
+
+        els.clearBtn.addEventListener('click', () => {
+            if (confirm('Clear all hard words?')) {
+                state.records = {};
+                localStorage.removeItem('en_vocab_records');
+                renderHistory();
+                updateUI();
+            }
+        });
+
+        window.deleteRecord = (word) => {
+            delete state.records[word];
+            localStorage.setItem('en_vocab_records', JSON.stringify(state.records));
+            renderHistory();
+            updateUI();
+        };
+
+        // Initialize
+        nextWord();
+    </script>
+</body>
+
+</html>

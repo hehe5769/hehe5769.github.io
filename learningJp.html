@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语AI高效学习器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans JP', 'Microsoft YaHei', sans-serif;
+        }
+
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <div id="app" class="max-w-md mx-auto p-4 min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="flex justify-between items-center py-4">
+            <div>
+                <h1 class="text-xl font-bold text-gray-800">高效背词</h1>
+                <p id="statsDisplay" class="text-xs text-gray-500 font-medium">已掌握: 0 | 待加强: 0</p>
+            </div>
+            <div class="flex gap-2">
+                <select id="levelSelect" class="bg-white border rounded-lg px-2 py-1 text-sm shadow-sm">
+                    <option value="N1">JLPT N1</option>
+                    <option value="N2" selected>JLPT N2</option>
+                </select>
+                <button id="showHistory" class="p-2 bg-white rounded-lg shadow-sm">📊</button>
+            </div>
+        </header>
+
+        <!-- Progress Container -->
+        <div class="mb-6">
+            <div class="flex justify-between text-[10px] text-gray-400 mb-1 px-1">
+                <span>当前进度</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 h-1 rounded-full">
+                <div id="progressBar" class="bg-indigo-500 h-1 rounded-full transition-all duration-300"
+                    style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Main Flashcard Area -->
+        <div id="studyView" class="flex-1 flex flex-col">
+            <div id="cardContainer" class="word-card w-full aspect-[3/4] mb-8 group">
+                <div class="card-inner relative w-full h-full shadow-2xl rounded-3xl bg-white">
+
+                    <!-- Front (Active Recall) -->
+                    <div
+                        class="card-face card-front absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                        <span class="text-xs text-gray-300 mb-4 uppercase tracking-widest">思考其中文含义</span>
+                        <div id="frontWord" class="text-6xl font-bold text-slate-800">...</div>
+                        <div class="mt-12 text-indigo-500 animate-bounce">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-2">点击翻转卡片</p>
+                    </div>
+
+                    <!-- Back (The Answer) -->
+                    <div
+                        class="card-face card-back absolute inset-0 flex flex-col p-6 bg-white rounded-3xl overflow-y-auto">
+                        <div id="backFurigana" class="text-indigo-500 text-lg font-medium text-center mb-1"></div>
+                        <div id="backWord" class="text-4xl font-bold text-slate-800 text-center mb-4 border-b pb-4">
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="text-xs font-bold text-gray-400 uppercase">释义</h4>
+                                <p id="meaning" class="text-xl text-slate-700 leading-tight"></p>
+                            </div>
+
+                            <div class="bg-indigo-50 p-4 rounded-2xl">
+                                <h4 class="text-xs font-bold text-indigo-300 uppercase mb-2">AI 例句</h4>
+                                <p id="exJp" class="text-slate-800 mb-2 leading-relaxed font-medium"></p>
+                                <p id="exCn" class="text-slate-500 text-sm"></p>
+                            </div>
+                        </div>
+
+                        <button id="speakBtn"
+                            class="mt-auto self-center p-3 rounded-full bg-indigo-100 text-indigo-600 mb-2">
+                            🔊 播放发音
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Learning Actions (Shown only when flipped) -->
+            <div id="controlGroup"
+                class="grid grid-cols-2 gap-4 opacity-0 pointer-events-none transition-opacity duration-300">
+                <button id="failBtn"
+                    class="flex flex-col items-center justify-center py-4 bg-red-50 text-red-600 rounded-2xl border-2 border-red-100 hover:bg-red-100">
+                    <span class="text-xl font-bold">忘了</span>
+                    <span class="text-[10px]">重新学习</span>
+                </button>
+                <button id="passBtn"
+                    class="flex flex-col items-center justify-center py-4 bg-emerald-50 text-emerald-600 rounded-2xl border-2 border-emerald-100 hover:bg-emerald-100">
+                    <span class="text-xl font-bold">认识</span>
+                    <span class="text-[10px]">下一张</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Notebook View -->
+        <section id="historyView" class="hidden flex-1">
+            <div class="flex items-center justify-between mb-6">
+                <button id="backBtn" class="text-indigo-600 font-bold flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                            clip-rule="evenodd" />
+                    </svg> 返回学习
+                </button>
+                <h2 class="font-bold text-gray-800">收藏夹 / 难词本</h2>
+                <button id="clearBtn" class="text-xs text-red-400">清空</button>
+            </div>
+            <div id="historyList" class="space-y-3"></div>
+        </section>
+    </div>
+
+    <!-- Loading State -->
+    <div id="globalLoader" class="fixed inset-0 bg-white/90 z-50 flex flex-col items-center justify-center hidden">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent"></div>
+        <p class="mt-4 text-indigo-600 font-medium tracking-widest">AI 老师正在准备单词...</p>
+    </div>
+
+    <script type="module">
+        const apiKey = "AIzaSyD52sNOXplSIh2yS9QGbzWNymvcFwApkhE";
+
+        const dictionary = {
+            N2: ["効率", "普及", "貢献", "反映", "克服", "矛盾", "維持", "慎重", "謙虚", "迅速", "妥協", "把握"],
+            N1: ["一躍", "畏怖", "婉曲", "乖離", "概念", "享受", "真髄", "脆弱", "還元", "毅然", "懸念", "希薄"]
+        };
+
+        let state = {
+            level: 'N2',
+            currentWord: null,
+            isFlipped: false,
+            // 存储结构：{ word, status: 'mastered' | 'learning', data }
+            records: JSON.parse(localStorage.getItem('jp_pro_records') || '{}'),
+            sessionCount: 0
+        };
+
+        const els = {
+            container: document.getElementById('cardContainer'),
+            studyView: document.getElementById('studyView'),
+            historyView: document.getElementById('historyView'),
+            frontWord: document.getElementById('frontWord'),
+            backWord: document.getElementById('backWord'),
+            backFurigana: document.getElementById('backFurigana'),
+            meaning: document.getElementById('meaning'),
+            exJp: document.getElementById('exJp'),
+            exCn: document.getElementById('exCn'),
+            controls: document.getElementById('controlGroup'),
+            passBtn: document.getElementById('passBtn'),
+            failBtn: document.getElementById('failBtn'),
+            loader: document.getElementById('globalLoader'),
+            stats: document.getElementById('statsDisplay'),
+            progress: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            historyList: document.getElementById('historyList'),
+            level: document.getElementById('levelSelect')
+        };
+
+        async function fetchWordAI(word) {
+            const prompt = `你是一个日语专家。请对单词 "${word}" 返回以下 JSON 格式的内容，不要输出任何其他解释文字：
+    {"furigana": "单词的假名", "meaning": "中文含义", "exampleJp": "地道的日文例句", "exampleCn": "例句的中文翻译"}`;
+
+            try {
+                // 使用额度最充足的 Gemma 3 27B 模型
+                // 接口路径必须使用 v1beta，因为 Gemma 模型属于实验性/较新模型
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${apiKey}`;
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: {
+                            // Gemma 有时比较话多，强制设置 temperature 较低以获得更稳定的 JSON
+                            temperature: 0.1,
+                            topP: 0.95,
+                            maxOutputTokens: 200
+                        }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error("Gemma API 报错:", result);
+                    throw new Error(`请求失败: ${response.status} - ${result.error?.message || '未知错误'}`);
+                }
+
+                // 提取文本并清理 JSON
+                let text = result.candidates[0].content.parts[0].text;
+
+                // Gemma 可能会输出 Markdown 格式，这里做强力清理
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                } else {
+                    throw new Error("未能解析到合法的 JSON 格式");
+                }
+
+            } catch (err) {
+                console.error("捕捉到错误:", err);
+                return {
+                    furigana: "エラー",
+                    meaning: "Gemma 响应异常",
+                    exampleJp: "请检查控制台是否报 403 或模型名错误。",
+                    exampleCn: "如果 27b 不行，可以尝试换成 gemma-3-12b-it"
+                };
+            }
+        }
+
+
+
+
+
+        async function nextWord() {
+            state.isFlipped = false;
+            els.container.classList.remove('card-flipped');
+            els.controls.classList.add('opacity-0', 'pointer-events-none');
+            els.loader.classList.remove('hidden');
+
+            // 智能选择逻辑：40% 几率出现之前“忘了”的词
+            const learningWords = Object.keys(state.records).filter(k => state.records[k].status === 'learning');
+            let word;
+            if (learningWords.length > 0 && Math.random() < 0.4) {
+                word = learningWords[Math.floor(Math.random() * learningWords.length)];
+            } else {
+                const list = dictionary[state.level];
+                word = list[Math.floor(Math.random() * list.length)];
+            }
+
+            const data = await fetchWordAI(word);
+            state.currentWord = { word, ...data };
+
+            // Render
+            els.frontWord.textContent = word;
+            els.backWord.textContent = word;
+            els.backFurigana.textContent = data.furigana;
+            els.meaning.textContent = data.meaning;
+            els.exJp.textContent = data.exampleJp;
+            els.exCn.textContent = data.exampleCn;
+
+            els.loader.classList.add('hidden');
+            updateUI();
+        }
+
+        function handleFeedback(isPositive) {
+            const word = state.currentWord.word;
+            state.records[word] = {
+                status: isPositive ? 'mastered' : 'learning',
+                data: state.currentWord,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('jp_pro_records', JSON.stringify(state.records));
+            state.sessionCount++;
+            nextWord();
+        }
+
+        function updateUI() {
+            const all = Object.values(state.records);
+            const mastered = all.filter(r => r.status === 'mastered').length;
+            const learning = all.filter(r => r.status === 'learning').length;
+            els.stats.textContent = `已掌握: ${mastered} | 待加强: ${learning}`;
+
+            const progress = Math.min((state.sessionCount / 10) * 100, 100);
+            els.progress.style.width = `${progress}%`;
+            els.progressText.textContent = `${Math.round(progress)}% (本次任务)`;
+        }
+
+        function renderHistory() {
+            els.historyList.innerHTML = '';
+            const learningOnes = Object.values(state.records).filter(r => r.status === 'learning');
+
+            if (learningOnes.length === 0) {
+                els.historyList.innerHTML = '<div class="text-center py-10 text-gray-400">目前没有难词，太棒了！</div>';
+                return;
+            }
+
+            learningOnes.sort((a, b) => b.timestamp - a.timestamp).forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-400";
+                div.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="font-bold text-lg">${item.data.word}</span>
+                            <span class="text-xs text-indigo-500 ml-2">${item.data.furigana}</span>
+                            <p class="text-sm text-gray-600 mt-1">${item.data.meaning}</p>
+                        </div>
+                        <button class="text-gray-300 hover:text-red-500" onclick="window.deleteRecord('${item.data.word}')">✕</button>
+                    </div>
+                `;
+                els.historyList.appendChild(div);
+            });
+        }
+
+        // --- Listeners ---
+        els.container.addEventListener('click', () => {
+            if (!state.isFlipped) {
+                state.isFlipped = true;
+                els.container.classList.add('card-flipped');
+                els.controls.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        els.passBtn.addEventListener('click', (e) => { e.stopPropagation(); handleFeedback(true); });
+        els.failBtn.addEventListener('click', (e) => { e.stopPropagation(); handleFeedback(false); });
+
+        document.getElementById('speakBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const u = new SpeechSynthesisUtterance(state.currentWord.word);
+            u.lang = 'ja-JP';
+            window.speechSynthesis.speak(u);
+        });
+
+        document.getElementById('showHistory').addEventListener('click', () => {
+            renderHistory();
+            els.studyView.classList.add('hidden');
+            els.historyView.classList.remove('hidden');
+        });
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            els.historyView.classList.add('hidden');
+            els.studyView.classList.remove('hidden');
+        });
+
+        els.level.addEventListener('change', (e) => {
+            state.level = e.target.value;
+            nextWord();
+        });
+
+        window.deleteRecord = (word) => {
+            delete state.records[word];
+            localStorage.setItem('jp_pro_records', JSON.stringify(state.records));
+            renderHistory();
+            updateUI();
+        };
+
+        // Init
+        nextWord();
+    </script>
+</body>
+
+</html>
