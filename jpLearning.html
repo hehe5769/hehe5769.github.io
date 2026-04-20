@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JLPT N1 学习</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600&display=swap');
+
+        body {
+            font-family: 'Noto Sans JP', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #fffaf5 0%, #f7f7f7 100%);
+        }
+
+        .jp-serif {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .card-shadow {
+            box-shadow: 0 12px 28px -18px rgba(0, 0, 0, 0.35);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #dc2626;
+            color: #dc2626;
+        }
+
+        .status-btn {
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .status-unknown { border: 1px solid #d1d5db; color: #6b7280; }
+        .status-vague { border: 1px solid #f59e0b; color: #d97706; background-color: #fffbeb; }
+        .status-known { border: 1px solid #10b981; color: #059669; background-color: #ecfdf5; }
+
+        .item-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px -20px rgba(0, 0, 0, 0.45);
+        }
+
+        .detail-box {
+            display: none;
+        }
+
+        .item-card.expanded .detail-box {
+            display: block;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <nav class="bg-white/90 backdrop-blur border-b sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-red-600 jp-serif">JLPT N1 学习页</h1>
+                <p class="text-xs text-gray-500 mt-1">词汇与语法均从 CSV 读取，学习状态保存在本地浏览器</p>
+            </div>
+            <div class="flex space-x-4 text-sm font-medium overflow-x-auto">
+                <button onclick="switchTab('vocab')" id="btn-vocab" class="tab-btn tab-active whitespace-nowrap px-2 pb-1">词汇</button>
+                <button onclick="switchTab('grammar')" id="btn-grammar" class="tab-btn whitespace-nowrap px-2 pb-1">语法</button>
+                <button onclick="switchTab('review')" id="btn-review" class="tab-btn whitespace-nowrap px-2 pb-1">复习</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="tab-btn whitespace-nowrap px-2 pb-1">测验</button>
+                <button onclick="switchTab('plan')" id="btn-plan" class="tab-btn whitespace-nowrap px-2 pb-1">进度</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-4 mt-4">
+        <section id="section-vocab" class="tab-content">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div class="flex items-center space-x-2">
+                    <h2 class="text-xl font-bold border-l-4 border-red-500 pl-3">N1 词汇</h2>
+                    <span class="text-xs text-gray-400 font-normal">已扩充到 200 条</span>
+                </div>
+                <div class="relative w-full md:w-72">
+                    <input type="text" id="vocabSearch" placeholder="搜索汉字、假名或中文释义" class="w-full border rounded-full py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+            </div>
+            <div id="loadingState" class="text-sm text-gray-500 mb-4">正在读取 CSV...</div>
+            <div id="errorState" class="hidden mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"></div>
+            <div id="vocabList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </section>
+
+        <section id="section-grammar" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div class="flex items-center space-x-2">
+                    <h2 class="text-xl font-bold border-l-4 border-red-500 pl-3">N1 语法</h2>
+                    <span class="text-xs text-gray-400 font-normal">从 CSV 读取并支持复习</span>
+                </div>
+                <div class="relative w-full md:w-72">
+                    <input type="text" id="grammarSearch" placeholder="搜索句型、含义或接续" class="w-full border rounded-full py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+            </div>
+            <div id="grammarList" class="space-y-4"></div>
+        </section>
+
+        <section id="section-review" class="tab-content hidden">
+            <h2 class="text-xl font-bold border-l-4 border-orange-500 pl-3 mb-6">待复习内容</h2>
+
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-gray-700">词汇复习</h3>
+                    <span id="review-vocab-count" class="text-sm text-orange-600 font-medium">0</span>
+                </div>
+                <div id="reviewVocabEmpty" class="text-sm text-gray-400 hidden">当前没有待复习词汇。</div>
+                <div id="reviewVocabGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-gray-700">语法复习</h3>
+                    <span id="review-grammar-count" class="text-sm text-orange-600 font-medium">0</span>
+                </div>
+                <div id="reviewGrammarEmpty" class="text-sm text-gray-400 hidden">当前没有待复习语法。</div>
+                <div id="reviewGrammarList" class="space-y-4"></div>
+            </div>
+        </section>
+
+        <section id="section-quiz" class="tab-content hidden">
+            <div id="quiz-container" class="bg-white p-8 rounded-xl card-shadow text-center">
+                <div class="mb-4 text-sm text-gray-500 font-bold tracking-widest uppercase">Vocabulary Quiz</div>
+                <div id="quiz-question" class="text-4xl mb-8 jp-serif font-bold text-gray-900">...</div>
+                <div id="quiz-options" class="grid grid-cols-1 gap-3"></div>
+                <div id="quiz-feedback" class="mt-6 min-h-8 font-bold"></div>
+                <button onclick="loadQuiz()" class="mt-4 text-red-500 font-medium hover:underline">下一题 <i class="fas fa-arrow-right ml-1"></i></button>
+            </div>
+        </section>
+
+        <section id="section-plan" class="tab-content hidden">
+            <h2 class="text-xl font-bold border-l-4 border-red-500 pl-3 mb-6">学习进度</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>词汇掌握进度</span>
+                        <span id="vocab-progress-text">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                        <div id="vocab-progress-bar" class="bg-green-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                        <span class="text-sm font-medium">词汇总数</span>
+                        <span id="vocab-total-count" class="font-bold">0</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>语法掌握进度</span>
+                        <span id="grammar-progress-text">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                        <div id="grammar-progress-bar" class="bg-blue-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                        <span class="text-sm font-medium">语法总数</span>
+                        <span id="grammar-total-count" class="font-bold">0</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl card-shadow md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-3 bg-orange-50 rounded flex items-center justify-between">
+                            <span class="text-sm font-medium">待复习词汇</span>
+                            <span id="review-vocab-total" class="font-bold text-orange-600">0</span>
+                        </div>
+                        <div class="p-3 bg-orange-50 rounded flex items-center justify-between">
+                            <span class="text-sm font-medium">待复习语法</span>
+                            <span id="review-grammar-total" class="font-bold text-orange-600">0</span>
+                        </div>
+                        <div class="p-3 bg-red-50 rounded flex items-center justify-between">
+                            <span class="text-sm font-medium">总待复习数</span>
+                            <span id="review-total" class="font-bold text-red-600">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const STORAGE_KEY = 'jlpt_n1_learning_state_v2';
+
+        let vocabData = [];
+        let grammarData = [];
+        let learningState = loadLearningState();
+
+        function loadLearningState() {
+            try {
+                const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                return {
+                    vocab: raw.vocab || {},
+                    grammar: raw.grammar || {}
+                };
+            } catch {
+                return { vocab: {}, grammar: {} };
+            }
+        }
+
+        function saveLearningState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(learningState));
+        }
+
+        function parseCsvLine(line) {
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                const next = line[i + 1];
+
+                if (char === '"') {
+                    if (inQuotes && next === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    values.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+
+            values.push(current);
+            return values;
+        }
+
+        async function loadCsvData(path) {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`读取 ${path} 失败：${response.status}`);
+            }
+
+            const csvText = await response.text();
+            const lines = csvText
+                .replace(/^\uFEFF/, '')
+                .split(/\r?\n/)
+                .filter(line => line.trim());
+
+            if (lines.length <= 1) return [];
+
+            const headers = parseCsvLine(lines[0]);
+            return lines.slice(1).map(line => {
+                const values = parseCsvLine(line);
+                return headers.reduce((item, header, index) => {
+                    item[header] = values[index] ?? '';
+                    return item;
+                }, {});
+            });
+        }
+
+        function getStatus(type, key) {
+            return learningState[type][key] || 'unknown';
+        }
+
+        function setStatus(type, key, status) {
+            learningState[type][key] = status;
+            saveLearningState();
+            renderAll();
+        }
+
+        function createStatusButtons(type, key, status) {
+            return `
+                <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'unknown')" class="status-btn ${status === 'unknown' ? 'bg-gray-100 font-bold border-gray-400' : ''} status-unknown">不确定</button>
+                <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'vague')" class="status-btn ${status === 'vague' ? 'font-bold border-orange-400' : ''} status-vague">模糊</button>
+                <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'known')" class="status-btn ${status === 'known' ? 'font-bold border-green-400' : ''} status-known">已掌握</button>
+            `;
+        }
+
+        function escapeForAttr(value) {
+            return String(value).replace(/'/g, "\\'");
+        }
+
+        function renderVocabCard(v, container) {
+            const status = getStatus('vocab', v.kanji);
+            const card = document.createElement('div');
+            card.className = `item-card bg-white p-4 rounded-xl card-shadow flex flex-col cursor-pointer border-2 ${status === 'known' ? 'border-green-100' : (status === 'vague' ? 'border-orange-100' : 'border-transparent')}`;
+
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                card.classList.toggle('expanded');
+            });
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start gap-3">
+                    <div>
+                        <div class="text-[10px] text-red-500 font-bold mb-1 uppercase tracking-wider">${v.tag}</div>
+                        <div class="text-2xl font-bold jp-serif text-gray-900">${v.kanji}</div>
+                        <div class="text-sm text-gray-500">${v.kana}</div>
+                    </div>
+                    <div class="text-right text-gray-800 font-medium">${v.mean}</div>
+                </div>
+
+                <div class="detail-box mt-4 p-3 bg-gray-50 rounded-lg border-l-4 border-red-300">
+                    <p class="text-sm text-gray-700 jp-serif font-medium leading-relaxed">${v.example}</p>
+                    <p class="text-xs text-gray-500 mt-1">${v.ex_mean}</p>
+                </div>
+
+                <div class="flex border-t pt-4 mt-4 justify-between items-center">
+                    <div class="flex space-x-1">${createStatusButtons('vocab', v.kanji, status)}</div>
+                    <i class="fas fa-chevron-down text-gray-300"></i>
+                </div>
+            `;
+
+            container.appendChild(card);
+        }
+
+        function renderGrammarCard(g, container) {
+            const status = getStatus('grammar', g.pattern);
+            const card = document.createElement('div');
+            card.className = `item-card bg-white p-5 rounded-xl card-shadow border-l-4 ${status === 'known' ? 'border-green-500' : (status === 'vague' ? 'border-orange-400' : 'border-red-500')}`;
+
+            card.innerHTML = `
+                <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">${g.tag}</span>
+                            <h3 class="text-lg font-bold text-gray-800 jp-serif">${g.pattern}</h3>
+                        </div>
+                        <p class="text-sm text-blue-600 font-medium mb-1">接续：${g.rule}</p>
+                        <p class="text-gray-700 font-bold mb-3">含义：${g.mean}</p>
+                        <div class="bg-gray-50 p-4 rounded-lg text-sm text-gray-600 italic border border-gray-100">例句：${g.example}</div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 md:justify-end">${createStatusButtons('grammar', g.pattern, status)}</div>
+                </div>
+            `;
+
+            container.appendChild(card);
+        }
+
+        function renderVocabList(filter = '') {
+            const list = document.getElementById('vocabList');
+            list.innerHTML = '';
+
+            vocabData
+                .filter(v => v.kanji.includes(filter) || v.kana.includes(filter) || v.mean.includes(filter))
+                .forEach(v => renderVocabCard(v, list));
+        }
+
+        function renderGrammarList(filter = '') {
+            const list = document.getElementById('grammarList');
+            list.innerHTML = '';
+
+            grammarData
+                .filter(g => g.pattern.includes(filter) || g.mean.includes(filter) || g.rule.includes(filter))
+                .forEach(g => renderGrammarCard(g, list));
+        }
+
+        function renderReviewList() {
+            const reviewVocabGrid = document.getElementById('reviewVocabGrid');
+            const reviewGrammarList = document.getElementById('reviewGrammarList');
+            const reviewVocabEmpty = document.getElementById('reviewVocabEmpty');
+            const reviewGrammarEmpty = document.getElementById('reviewGrammarEmpty');
+
+            reviewVocabGrid.innerHTML = '';
+            reviewGrammarList.innerHTML = '';
+
+            const vocabToReview = vocabData.filter(v => {
+                const status = getStatus('vocab', v.kanji);
+                return status === 'unknown' || status === 'vague';
+            });
+
+            const grammarToReview = grammarData.filter(g => {
+                const status = getStatus('grammar', g.pattern);
+                return status === 'unknown' || status === 'vague';
+            });
+
+            document.getElementById('review-vocab-count').textContent = `${vocabToReview.length} 条`;
+            document.getElementById('review-grammar-count').textContent = `${grammarToReview.length} 条`;
+
+            if (vocabToReview.length) {
+                reviewVocabEmpty.classList.add('hidden');
+                vocabToReview.forEach(v => renderVocabCard(v, reviewVocabGrid));
+            } else {
+                reviewVocabEmpty.classList.remove('hidden');
+            }
+
+            if (grammarToReview.length) {
+                reviewGrammarEmpty.classList.add('hidden');
+                grammarToReview.forEach(g => renderGrammarCard(g, reviewGrammarList));
+            } else {
+                reviewGrammarEmpty.classList.remove('hidden');
+            }
+        }
+
+        function updateProgress() {
+            const vocabKnown = vocabData.filter(v => getStatus('vocab', v.kanji) === 'known').length;
+            const grammarKnown = grammarData.filter(g => getStatus('grammar', g.pattern) === 'known').length;
+            const vocabReview = vocabData.filter(v => getStatus('vocab', v.kanji) !== 'known').length;
+            const grammarReview = grammarData.filter(g => getStatus('grammar', g.pattern) !== 'known').length;
+
+            const vocabPercent = vocabData.length ? Math.round((vocabKnown / vocabData.length) * 100) : 0;
+            const grammarPercent = grammarData.length ? Math.round((grammarKnown / grammarData.length) * 100) : 0;
+
+            document.getElementById('vocab-progress-bar').style.width = `${vocabPercent}%`;
+            document.getElementById('vocab-progress-text').textContent = `${vocabPercent}%`;
+            document.getElementById('vocab-total-count').textContent = String(vocabData.length);
+
+            document.getElementById('grammar-progress-bar').style.width = `${grammarPercent}%`;
+            document.getElementById('grammar-progress-text').textContent = `${grammarPercent}%`;
+            document.getElementById('grammar-total-count').textContent = String(grammarData.length);
+
+            document.getElementById('review-vocab-total').textContent = String(vocabReview);
+            document.getElementById('review-grammar-total').textContent = String(grammarReview);
+            document.getElementById('review-total').textContent = String(vocabReview + grammarReview);
+        }
+
+        function renderAll() {
+            renderVocabList(document.getElementById('vocabSearch').value || '');
+            renderGrammarList(document.getElementById('grammarSearch').value || '');
+            renderReviewList();
+            updateProgress();
+        }
+
+        let currentCorrect = '';
+        window.loadQuiz = () => {
+            if (!vocabData.length) return;
+
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.textContent = '';
+
+            const question = vocabData[Math.floor(Math.random() * vocabData.length)];
+            currentCorrect = question.mean;
+            document.getElementById('quiz-question').textContent = question.kanji;
+
+            const options = [question.mean];
+            while (options.length < 4 && options.length < vocabData.length) {
+                const randomMean = vocabData[Math.floor(Math.random() * vocabData.length)].mean;
+                if (!options.includes(randomMean)) {
+                    options.push(randomMean);
+                }
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('quiz-options');
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full py-4 px-4 border-2 border-gray-100 rounded-xl hover:bg-red-50 hover:border-red-200 transition-all font-medium text-gray-700';
+                btn.textContent = opt;
+                btn.onclick = () => {
+                    if (opt === currentCorrect) {
+                        feedback.innerHTML = '<span class="text-green-500"><i class="fas fa-check-circle mr-1"></i> 回答正确</span>';
+                        setStatus('vocab', question.kanji, 'known');
+                        btn.className = 'w-full py-4 px-4 border-2 border-green-500 bg-green-50 rounded-xl transition-all font-bold text-green-700';
+                    } else {
+                        feedback.innerHTML = `<span class="text-red-500"><i class="fas fa-times-circle mr-1"></i> 回答错误（正确答案：${currentCorrect}）</span>`;
+                        setStatus('vocab', question.kanji, 'vague');
+                        btn.className = 'w-full py-4 px-4 border-2 border-red-500 bg-red-50 rounded-xl transition-all font-bold text-red-700';
+                    }
+                };
+                container.appendChild(btn);
+            });
+        };
+
+        window.updateStatus = (type, key, status) => {
+            setStatus(type, key, status);
+        };
+
+        window.switchTab = (tab) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('tab-active'));
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`btn-${tab}`).classList.add('tab-active');
+            if (tab === 'quiz') {
+                window.loadQuiz();
+            }
+        };
+
+        document.getElementById('vocabSearch').addEventListener('input', (e) => {
+            renderVocabList(e.target.value);
+        });
+
+        document.getElementById('grammarSearch').addEventListener('input', (e) => {
+            renderGrammarList(e.target.value);
+        });
+
+        async function bootstrap() {
+            try {
+                [vocabData, grammarData] = await Promise.all([
+                    loadCsvData('./data/jlpt_n1_vocab.csv'),
+                    loadCsvData('./data/jlpt_n1_grammar.csv')
+                ]);
+                document.getElementById('loadingState').classList.add('hidden');
+                renderAll();
+            } catch (error) {
+                document.getElementById('loadingState').classList.add('hidden');
+                const errorState = document.getElementById('errorState');
+                errorState.textContent = `${error.message}。请确认你是通过 http://localhost:8000/jpLearning.html 打开的。`;
+                errorState.classList.remove('hidden');
+                console.error(error);
+            }
+        }
+
+        bootstrap();
+    </script>
+</body>
+</html>
