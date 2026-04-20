@@ -61,7 +61,7 @@
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-4">
             <div>
                 <h1 class="text-2xl font-bold text-red-600 jp-serif">JLPT N1 学习页</h1>
-                <p class="text-xs text-gray-500 mt-1">词汇与语法均从 CSV 读取，学习状态保存在本地浏览器</p>
+                <p class="text-xs text-gray-500 mt-1">词汇和语法从 CSV 读取，状态保存在浏览器本地</p>
             </div>
             <div class="flex space-x-4 text-sm font-medium overflow-x-auto">
                 <button onclick="switchTab('vocab')" id="btn-vocab" class="tab-btn tab-active whitespace-nowrap px-2 pb-1">词汇</button>
@@ -78,7 +78,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <div class="flex items-center space-x-2">
                     <h2 class="text-xl font-bold border-l-4 border-red-500 pl-3">N1 词汇</h2>
-                    <span class="text-xs text-gray-400 font-normal">已扩充到 200 条</span>
+                    <span class="text-xs text-gray-400 font-normal">共 200 条</span>
                 </div>
                 <div class="relative w-full md:w-72">
                     <input type="text" id="vocabSearch" placeholder="搜索汉字、假名或中文释义" class="w-full border rounded-full py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
@@ -93,7 +93,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <div class="flex items-center space-x-2">
                     <h2 class="text-xl font-bold border-l-4 border-red-500 pl-3">N1 语法</h2>
-                    <span class="text-xs text-gray-400 font-normal">从 CSV 读取并支持复习</span>
+                    <span class="text-xs text-gray-400 font-normal">支持单独标记掌握状态</span>
                 </div>
                 <div class="relative w-full md:w-72">
                     <input type="text" id="grammarSearch" placeholder="搜索句型、含义或接续" class="w-full border rounded-full py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-400">
@@ -103,25 +103,13 @@
         </section>
 
         <section id="section-review" class="tab-content hidden">
-            <h2 class="text-xl font-bold border-l-4 border-orange-500 pl-3 mb-6">待复习内容</h2>
-
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="font-bold text-gray-700">词汇复习</h3>
-                    <span id="review-vocab-count" class="text-sm text-orange-600 font-medium">0</span>
-                </div>
-                <div id="reviewVocabEmpty" class="text-sm text-gray-400 hidden">当前没有待复习词汇。</div>
-                <div id="reviewVocabGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <h2 class="text-xl font-bold border-l-4 border-orange-500 pl-3 mb-6">词汇复习</h2>
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-gray-700">只显示“不确定”或“模糊”的词汇</h3>
+                <span id="review-vocab-count" class="text-sm text-orange-600 font-medium">0</span>
             </div>
-
-            <div>
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="font-bold text-gray-700">语法复习</h3>
-                    <span id="review-grammar-count" class="text-sm text-orange-600 font-medium">0</span>
-                </div>
-                <div id="reviewGrammarEmpty" class="text-sm text-gray-400 hidden">当前没有待复习语法。</div>
-                <div id="reviewGrammarList" class="space-y-4"></div>
-            </div>
+            <div id="reviewVocabEmpty" class="text-sm text-gray-400 hidden">当前没有需要复习的词汇。</div>
+            <div id="reviewVocabGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </section>
 
         <section id="section-quiz" class="tab-content hidden">
@@ -270,16 +258,16 @@
             renderAll();
         }
 
+        function escapeForAttr(value) {
+            return String(value).replace(/'/g, "\\'");
+        }
+
         function createStatusButtons(type, key, status) {
             return `
                 <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'unknown')" class="status-btn ${status === 'unknown' ? 'bg-gray-100 font-bold border-gray-400' : ''} status-unknown">不确定</button>
                 <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'vague')" class="status-btn ${status === 'vague' ? 'font-bold border-orange-400' : ''} status-vague">模糊</button>
                 <button onclick="updateStatus('${type}', '${escapeForAttr(key)}', 'known')" class="status-btn ${status === 'known' ? 'font-bold border-green-400' : ''} status-known">已掌握</button>
             `;
-        }
-
-        function escapeForAttr(value) {
-            return String(value).replace(/'/g, "\\'");
         }
 
         function renderVocabCard(v, container) {
@@ -359,38 +347,22 @@
 
         function renderReviewList() {
             const reviewVocabGrid = document.getElementById('reviewVocabGrid');
-            const reviewGrammarList = document.getElementById('reviewGrammarList');
             const reviewVocabEmpty = document.getElementById('reviewVocabEmpty');
-            const reviewGrammarEmpty = document.getElementById('reviewGrammarEmpty');
 
             reviewVocabGrid.innerHTML = '';
-            reviewGrammarList.innerHTML = '';
 
             const vocabToReview = vocabData.filter(v => {
                 const status = getStatus('vocab', v.kanji);
                 return status === 'unknown' || status === 'vague';
             });
 
-            const grammarToReview = grammarData.filter(g => {
-                const status = getStatus('grammar', g.pattern);
-                return status === 'unknown' || status === 'vague';
-            });
-
             document.getElementById('review-vocab-count').textContent = `${vocabToReview.length} 条`;
-            document.getElementById('review-grammar-count').textContent = `${grammarToReview.length} 条`;
 
             if (vocabToReview.length) {
                 reviewVocabEmpty.classList.add('hidden');
                 vocabToReview.forEach(v => renderVocabCard(v, reviewVocabGrid));
             } else {
                 reviewVocabEmpty.classList.remove('hidden');
-            }
-
-            if (grammarToReview.length) {
-                reviewGrammarEmpty.classList.add('hidden');
-                grammarToReview.forEach(g => renderGrammarCard(g, reviewGrammarList));
-            } else {
-                reviewGrammarEmpty.classList.remove('hidden');
             }
         }
 
