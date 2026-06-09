@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>みんなのいえ 日本語教室 | 無料日本語教室・予約システム</title>
+
+    <!-- SEO 検索エンジン対策メタタグ -->
+    <meta name="description"
+        content="埼玉県ふじみ野市の無料日本語教室「みんなのいえ（一般社団法人 多文化共生推進プロジェクト）」の公式ホームページです。外国人のためのやさしい日本語クラスや会話サロンを開催中。簡単ネット予約システムからいつでもお申し込みいただけます。" />
+    <meta name="keywords" content="みんなのいえ,ふじみ野みんなの家,予約システム,無料日本語教室,外国人,日本語学習,ふじみ野市,やさしい日本語,多文化共生推進プロジェクト" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- SNSシェア用 OGPタグ -->
+    <meta property="og:title" content="みんなのいえ 日本語教室 | 無料日本語教室・予約システム" />
+    <meta property="og:description" content="埼玉県ふじみ野市の無料日本語教室。外国人のためのクラスを簡単ネット予約システムで受付中！" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="みんなのいえ 日本語教室" />
+
+    <!-- Google 検索確認用メタタグ (サーチコンソール連携用) -->
+    <meta name="google-site-verification" content="l2f1eOXDufotvW6oiEz9kI2mh7rRDE_hJbaytXLdYHQ" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Sansom+Noto+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Kiwi Maru', sans-serif;
+        }
+
+        .font-friendly {
+            font-family: 'Kiwi Maru', sans-serif;
+        }
+
+        /* スムーススクロール */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ボタンのぷるぷるアニメーション（目立たせる用） */
+        @keyframes pulse-gentle {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .animate-pulse-gentle {
+            animation: pulse-gentle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-[#FFFDF9] text-gray-800 flex flex-col min-h-screen">
+
+    <!-- 多言語テキスト定義 (JavaScriptで切り替え) -->
+    <span id="lang-data" class="hidden"
+        data-ja='{"home":"ホーム","about":"教室について","classes":"クラス案内","access":"アクセス","faq":"よくある質問","contact":"お問い合わせ","hero-title":"みんなのいえ 日本語教室","hero-subtitle":"公的で安心、外国人のための無料日本語教室（予約システム受付中）","hero-desc":"「みんなのいえ（一般社団法人 多文化共生推進プロジェクト）」は、ふじみ野市に住む外国人のための公的な無料日本語教室です。地域と連携し、安心して楽しく日本語を学べる環境を提供しています。便利な予約システムから24時間いつでもクラスの予約が可能です。","btn-more":"詳しくみる","btn-join":"参加を申し込む","btn-reserve":"クラスを予約する（無料）","reserve-note":"※ 予約システムのサーバー起動に約30秒ほど時間がかかる場合があります。ページが開くまでそのまま少々お待ちください。","about-title":"教室について","about-desc1":"「みんなのいえ」は、一般社団法人 多文化共生推進プロジェクトが運営する安心の無料日本語教室です。日本語の勉強だけでなく、地域での生活情報も得られます。","about-desc2":"研修を受けたやさしいボランティア講師たちが、あなたのレベル（初心者から日常会話まで）に合わせて丁寧にサポートします。","feature1-title":"やさしい日本語","feature1-desc":"むずかしい言葉は使いません。外国人の方でも日常会話からすぐにスタートできます。","feature2-title":"公的なサポート","feature2-desc":"行政や地域コミュニティと連携しているため、生活相談や情報収集もできて安心です。","feature3-title":"参加費は無料","feature3-desc":"すべてのクラス・イベントに無料で参加できます。ネット予約システムから簡単にお申し込みいただけます。","class-title":"クラス案内","class-intro":"スケジュールや日本語のレベルに合わせて、お好きなクラスを予約システムからお選びください。","class1-name":"にちようクラス（日曜）","class1-time":"毎週日曜日 10:00 - 12:00","class1-desc":"日常会話を中心に、買い物や病院、役所などで使う実践的な日本語を練習します。","class2-name":"すいようクラス（水曜）","class2-time":"毎週水曜日 14:00 - 15:30","class2-desc":"初心者向けクラス。ひらがな、カタカナ、かんたんな挨拶表現から丁寧に学びます。","class3-name":"おしゃべりカフェ","class3-time":"第2・第4土曜日 13:00 - 15:00","class3-desc":"自由なテーマでフリートーク。お茶を飲みながら、地域の人々や他の外国人と楽しくおしゃべりします。","price-info":"参加費：無料 (0円)","access-title":"アクセス・場所","access-place":"場所：みんなのいえ （一般社団法人 多文化共生推進プロジェクト）","access-address":"住所：埼玉県ふじみ野市亀久保2-9-34","access-train":"受付TEL：090-2620-3873（火・木・土・日）","contact-title":"お問い合わせ","contact-label-name":"お名前","contact-label-email":"メールアドレス","contact-label-msg":"メッセージ / 質問したいこと","contact-btn-submit":"送信する","contact-success":"メッセージを送信しました！ご連絡をお待ちください。","footer-rights":"© 2026 みんなのいえ 日本語教室. All rights reserved.","badge-reserve":"ネットでかんたん予約！"}'
+        data-en='{"home":"Home","about":"About","classes":"Classes","access":"Access","faq":"FAQ","contact":"Contact","hero-title":"Minna no Ie","hero-subtitle":"An official, free Japanese language class for foreigners in Fujimino","hero-desc":"\"Minna no Ie\" (Multicultural Coexistence Promotion Project) is a public, free Japanese class supported by the community in Fujimino. We provide a safe, warm environment for foreigners. You can easily book classes anytime using our online booking system.","btn-more":"Read More","btn-join":"Join Us","btn-reserve":"Book a Class (Free)","reserve-note":"* The booking system server may take about 30 seconds to start. Please wait a moment, it will open automatically.","about-title":"About Us","about-desc1":"\"Minna no Ie\" is a trusted, publicly supported free Japanese class. Here, you can study Japanese and also get local living information.","about-desc2":"Trained volunteer teachers will kindly guide you according to your level. Beginners and foreign residents are very welcome!","feature1-title":"Easy Japanese","feature1-desc":"We do not use difficult words. Foreigners can start learning from everyday conversation easily.","feature2-title":"Public Support","feature2-desc":"As an official program in Fujimino, we can assist with living inquiries and connect you with local services.","feature3-title":"Completely Free","feature3-desc":"There is no tuition fee. All classes are free of charge. You can easily book via our reservation system.","class-title":"Our Classes","class-intro":"Choose a class that fits your schedule and Japanese level from our booking system.","class1-name":"Sunday Class","class1-time":"Every Sunday 10:00 - 12:00","class1-desc":"Focused on daily conversation. Practice Japanese for shopping, hospitals, and public services.","class2-name":"Wednesday Class","class2-time":"Every Wednesday 14:00 - 15:30","class2-desc":"For absolute beginners. Learn Hiragana, Katakana, and basic greetings.","class3-name":"Talking Cafe","class3-time":"2nd & 4th Saturday 13:00 - 15:00","class3-desc":"Free talk based on friendly topics. Chat with locals while enjoying tea and refreshments.","price-info":"Fee: Free (0 JPY)","access-title":"Access & Location","access-place":"Venue: Minna no Ie (Multicultural Coexistence Promotion Project)","access-address":"Address: 2-9-34 Kamekubo, Fujimino-shi, Saitama","access-train":"Inquiry TEL: 090-2620-3873 (Tue, Thu, Sat, Sun)","contact-title":"Contact Us","contact-label-name":"Name","contact-label-email":"Email Address","contact-label-msg":"Message / Questions","contact-btn-submit":"Send Message","contact-success":"Thank you! Your message has been sent. We will get back to you soon.","footer-rights":"© 2026 Minna no Ie Japanese Class. All rights reserved.","badge-reserve":"Easy Online Booking!"}'
+        data-easy='{"home":"ほーむ","about":"きょうしつ について","classes":"くらす の あんない","access":"ばしょ","faq":"よくある しつもん","contact":"れんらくする","hero-title":"みんなのいえ にほんごきょうしつ","hero-subtitle":"がいこくじん の ための むりょう（０えん）にほんごきょうしつ","hero-desc":"「みんなのいえ（一般社団法人 多文化共生推進プロジェクト）」は、まちの むりょうの にほんごきょうしつ です。あんしんして たのしく にほんごを べんきょう することができます。スマホの よやくシステムから かんたんに よやくが できます。","btn-more":"くわしく みる","btn-join":"さんかしたい","btn-reserve":"クラスの よやくを する（０えん）","reserve-note":"※ 予約（よやく）システム（しすてむ）の サーバー（さーばー）が うごくまでに 30びょう くらい かかることがあります。画面（がめん）が ひらくのを すこし まってください。","about-title":"きょうしつ について","about-desc1":"「みんなのいえ」は、いっぱんしゃだんほうじん たぶんかきょうせいすいしんぷろじぇくと が サポート（さぽーと）している むりょうのにほんごきょうしつ です。にほんごの べんきょうや、生活（せいかつ）の ことを きくことができます。","about-desc2":"やさしい せんせいが、あなたに あわせて おしえます。にほんごが はじめてのがいこくじんの人も あんしんしてください。","feature1-title":"やさしい にほんご","feature1-desc":"むずかしい ことばは つかいません。がいこくじんの人も かんたんな かいわから はじめます。","feature2-title":"あんしんの サポート","feature2-desc":"まちの きょうしつ なので、せいかつの なやみや そうだんも できます。","feature3-title":"０えん（むりょう）","feature3-desc":"おかねは かかりません。テキスト（きょうかしょ）も ０えんです。よやくシステムから すぐによやく できます。","class-title":"くらす の あんない","class-intro":"よやくシステムから、あなたの すきな じかんの くらすを えらんでください。","class1-name":"にちようび クラス","class1-time":"毎週（まいしゅう）にちようび 10:00 - 12:00","class1-desc":"かいものの ときや、びょういん、やくしょで つかう にほんごを れんしゅう します。","class2-name":"すいようび クラス","class2-time":"毎週（まいしゅう）すいようび 14:00 - 15:30","class2-desc":"はじめて にほんごを べんきょうする 外国人（がいこくじん）の クラスです。ひらがなから はじめます。","class3-name":"おしゃべり カフェ","class3-time":"第2・第4（だい２・だい４）どようび 13:00 - 15:00","class3-desc":"おちゃを のみながら、みんなで たのしく おしゃべりを します。","price-info":"おかね：０えん（むりょう）","access-title":"ばしょ（いく方法）","access-place":"ばしょ：みんなのいえ（一般社団法人 多文化共生推進プロジェクト）","access-address":"じゅうしょ：埼玉県（さいたまけん）ふじみ野市（ふじみのし）亀久保（かめくぼ）2-9-34","access-train":"でんわ：090-2620-3873（か・もく・ど・にち）","contact-title":"れんらくする（メール）","contact-label-name":"なまえ","contact-label-email":"メールアドレス","contact-label-msg":"メッセージ（ききたいこと）","contact-btn-submit":"おくる","contact-success":"メールをおくりました！へんじを まってくださいね。","footer-rights":"© 2026 みんなのいえ にほんごきょうしつ. All rights reserved.","badge-reserve":"スマホで かんたんよやく！"}'>
+    </span>
+
+    <!-- ヘッダー（ナビゲーション） -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-orange-100">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- ロゴ -->
+            <a href="#" class="flex items-center space-x-2">
+                <div
+                    class="bg-orange-400 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-house-chimney-user text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-friendly text-xl font-bold text-orange-600 block leading-tight"
+                        data-t="hero-title">みんなのいえ 日本語教室</span>
+                    <span class="text-xs text-gray-400 block hidden md:block">Minna no Ie Japanese Class</span>
+                </div>
+            </a>
+
+            <!-- デスクトップ ナビゲーション -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium items-center">
+                <a href="#about" class="text-gray-600 hover:text-orange-500 transition" data-t="about">教室について</a>
+                <a href="#classes" class="text-gray-600 hover:text-orange-500 transition" data-t="classes">クラス案内</a>
+                <a href="#access" class="text-gray-600 hover:text-orange-500 transition" data-t="access">アクセス</a>
+                <a href="#faq" class="text-gray-600 hover:text-orange-500 transition" data-t="faq">よくある質問</a>
+
+                <!-- ヘッダーの目立つ予約リンク -->
+                <!-- 予約システムのURLをここに貼る (例: href="https://your-booking-system.com") -->
+                <a href="#contact"
+                    class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition shadow-sm font-bold flex items-center space-x-1"
+                    id="headerReserveLink">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span data-t="btn-reserve">クラスを予約する（無料）</span>
+                </a>
+            </nav>
+
+            <!-- 言語切り替え & モバイルメニューボタン -->
+            <div class="flex items-center space-x-3">
+                <!-- 言語セレクター -->
+                <div class="relative inline-block text-left text-xs md:text-sm">
+                    <select id="langSelect" onchange="changeLanguage(this.value)"
+                        class="bg-orange-50 border border-orange-200 text-orange-700 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-orange-400 cursor-pointer font-medium">
+                        <option value="ja">日本語</option>
+                        <option value="easy">やさしい日本語</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+
+                <!-- モバイルメニュー用ボタン -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-orange-500 focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- モバイルナビゲーション（非表示デフォルト） -->
+        <div id="mobileMenu"
+            class="hidden md:hidden bg-orange-50 border-t border-orange-100 px-4 py-4 space-y-3 shadow-inner">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-gray-700 font-medium hover:text-orange-500"
+                data-t="about">教室について</a>
+            <a href="#classes" onclick="toggleMobileMenu()"
+                class="block text-gray-700 font-medium hover:text-orange-500" data-t="classes">クラス案内</a>
+            <a href="#access" onclick="toggleMobileMenu()" class="block text-gray-700 font-medium hover:text-orange-500"
+                data-t="access">アクセス</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block text-gray-700 font-medium hover:text-orange-500"
+                data-t="faq">よくある質問</a>
+
+            <!-- モバイルメニュー内の予約ボタン -->
+            <!-- 予約システムのURLをここに貼る -->
+            <a href="#contact" onclick="toggleMobileMenu()"
+                class="block bg-red-500 text-white text-center py-2.5 rounded-lg font-bold hover:bg-red-600 shadow"
+                id="mobileReserveLink">
+                <i class="fa-solid fa-calendar-check mr-1"></i>
+                <span data-t="btn-reserve">クラスを予約する（無料）</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="relative bg-gradient-to-b from-orange-50 via-yellow-50 to-[#FFFDF9] py-16 md:py-24 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center relative z-10">
+            <!-- テキスト部分 -->
+            <div class="space-y-6 text-center md:text-left">
+                <span
+                    class="inline-block bg-orange-100 text-orange-700 text-xs md:text-sm px-3 py-1 rounded-full font-bold uppercase tracking-wider"
+                    data-t="hero-subtitle">
+                    にほんごで はなそう、つながろう！
+                </span>
+
+                <h1 class="font-friendly text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
+                    data-t="hero-title">
+                    みんなのいえ 日本語教室
+                </h1>
+
+                <p class="text-base md:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0"
+                    data-t="hero-desc">
+                    「みんなのいえ（一般社団法人
+                    多文化共生推進プロジェクト）」は、外国にルーツを持つ方や、地域に住む外国人のための、あたたかい無料日本語教室です。お茶を飲みながら、楽しく日本語を学びませんか？予約システムからいつでも申込可能です。
+                </p>
+
+                <!-- 申し込み/予約ボタンと備考ブロック -->
+                <div class="pt-4 pb-2 space-y-3">
+                    <!-- 予約システムのURLをここに貼る (例: href="https://your-booking-system.com") -->
+                    <a href="https://liveproject-w6ny.onrender.com/index_ja.html"
+                        class="inline-flex items-center justify-center space-x-3 bg-red-500 hover:bg-red-600 text-white text-xl md:text-2xl font-bold px-8 py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 animate-pulse-gentle w-full sm:w-auto"
+                        id="heroReserveLink">
+                        <i class="fa-solid fa-calendar-days text-2xl md:text-3xl"></i>
+                        <span data-t="btn-reserve">クラスを予約する（無料）</span>
+                    </a>
+
+                    <!-- サーバー起動時間に関する丁寧な注意書き（多言語翻訳対応） -->
+                    <p class="text-xs text-gray-500 max-w-md mx-auto md:mx-0 leading-relaxed bg-orange-100/50 p-3 rounded-xl border border-orange-200/50 flex items-start space-x-2"
+                        id="reserveNoteBlock">
+                        <i class="fa-solid fa-circle-info text-orange-500 mt-0.5 shrink-0"></i>
+                        <span data-t="reserve-note">※ 予約システムのサーバー起動に約30秒ほど時間がかかる場合があります。ページが開くまでそのまま少々お待ちください。</span>
+                    </p>
+                </div>
+
+                <!-- サブボタン -->
+                <div class="flex justify-center md:justify-start gap-4">
+                    <a href="#about"
+                        class="text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-6 py-2.5 rounded-full font-semibold text-sm transition"
+                        data-t="btn-more">
+                        詳しくみる
+                    </a>
+                    <a href="#contact"
+                        class="text-gray-500 hover:text-gray-700 px-6 py-2.5 rounded-full font-semibold text-sm transition"
+                        data-t="btn-join">
+                        参加を申し込む
+                    </a>
+                </div>
+            </div>
+
+            <!-- メインビジュアル（SVGイラスト） -->
+            <div class="flex justify-center items-center relative">
+                <!-- 装飾用背景サークル -->
+                <div class="absolute w-72 h-72 md:w-96 md:h-96 bg-yellow-200/40 rounded-full blur-2xl"></div>
+                <!-- イラスト代わりのグラフィック -->
+                <div class="relative bg-white p-6 rounded-3xl shadow-xl border border-orange-100 max-w-md w-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <!-- 動的なネット予約誘導バッジ -->
+                        <span
+                            class="text-xs text-red-500 font-bold bg-red-50 px-2 py-1 rounded-lg border border-red-100 flex items-center animate-bounce">
+                            <i class="fa-solid fa-bolt mr-1"></i>
+                            <span data-t="badge-reserve">ネットでかんたん予約！</span>
+                        </span>
+                        <div class="flex space-x-1">
+                            <span class="w-2.5 h-2.5 bg-red-400 rounded-full"></span>
+                            <span class="w-2.5 h-2.5 bg-yellow-400 rounded-full"></span>
+                            <span class="w-2.5 h-2.5 bg-green-400 rounded-full"></span>
+                        </div>
+                    </div>
+                    <!-- 模擬授業風のイラスト風ブロック -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 bg-orange-50 p-3 rounded-xl border border-orange-100">
+                            <div class="bg-orange-400 text-white p-2 rounded-lg"><i
+                                    class="fa-regular fa-comments text-lg"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-800">おしゃべり (Conversation)</h4>
+                                <p class="text-xs text-gray-500">「こんにちは！お元気ですか？」</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-blue-50 p-3 rounded-xl border border-blue-100">
+                            <div class="bg-blue-400 text-white p-2 rounded-lg"><i
+                                    class="fa-solid fa-book-open text-lg"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-800">ひらがな・漢字 (Letters)</h4>
+                                <p class="text-xs text-gray-500">あいうえお / 日本、友だち</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-green-50 p-3 rounded-xl border border-green-100">
+                            <div class="bg-green-400 text-white p-2 rounded-lg"><i
+                                    class="fa-solid fa-mug-hot text-lg"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-800">公的・安心 (Public & Safe)</h4>
+                                <p class="text-xs text-gray-500">みんなで支え合う、無料のコミュニティです</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                        <span><i class="fa-solid fa-users mr-1"></i> 多国籍の仲間が待っています</span>
+                        <span class="text-orange-500 font-bold bg-orange-100 px-2 py-1 rounded-md">参加費 無料 🆓</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 波の区切り線効果 -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-8 md:h-16">
+                <path
+                    d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
+                    fill="#FFFDF9"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 教室について セクション -->
+    <section id="about" class="py-16 bg-[#FFFDF9]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-friendly text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-t="about-title">教室について
+                </h2>
+                <div class="w-16 h-1 bg-orange-400 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 mb-2 font-medium" data-t="about-desc1">
+                    「みんなのいえ」は、日本語の勉強だけでなく、地域の情報交換や友達づくりの場所でもあります。</p>
+                <p class="text-gray-500 text-sm" data-t="about-desc2">
+                    ボランティアの先生たちが、あなたのレベルに合わせてやさしく教えます。初心者・外国にルーツを持つ方大歓迎です！</p>
+            </div>
+
+            <!-- 特徴3つ -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 特徴1 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-orange-50 hover:shadow-md transition text-center group">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition duration-300">
+                        <i class="fa-regular fa-comment-dots text-3xl"></i>
+                    </div>
+                    <h3 class="font-friendly text-xl font-bold text-gray-800 mb-3" data-t="feature1-title">やさしい日本語</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed" data-t="feature1-desc">むずかしい言葉は使いません。外国人の方
+                        advice日常会話からすぐにスタートできます。</p>
+                </div>
+
+                <!-- 特徴2 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-orange-50 hover:shadow-md transition text-center group">
+                    <div
+                        class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6 text-yellow-600 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-shield-halved text-2xl"></i>
+                    </div>
+                    <h3 class="font-friendly text-xl font-bold text-gray-800 mb-3" data-t="feature2-title">公的なサポート</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed" data-t="feature2-desc">
+                        行政や地域と連携しているため、生活相談や情報収集もできて安心です。</p>
+                </div>
+
+                <!-- 特徴3 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-orange-50 hover:shadow-md transition text-center group">
+                    <div
+                        class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-600 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-hand-holding-dollar text-2xl"></i>
+                    </div>
+                    <h3 class="font-friendly text-xl font-bold text-gray-800 mb-3" data-t="feature3-title">参加費は無料</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed" data-t="feature3-desc">
+                        すべてのクラス・イベントに無料で参加できます。ネット予約システムから簡単にお申し込みいただけます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- クラス案内 セクション -->
+    <section id="classes" class="py-16 bg-orange-50/50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-friendly text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-t="class-title">クラス案内
+                </h2>
+                <div class="w-16 h-1 bg-orange-400 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600" data-t="class-intro">スケジュールや日本語のレベルに合わせて、お好きなクラスを予約システムからお選びください。</p>
+            </div>
+
+            <!-- クラスカード3種 -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- クラス1 -->
+                <div
+                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition border border-orange-100/50 flex flex-col justify-between">
+                    <div class="p-6">
+                        <div
+                            class="inline-block bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                            <i class="fa-regular fa-clock mr-1"></i> Sunday
+                        </div>
+                        <h3 class="font-friendly text-xl font-bold text-gray-800 mb-2" data-t="class1-name">にちようクラス（日曜）
+                        </h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-4" data-t="class1-time">毎週日曜日 10:00 - 12:00
+                        </p>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-t="class1-desc">
+                            日常会話を中心に、買い物や病院、市役所などで使う実践的な日本語を練習します。
+                        </p>
+                    </div>
+                    <div class="bg-orange-50/50 p-4 border-t border-orange-50 text-center">
+                        <span class="text-xs text-orange-600 font-bold" data-t="price-info">参加費：無料 (0円)</span>
+                    </div>
+                </div>
+
+                <!-- クラス2 -->
+                <div
+                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition border border-orange-100/50 flex flex-col justify-between">
+                    <div class="p-6">
+                        <div
+                            class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                            <i class="fa-regular fa-clock mr-1"></i> Wednesday
+                        </div>
+                        <h3 class="font-friendly text-xl font-bold text-gray-800 mb-2" data-t="class2-name">すいようクラス（水曜）
+                        </h3>
+                        <p class="text-blue-500 font-semibold text-sm mb-4" data-t="class2-time">毎週水曜日 14:00 - 15:30</p>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-t="class2-desc">
+                            初心者向けクラス。ひらがな、カタカナ、かんたんな挨拶表現から丁寧に学びます。
+                        </p>
+                    </div>
+                    <div class="bg-orange-50/50 p-4 border-t border-orange-50 text-center">
+                        <span class="text-xs text-orange-600 font-bold" data-t="price-info">参加費：無料 (0円)</span>
+                    </div>
+                </div>
+
+                <!-- クラス3 -->
+                <div
+                    class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition border border-orange-100/50 flex flex-col justify-between">
+                    <div class="p-6">
+                        <div
+                            class="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                            <i class="fa-regular fa-clock mr-1"></i> Event
+                        </div>
+                        <h3 class="font-friendly text-xl font-bold text-gray-800 mb-2" data-t="class3-name">おしゃべりカフェ
+                        </h3>
+                        <p class="text-emerald-500 font-semibold text-sm mb-4" data-t="class3-time">第2・第4土曜日 13:00 -
+                            15:00</p>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-t="class3-desc">
+                            自由なテーマでフリートーク。お菓子を食べながらおしゃべりします。
+                        </p>
+                    </div>
+                    <div class="bg-orange-50/50 p-4 border-t border-orange-50 text-center">
+                        <span class="text-xs text-orange-600 font-bold" data-t="price-info">参加費：無料 (0円)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- アクセス（地図＆場所） セクション -->
+    <section id="access" class="py-16 bg-[#FFFDF9]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-friendly text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-t="access-title">
+                    アクセス・場所</h2>
+                <div class="w-16 h-1 bg-orange-400 mx-auto rounded-full mb-6"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-stretch">
+                <!-- 場所の説明と実際の写真 -->
+                <div class="flex flex-col justify-between space-y-6">
+                    <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100 space-y-4 shadow-sm">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-location-dot text-orange-500 text-xl mt-1 shrink-0"></i>
+                            <div>
+                                <h3 class="font-friendly text-lg font-bold text-gray-800" data-t="access-place">
+                                    場所：みんなのいえ （一般社団法人 多文化共生推進プロジェクト）</h3>
+                                <p class="text-gray-600 text-sm mt-2 font-medium" data-t="access-address">
+                                    住所：埼玉県ふじみ野市亀久保2-9-34</p>
+
+                                <div
+                                    class="mt-4 pt-3 border-t border-orange-200/50 space-y-2 text-xs md:text-sm text-gray-600">
+                                    <p class="flex items-center">
+                                        <i class="fa-solid fa-phone mr-2 text-orange-500"></i>
+                                        <span><strong>TEL:</strong> 090-2620-3873 <span
+                                                class="text-gray-400 text-xs">(火・木・土・日)</span></span>
+                                    </p>
+                                    <p class="flex items-center">
+                                        <i class="fa-solid fa-envelope mr-2 text-orange-500"></i>
+                                        <span><strong>e-mail:</strong> minnanoie-2934@ozzio.jp</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- アップロードされた実際の建物外観写真 -->
+                    <div
+                        class="relative rounded-2xl overflow-hidden shadow-md flex-grow min-h-[220px] bg-gray-100 border border-orange-100">
+                        <img src="image_e592c0.jpg" alt="みんなのいえ 外観" class="w-full h-full object-cover"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80';">
+                        <div
+                            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+                            <span class="font-bold text-sm"><i class="fa-solid fa-image mr-1"></i> みんなのいえ 建物外観</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 本物の Google マップ (埋め込み) -->
+                <div
+                    class="flex flex-col justify-between rounded-3xl overflow-hidden border-2 border-orange-100 shadow-md p-4 bg-white space-y-4">
+                    <div class="relative w-full h-80 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
+                        <!-- 埼玉県ふじみ野市亀久保2-9-34 を正確にマッピングした埋め込み用Iframe -->
+                        <iframe
+                            src="https://maps.google.com/maps?q=%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%B5%E3%81%98%E3%81%BF%E9%85%8E%E5%B8%82%E4%BA%80%E4%B9%85%E4%BF%9D2-9-34&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- クイックジャンプ・ルート検索ボタン -->
+                    <a href="https://www.google.com/maps/search/?api=1&query=%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%B5%E3%81%98%E3%81%BF%E9%85%8E%E5%B8%82%E4%BA%80%E4%B9%85%E4%BF%9D2-9-34"
+                        target="_blank"
+                        class="flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow-md transition-all duration-300 transform hover:-translate-y-0.5 text-center text-sm md:text-base">
+                        <i class="fa-solid fa-diamond-turn-right text-lg"></i>
+                        <span>Googleマップでルートを調べる (アプリ起動)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- よくある質問 セクション -->
+    <section id="faq" class="py-16 bg-orange-50/30">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-friendly text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-t="faq">よくある質問</h2>
+                <div class="w-16 h-1 bg-orange-400 mx-auto rounded-full mb-6"></div>
+            </div>
+
+            <!-- アコーディオン -->
+            <div class="space-y-4">
+                <!-- 質問 1 -->
+                <div class="bg-white rounded-xl border border-orange-100/60 overflow-hidden shadow-sm">
+                    <button
+                        class="w-full text-left p-5 font-bold text-gray-800 flex justify-between items-center hover:bg-orange-50/50 transition focus:outline-none"
+                        onclick="toggleFaq(this)">
+                        <span>Q. 日本語が全然話せなくても大丈夫ですか？</span>
+                        <i class="fa-solid fa-chevron-down text-orange-400 transition-transform"></i>
+                    </button>
+                    <div
+                        class="faq-answer hidden p-5 bg-orange-50/10 border-t border-orange-50 text-gray-600 text-sm leading-relaxed">
+                        はい、全然大丈夫です！ひらがなや挨拶、自己紹介など、本当に基礎的なところから外国人の方でもやさしく勉強できます。
+                    </div>
+                </div>
+
+                <!-- 質問 2 -->
+                <div class="bg-white rounded-xl border border-orange-100/60 overflow-hidden shadow-sm">
+                    <button
+                        class="w-full text-left p-5 font-bold text-gray-800 flex justify-between items-center hover:bg-orange-50/50 transition focus:outline-none"
+                        onclick="toggleFaq(this)">
+                        <span>Q. 事前の予約（申し込み）は必要ですか？</span>
+                        <i class="fa-solid fa-chevron-down text-orange-400 transition-transform"></i>
+                    </button>
+                    <div
+                        class="faq-answer hidden p-5 bg-orange-50/10 border-t border-orange-50 text-gray-600 text-sm leading-relaxed">
+                        初めてお越しになる時は、事前にホームページ上の「ネット予約システム」からクラスを予約いただくか、お問い合わせから連絡をいただけるとご案内がスムーズです。もちろん当日の飛び込み参加も歓迎します。
+                    </div>
+                </div>
+
+                <!-- 質問 3 -->
+                <div class="bg-white rounded-xl border border-orange-100/60 overflow-hidden shadow-sm">
+                    <button
+                        class="w-full text-left p-5 font-bold text-gray-800 flex justify-between items-center hover:bg-orange-50/50 transition focus:outline-none"
+                        onclick="toggleFaq(this)">
+                        <span>Q. 本当に無料で参加できますか？教材費はかかりますか？</span>
+                        <i class="fa-solid fa-chevron-down text-orange-400 transition-transform"></i>
+                    </button>
+                    <div
+                        class="faq-answer hidden p-5 bg-orange-50/10 border-t border-orange-50 text-gray-600 text-sm leading-relaxed">
+                        はい、すべてのクラス・イベントへの参加は無料です。授業で使うテキストやプリントなどの教材費も一切かかりませんので、安心してご参加ください。
+                    </div>
+                </div>
+
+                <!-- 質問 4 -->
+                <div class="bg-white rounded-xl border border-orange-100/60 overflow-hidden shadow-sm">
+                    <button
+                        class="w-full text-left p-5 font-bold text-gray-800 flex justify-between items-center hover:bg-orange-50/50 transition focus:outline-none"
+                        onclick="toggleFaq(this)">
+                        <span>Q. 子どもと一緒に参加してもいいですか？</span>
+                        <i class="fa-solid fa-chevron-down text-orange-400 transition-transform"></i>
+                    </button>
+                    <div
+                        class="faq-answer hidden p-5 bg-orange-50/10 border-t border-orange-50 text-gray-600 text-sm leading-relaxed">
+                        はい、大歓迎です。教室内には絵本や簡単なおもちゃを置いたキッズスペースもありますので、お子様と一緒に安心して勉強に集中いただけます。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせ セクション -->
+    <section id="contact" class="py-16 bg-[#FFFDF9]">
+        <div class="max-w-xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="font-friendly text-3xl font-bold text-gray-900 mb-4" data-t="contact-title">お問い合わせ</h2>
+                <div class="w-16 h-1 bg-orange-400 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- お問い合わせフォーム -->
+            <form id="contactForm" onsubmit="handleContactSubmit(event)"
+                class="bg-white p-8 rounded-3xl shadow-md border border-orange-50 space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" for="name"
+                        data-t="contact-label-name">お名前</label>
+                    <input type="text" id="name" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+                        placeholder="たなか はなこ / Hanako Tanaka">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" for="email"
+                        data-t="contact-label-email">メールアドレス</label>
+                    <input type="email" id="email" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+                        placeholder="yourname@example.com">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2" for="message"
+                        data-t="contact-label-msg">メッセージ / 質問したいこと</label>
+                    <textarea id="message" rows="4" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+                        placeholder="にちようびの クラスに さんか したいです。"></textarea>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-md hover:shadow-lg"
+                    data-t="contact-btn-submit">
+                    送信する
+                </button>
+            </form>
+
+            <!-- 送信完了メッセージ -->
+            <div id="successMsg"
+                class="hidden mt-6 bg-emerald-50 border border-emerald-200 text-emerald-800 p-6 rounded-3xl text-center shadow-sm">
+                <i class="fa-regular fa-circle-check text-4xl mb-3 text-emerald-500"></i>
+                <p class="font-bold text-lg mb-1" data-t="contact-success">メッセージを送信しました！ご連絡をお待ちください。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-orange-950 text-orange-100 py-12 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+            <!-- 教室ロゴ・紹介 -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-orange-500 text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-house-chimney-user text-sm"></i>
+                    </div>
+                    <span class="font-friendly text-lg font-bold text-white" data-t="hero-title">みんなのいえ 日本語教室</span>
+                </div>
+                <p class="text-xs text-orange-200/80 leading-relaxed">
+                    「みんなのいえ（一般社団法人 多文化共生推進プロジェクト）」は、外国にルーツを持つ方や、地域に住む外国人のための、あたたかい無料日本語教室です。
+                </p>
+            </div>
+
+            <!-- リンク -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-white border-b border-orange-800 pb-2 text-sm">Menu</h4>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <a href="#about" class="hover:text-white transition" data-t="about">教室について</a>
+                    <a href="#classes" class="hover:text-white transition" data-t="classes">クラス案内</a>
+                    <a href="#access" class="hover:text-white transition" data-t="access">アクセス</a>
+                    <a href="#faq" class="hover:text-white transition" data-t="faq">よくある質問</a>
+                </div>
+            </div>
+
+            <!-- お問い合わせ情報等 -->
+            <div class="space-y-4 text-xs">
+                <h4 class="font-bold text-white border-b border-orange-800 pb-2 text-sm">Contact Info</h4>
+                <p class="flex items-start"><i
+                        class="fa-solid fa-location-dot mr-2 mt-0.5 text-orange-400 shrink-0"></i> <span
+                        data-t="access-address">埼玉県ふじみ野市亀久保2-9-34</span></p>
+                <p class="flex items-center"><i class="fa-solid fa-phone mr-2 text-orange-400"></i> 090-2620-3873</p>
+                <p class="flex items-center"><i class="fa-solid fa-envelope mr-2 text-orange-400"></i>
+                    minnanoie-2934@ozzio.jp</p>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 mt-8 pt-8 border-t border-orange-900 text-center text-xs text-orange-300/60">
+            <p data-t="footer-rights">© 2026 みんなのいえ 日本語教室. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript ロジック -->
+    <script>
+        // 多言語化オブジェクト
+        const translations = {
+            ja: JSON.parse(document.getElementById('lang-data').getAttribute('data-ja')),
+            en: JSON.parse(document.getElementById('lang-data').getAttribute('data-en')),
+            easy: JSON.parse(document.getElementById('lang-data').getAttribute('data-easy'))
+        };
+
+        // 言語変更関数
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            // data-t属性を持つ全ての要素のテキストを置換
+            document.querySelectorAll('[data-t]').forEach(element => {
+                const key = element.getAttribute('data-t');
+                if (t[key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        // プレースホルダーの多言語対応は別途行う
+                    } else {
+                        element.innerText = t[key];
+                    }
+                }
+            });
+
+            // フォームのプレースホルダーのテキスト切り替え
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            if (lang === 'en') {
+                nameInput.placeholder = 'e.g., Hanako Tanaka';
+                messageInput.placeholder = 'I would like to participate in the Sunday class.';
+            } else if (lang === 'easy') {
+                nameInput.placeholder = 'なまえ（たとえば：たなか はなこ）';
+                messageInput.placeholder = 'にちようびの クラスに いきたいです。';
+            } else {
+                nameInput.placeholder = 'たなか はなこ / Hanako Tanaka';
+                messageInput.placeholder = 'にちようびの クラスに さんか したいです。';
+            }
+
+            // セレクトボックスの選択状態を同期
+            document.getElementById('langSelect').value = lang;
+        }
+
+        // モバイルメニューの表示切り替え
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            toggleMobileMenu();
+        });
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-xl';
+            } else {
+                icon.className = 'fa-solid fa-xmark text-xl';
+            }
+        }
+
+        // よくある質問（アコーディオン）の開閉
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+
+            answer.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // 問い合わせフォーム送信のシミュレート
+        function handleContactSubmit(event) {
+            event.preventDefault(); // 実際の送信を防止
+
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('successMsg');
+
+            // フォームをフェードアウトして、成功メッセージを表示
+            form.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+
+            // 送信後、入力フィールドをクリア
+            form.reset();
+        }
+
+        // 読み込み時に日本語を設定
+        window.onload = () => {
+            changeLanguage('ja');
+        };
+    </script>
+</body>
+
+</html>
