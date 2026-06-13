@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本語シチュエーション学習ポータル</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Noto Sans JP & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Noto+Sans+JP:wght=300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    },
+                    colors: {
+                        sakura: {
+                            50: '#fff5f6',
+                            100: '#ffebe3',
+                            200: '#ffd1d6',
+                            400: '#ff8a9a',
+                            500: '#ff5e7e',
+                            600: '#e03d5f',
+                        },
+                        indigoJapanese: {
+                            50: '#f0f4f8',
+                            800: '#1a2e40',
+                            900: '#0f1c2c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #fcfbfa;
+            background-image:
+                radial-gradient(#ff5e7e08 1px, transparent 0),
+                radial-gradient(#1a2e4005 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
+        .japanese-pattern {
+            background-color: #1a2e40;
+            background-image: radial-gradient(circle at 100% 150%, #1a2e40 24%, #223a52 24%, #223a52 28%, #1a2e40 28%, #1a2e40 36%, #223a52 36%, #223a52 40%, transparent 40%, transparent),
+                radial-gradient(circle at 0 150%, #1a2e40 24%, #223a52 24%, #223a52 28%, #1a2e40 28%, #1a2e40 36%, #223a52 36%, #223a52 40%, transparent 40%, transparent),
+                radial-gradient(circle at 50% 100%, #223a52 10%, #1a2e40 10%, #1a2e40 23%, #223a52 23%, #223a52 30%, #1a2e40 30%, #1a2e40 43%, #223a52 43%, #223a52 50%, transparent 50%, transparent),
+                radial-gradient(circle at 100% 50%, #223a52 5%, #1a2e40 5%, #1a2e40 15%, #223a52 15%, #223a52 20%, #1a2e40 20%, #1a2e40 29%, #223a52 29%, #223a52 34%, #1a2e40 34%, #1a2e40 44%, #223a52 44%, #223a52 49%, transparent 49%, transparent),
+                radial-gradient(circle at 0 50%, #223a52 5%, #1a2e40 5%, #1a2e40 15%, #223a52 15%, #223a52 20%, #1a2e40 20%, #1a2e40 29%, #223a52 29%, #223a52 34%, #1a2e40 34%, #1a2e40 44%, #223a52 44%, #223a52 49%, transparent 49%, transparent);
+            background-size: 100px 50px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 glass-card border-b border-slate-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-xl bg-sakura-500 text-white shadow-lg shadow-sakura-500/30 transform hover:rotate-12 transition-transform">
+                        <span class="font-bold text-lg font-sans">あ</span>
+                    </span>
+                    <div>
+                        <h1 class="font-bold text-lg sm:text-xl text-indigoJapanese-800 tracking-tight">日本語シチュエーション</h1>
+                        <p class="text-xs text-slate-500 font-medium">Scenario-based Japanese Learning Portal</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 font-mono">
+                        Local Mode
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden bg-slate-900 text-white py-12 sm:py-16 px-4 japanese-pattern shadow-inner">
+        <!-- Overlay for aesthetics -->
+        <div class="absolute inset-0 bg-gradient-to-r from-indigoJapanese-900/90 to-transparent"></div>
+
+        <div class="relative max-w-4xl mx-auto text-center z-10">
+            <span
+                class="inline-block px-3 py-1 bg-sakura-500/20 border border-sakura-400/30 rounded-full text-xs font-semibold text-sakura-200 tracking-wider uppercase mb-4">
+                実践的な日本語を学ぶ
+            </span>
+            <h2
+                class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-4 drop-shadow-sm">
+                シチュエーション別学習ポータル
+            </h2>
+            <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base mb-8">
+                実際の会話シチュエーションをクリックして、あなたの教材（HTML）にジャンプ！
+                日常会話、バイト対応、面接練習など、実践的な日本語を効率的にマスターしましょう。
+            </p>
+
+            <!-- SEARCH BAR -->
+            <div class="max-w-xl mx-auto relative px-2">
+                <div class="relative flex items-center">
+                    <i class="fa-solid fa-magnifying-glass absolute left-6 text-slate-400"></i>
+                    <input type="text" id="searchInput" oninput="filterScenarios()"
+                        placeholder="キーワードを入力 (例: バイト 接客)..."
+                        class="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white text-slate-900 placeholder-slate-400 border-none shadow-xl focus:ring-2 focus:ring-sakura-400 outline-none text-sm transition">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- STATISTICS & FILTER SECTION -->
+        <div
+            class="flex flex-col md:flex-row gap-6 items-center justify-between mb-8 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+            <!-- Progress Tracker -->
+            <div class="w-full md:w-auto flex items-center gap-4">
+                <div class="relative flex items-center justify-center">
+                    <svg class="w-14 h-14 transform -rotate-90">
+                        <circle cx="28" cy="28" r="24" stroke="#f1f5f9" stroke-width="4" fill="transparent" />
+                        <circle cx="28" cy="28" r="24" stroke="#ff5e7e" stroke-width="4" fill="transparent"
+                            stroke-dasharray="150.79" id="progressCircle" stroke-dashoffset="150.79" />
+                    </svg>
+                    <span id="progressPercent" class="absolute font-bold text-xs text-slate-700">0%</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-slate-800">全体学習進捗状況</h3>
+                    <p class="text-xs text-slate-500 mt-0.5"><span id="completedCount"
+                            class="font-semibold text-sakura-500">0</span> / <span id="totalCount">0</span> シナリオ完了</p>
+                </div>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end" id="categoryPills">
+                <!-- Will be dynamically populated -->
+            </div>
+        </div>
+
+        <!-- SCENARIO GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="scenariosGrid">
+            <!-- Dynamic scenarios will render here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState"
+            class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
+            <div class="text-slate-300 text-5xl mb-4">
+                <i class="fa-regular fa-folder-open"></i>
+            </div>
+            <h4 class="text-slate-700 font-bold mb-1">合致するシナリオがありません</h4>
+            <p class="text-slate-400 text-sm">検索ワードを変えてみてください。</p>
+        </div>
+    </main>
+
+    <!-- STUDY TIP BANNER -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-12">
+        <div
+            class="bg-gradient-to-r from-sakura-50 to-pink-50 border border-sakura-100 rounded-2xl p-6 relative overflow-hidden flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div class="relative z-10">
+                <h4 class="font-bold text-sakura-600 text-md flex items-center gap-2 mb-1">
+                    <i class="fa-solid fa-lightbulb"></i> 今日のワンポイント会話表现
+                </h4>
+                <p id="dailyPhrase" class="text-slate-700 text-sm italic">
+                    「少々お待ちください」ー お客様をお待たせするときに使います。
+                </p>
+            </div>
+            <button onclick="refreshDailyPhrase()"
+                class="relative z-10 px-4 py-2 bg-white text-sakura-500 hover:bg-sakura-50 border border-sakura-200 rounded-xl font-medium text-xs shadow-sm transition flex items-center gap-1.5 shrink-0">
+                <i class="fa-solid fa-shuffle"></i> 次の表现へ
+            </button>
+            <svg class="absolute -right-4 -bottom-4 w-24 h-24 opacity-10 text-sakura-400 pointer-events-none"
+                fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4M12,18A2,2 0 0,1 14,20A2,2 0 0,1 12,22A2,2 0 0,1 10,20A2,2 0 0,1 12,18Z" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl text-sm">
+        <span id="toastIcon" class="text-sakura-400"><i class="fa-solid fa-circle-check"></i></span>
+        <span id="toastMessage">保存しました</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs mt-12">
+        <p class="mb-2">© 2026 日本語シチュエーション学習ポータル. All Rights Reserved.</p>
+        <p class="text-slate-600">あなたのローカルHTMLと連动して学習のハブとして機能します。</p>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // 【 🌟 路径配置预留区 🌟 】
+        // 所有的前端 HTML 路径都在这里直接静态修改。页面中去掉了“新增”和“修改”弹窗。
+        // =========================================================================
+        const DEFAULT_SCENARIOS = [
+            {
+                id: "parttime",
+                title: "アルバイト",
+                subtitle: "part-time Job",
+                // 【已修改为您电脑的本地绝对路径，并转义了空格 %20】
+                path: "../JpLearning/part time.html",
+                category: "アルバイト",
+                difficulty: "初級",
+                icon: "fa-utensils"
+            },
+            {
+                id: "convenience",
+                title: "小学生会話",
+                subtitle: "Elementary School Student",
+                // 预设相对路径
+                path: "../JpLearning/student.html",
+                category: "日常会話",
+                difficulty: "初級",
+                icon: "fa-shop"
+            },
+            {
+                id: "interview",
+                title: "日常会話",
+                subtitle: "Normal Life Conversation",
+                // 预设相对路径
+                path: "../JpLearning/normal life.html",
+                category: "日常会話",
+                difficulty: "初級",
+                icon: "fa-briefcase"
+            },
+            {
+                id: "phone",
+                title: "電話での予約対応",
+                subtitle: "Making Phone Reservations",
+                // 预设相对路径
+                path: "material/JpLearning/phone.html",
+                category: "日常会話",
+                difficulty: "中級",
+                icon: "fa-phone"
+            },
+            {
+                id: "directions",
+                title: "道案内と交通機関",
+                subtitle: "Directions and Transportation",
+                // 预设相对路径
+                path: "material/JpLearning/directions.html",
+                category: "旅行・観光",
+                difficulty: "初級",
+                icon: "fa-plane"
+            },
+            {
+                id: "business",
+                title: "社内ミーティング（敬語）",
+                subtitle: "Business Meeting (Keigo)",
+                // 预设相对路径
+                path: "material/JpLearning/business.html",
+                category: "ビジネス",
+                difficulty: "上級",
+                icon: "fa-briefcase"
+            }
+        ];
+
+        // 每日日语精选例句
+        const DAILY_PHRASES = [
+            "「少々お待ちください」ー お客様をお待たせするときに使います。(Wait a moment please.)",
+            "「かしこまりました」ー 注文や要望を承ったときに使います。(Understood/Certainly.)",
+            "「お待たせいたしました」ー 料理を出したりお待たせした後に使います。(Sorry to have kept you waiting.)",
+            "「恐れ入りますが」ー クッション言葉として、丁寧にお願いするときに使います。(Excuse me but...)",
+            "「お疲れ様でした」ー 工作が終わったとき、同僚や先輩に使います。(Thank you for your hard work.)",
+            "「失礼いたします」ー 部屋に入るときや退勤するときに使います。(Excuse me/Goodbye.)"
+        ];
+
+        let scenarios = [];
+        let currentCategoryFilter = '全部';
+
+        // 初始化页面状态
+        window.onload = function () {
+            initScenarios();
+            renderCategoryFilters();
+            renderScenarios();
+            updateProgress();
+            refreshDailyPhrase();
+        };
+
+        // 从 LocalStorage 读取并对照默认静态配置，仅同步 completed 完成状态，防止路径在静态修改后被旧缓存覆盖
+        function initScenarios() {
+            const savedProgress = localStorage.getItem('japanese_learning_progress');
+            let completedMap = {};
+            if (savedProgress) {
+                try {
+                    completedMap = JSON.parse(savedProgress); // { 'parttime': true, 'convenience': false }
+                } catch (e) {
+                    completedMap = {};
+                }
+            }
+
+            // 使用最新的静态配置，并附加打卡状态
+            scenarios = DEFAULT_SCENARIOS.map(item => {
+                return {
+                    ...item,
+                    completed: !!completedMap[item.id]
+                };
+            });
+        }
+
+        // 仅将打卡状态（以 id 作为 Key）保存到 LocalStorage
+        function saveProgressToStorage() {
+            const completedMap = {};
+            scenarios.forEach(item => {
+                completedMap[item.id] = item.completed;
+            });
+            localStorage.setItem('japanese_learning_progress', JSON.stringify(completedMap));
+        }
+
+        function renderCategoryFilters() {
+            const categories = ['全部', 'アルバイト', '日常会話', 'ビジネス', '旅行・観光'];
+            const container = document.getElementById('categoryPills');
+
+            container.innerHTML = categories.map(cat => {
+                const isActive = cat === currentCategoryFilter;
+                const activeClass = "bg-sakura-500 text-white shadow-md shadow-sakura-500/10";
+                const inactiveClass = "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200";
+
+                return `<button onclick="setCategoryFilter('${cat}')" class="px-3 py-1.5 rounded-full text-xs font-semibold transition ${isActive ? activeClass : inactiveClass}">
+                    ${cat}
+                </button>`;
+            }).join('');
+        }
+
+        function setCategoryFilter(cat) {
+            currentCategoryFilter = cat;
+            renderCategoryFilters();
+            renderScenarios();
+        }
+
+        function filterScenarios() {
+            renderScenarios();
+        }
+
+        // ==========================================
+        // 前端高性能模糊检索逻辑
+        // ==========================================
+        function renderScenarios() {
+            // 获取输入框中的内容，转换为小写，去掉首尾空白
+            const rawQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            // 【多关键词模糊解析】：将中文/日文全角空格「　」统一转化为半角空格，并根据空格切分成关键词数组
+            const queries = rawQuery.replace(/　/g, ' ').split(/\s+/).filter(q => q.length > 0);
+
+            const grid = document.getElementById('scenariosGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = scenarios.filter(item => {
+                // 1. 判断类别筛选
+                const matchesCategory = (currentCategoryFilter === '全部') || (item.category === currentCategoryFilter);
+
+                // 2. 模糊匹配多关键词。必须保证每一个输入的词（AND关系），都在项目的某个字段中存在（支持无序输入）
+                const matchesQuery = queries.length === 0 || queries.every(q => {
+                    return item.title.toLowerCase().includes(q) ||
+                        item.subtitle.toLowerCase().includes(q) ||
+                        item.category.toLowerCase().includes(q) ||
+                        item.difficulty.toLowerCase().includes(q) ||
+                        item.path.toLowerCase().includes(q);
+                });
+
+                return matchesCategory && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            grid.innerHTML = filtered.map((item, index) => {
+                const globalIndex = scenarios.findIndex(s => s.id === item.id);
+
+                let diffBadgeColor = 'bg-emerald-50 text-emerald-600 border-emerald-100';
+                if (item.difficulty === '中級') diffBadgeColor = 'bg-amber-50 text-amber-600 border-amber-100';
+                if (item.difficulty === '上級') diffBadgeColor = 'bg-rose-50 text-rose-600 border-rose-100';
+
+                return `
+                <div class="group relative flex flex-col justify-between p-6 bg-white border border-slate-100 rounded-3xl transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-slate-100">
+                    
+                    <!-- Top Ribbon info & status -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase border ${diffBadgeColor}">
+                            ${item.difficulty}
+                        </span>
+                        
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="toggleCompleted(${globalIndex}, event)" class="p-1.5 rounded-lg hover:bg-slate-50 transition" title="${item.completed ? '未完了に戻す' : '完了にする'}">
+                                <i class="fa-solid ${item.completed ? 'fa-circle-check text-sakura-500' : 'fa-regular fa-circle text-slate-300'} text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main content link -->
+                    <a href="${item.path}" class="flex-grow block">
+                        <div class="flex items-start gap-3.5 mb-3">
+                            <div class="w-10 h-10 shrink-0 flex items-center justify-center bg-sakura-50 text-sakura-500 rounded-xl group-hover:bg-sakura-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid ${item.icon || 'fa-utensils'} text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-md line-clamp-1 group-hover:text-sakura-600 transition-colors">${item.title}</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">${item.subtitle}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between text-xs font-semibold text-slate-400">
+                            <span class="bg-slate-50 px-2 py-1 rounded text-[11px] text-slate-500">${item.category}</span>
+                            <span class="flex items-center gap-1 text-sakura-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                ページを開く <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleCompleted(index, event) {
+            event.stopPropagation();
+            scenarios[index].completed = !scenarios[index].completed;
+            saveProgressToStorage();
+            renderScenarios();
+            updateProgress();
+
+            if (scenarios[index].completed) {
+                showToast(`🎉 「${scenarios[index].title}」学習完了！`, true);
+            } else {
+                showToast(`🔄 「${scenarios[index].title}」未完了に戻しました`, false);
+            }
+        }
+
+        function updateProgress() {
+            const total = scenarios.length;
+            const completed = scenarios.filter(s => s.completed).length;
+            document.getElementById('totalCount').innerText = total;
+            document.getElementById('completedCount').innerText = completed;
+
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressPercent').innerText = percentage + '%';
+
+            const circle = document.getElementById('progressCircle');
+            const circumference = 150.79;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function refreshDailyPhrase() {
+            const phrase = DAILY_PHRASES[Math.floor(Math.random() * DAILY_PHRASES.length)];
+            document.getElementById('dailyPhrase').innerText = phrase;
+        }
+
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+
+            msgEl.innerText = message;
+            if (isSuccess) {
+                iconEl.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+            } else {
+                iconEl.innerHTML = '<i class="fa-solid fa-circle-minus text-slate-400"></i>';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+
+</html>

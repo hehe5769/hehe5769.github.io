@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学生のためのがっこうにほんごサポートツール</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Noto Sans JP for friendly premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0fdf4;
+            /* Light pastel green background for a school/nature feel */
+        }
+
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* Card pop effect */
+        .card-hover:hover {
+            transform: scale(1.02);
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header with playful colors resembling a school board or kindergarten class -->
+    <header
+        class="bg-gradient-to-r from-sky-400 via-amber-400 to-emerald-400 text-slate-900 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div
+                    class="bg-white text-sky-500 p-2 rounded-full shadow-md flex items-center justify-center border-2 border-sky-300">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-wider flex items-center gap-1">
+                        がっこうせいかつ<ruby>応援<rt>おうえん</rt></ruby>ひろば
+                    </h1>
+                    <p class="text-xs font-bold text-slate-800 mt-0.5">にほんの しょうがっこうに かよう みなさんのための にほんごサポートツール</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2.5 flex-wrap justify-center">
+                <!-- Return to Home Button (相対パスで HomeService\index.html に戻る) -->
+                <a href="../JpLearning/index.html"
+                    class="bg-white hover:bg-rose-50 text-rose-500 font-black text-xs px-4 py-2 rounded-full border-2 border-rose-300 shadow-sm flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-house"></i>
+                    <span>ホームに<ruby>戻<rt>もど</rt></ruby>る</span>
+                </a>
+                <div
+                    class="bg-white/80 rounded-full px-4 py-1.5 border border-amber-300 text-xs font-bold text-slate-700">
+                    <span class="text-rose-500">🎒 ひらがな・ローマじ：</span> かんじには すべて ふりがな（ルビ）が ついています！
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6">
+
+        <!-- Sidebar Navigation (Kid friendly with colorful icons) -->
+        <aside class="w-full md:w-1/4 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border-2 border-emerald-100 sticky top-24 space-y-2">
+                <p class="text-xs font-black text-slate-400 uppercase tracking-wider px-3 mb-2"><ruby>学校<rt>がっこう</rt>
+                    </ruby>のメニュー</p>
+
+                <button onclick="switchTab('survival')" id="btn-survival"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition bg-sky-100 text-sky-800 border border-sky-200">
+                    <i class="fa-solid fa-comments text-base text-sky-500"></i>
+                    <span>がっこうの かいわ（会話）</span>
+                </button>
+
+                <button onclick="switchTab('vocab')" id="btn-vocab"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 transition border border-transparent">
+                    <i class="fa-solid fa-book-open text-base text-amber-500"></i>
+                    <span>がっこうの ことば（単語）</span>
+                </button>
+
+                <button onclick="switchTab('memo-gen')" id="btn-memo-gen"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 transition border border-transparent">
+                    <i class="fa-solid fa-envelope-open-text text-base text-rose-500"></i>
+                    <span>おてがみ・ノートづくり</span>
+                </button>
+
+                <button onclick="switchTab('guide')" id="btn-guide"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 transition border border-transparent">
+                    <i class="fa-solid fa-star text-base text-emerald-500"></i>
+                    <span>がっこうの ルール</span>
+                </button>
+
+                <!-- Supportive advice box for parents/kids -->
+                <div
+                    class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 leading-relaxed shadow-sm">
+                    <h4 class="font-black flex items-center gap-1.5 text-amber-950 mb-1">
+                        <i class="fa-solid fa-face-smile text-amber-600"></i>
+                        しょうがくせいのみなさんへ
+                    </h4>
+                    <p class="font-medium">にほんの しょうがっこうは、たのしいことが たくさん あります！ことばが わからなくても、えがおで「ありがとう」や「いっしょに あそぼう」と
+                        つたえれば、きっと ともだちが できますよ！</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Tab Content Area -->
+        <section class="flex-grow w-full md:w-3/4">
+
+            <!-- 1. School Conversations Tab -->
+            <div id="tab-survival" class="tab-pane space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border-2 border-sky-100">
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-2 bg-sky-100 text-sky-600 rounded-2xl text-sm"><i
+                                class="fa-solid fa-comments text-lg"></i></span>
+                        がっこうの かいわ（<ruby>会話<rt>かいわ</rt></ruby>）
+                    </h2>
+                    <p class="text-xs font-bold text-slate-500 mb-6">ともだちと あそぶとき、じゅぎょうのとき、せんせいに はなすときに つかう ことばです。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterPhrases('all')"
+                            class="phrase-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-sky-500 text-white shadow-md transition">
+                            すべて
+                        </button>
+                        <button onclick="filterPhrases('friends')"
+                            class="phrase-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ① ともだちと あそぶ
+                        </button>
+                        <button onclick="filterPhrases('class')"
+                            class="phrase-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ② じゅぎょう（授業）
+                        </button>
+                        <button onclick="filterPhrases('lunch_clean')"
+                            class="phrase-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ③ きゅうしょく・そうじ
+                        </button>
+                        <button onclick="filterPhrases('trouble')"
+                            class="phrase-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ④ こまったとき・せんせいへ
+                        </button>
+                    </div>
+
+                    <!-- Phrase Grid -->
+                    <div id="phrases-grid" class="grid grid-cols-1 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Vocabulary Tab -->
+            <div id="tab-vocab" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border-2 border-amber-100">
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-2 bg-amber-100 text-amber-600 rounded-2xl text-sm"><i
+                                class="fa-solid fa-book-open text-lg"></i></span>
+                        がっこうの ことば（<ruby>単語<rt>たんご</rt></ruby>）
+                    </h2>
+                    <p class="text-xs font-bold text-slate-500 mb-6">しょうがっこうで まいにち つかう どうぐや、ばしょの なまえです。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterVocab('all')"
+                            class="vocab-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-amber-500 text-white shadow-md transition">
+                            すべて
+                        </button>
+                        <button onclick="filterVocab('items')"
+                            class="vocab-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ① もちもの・どうぐ
+                        </button>
+                        <button onclick="filterVocab('places')"
+                            class="vocab-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ② がっこうの ばしょ
+                        </button>
+                        <button onclick="filterVocab('subjects')"
+                            class="vocab-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ③ きょうか（教科・勉強）
+                        </button>
+                        <button onclick="filterVocab('events')"
+                            class="vocab-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ④ がっこうの ぎょうじ
+                        </button>
+                    </div>
+
+                    <!-- Vocab Grid -->
+                    <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Letter/Note Generator Tab -->
+            <div id="tab-memo-gen" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border-2 border-rose-100">
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-2 bg-rose-100 text-rose-600 rounded-2xl text-sm"><i
+                                class="fa-solid fa-envelope-open-text text-lg"></i></span>
+                        おてがみ・ノートづくり
+                    </h2>
+                    <p class="text-xs font-bold text-slate-500 mb-6">ともだちに あそぶやくそくを するときや、せんせいに れんらくを するときに つかう メモが
+                        つくれます。</p>
+
+                    <!-- Input Form for generating messages -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-rose-50/30 p-5 rounded-2xl border-2 border-rose-100/60 mb-6">
+                        <div>
+                            <label class="block text-xs font-black text-slate-700 mb-1">じぶんの なまえ (ひらがな)</label>
+                            <input type="text" id="form-my-name" placeholder="れい：あきら" value="あきら"
+                                oninput="generateMemos()"
+                                class="w-full text-sm font-bold border-2 border-slate-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-700 mb-1">あいての なまえ (ひらがな)</label>
+                            <input type="text" id="form-target-name" placeholder="れい：たろうくん / せんせい" value="たろうくん"
+                                oninput="generateMemos()"
+                                class="w-full text-sm font-bold border-2 border-slate-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-700 mb-1">あそびたい ばしょ（ともだち用）</label>
+                            <select id="form-play-place" onchange="generateMemos()"
+                                class="w-full text-sm font-bold border-2 border-slate-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                                <option value="こうえん">こうえん（公園）</option>
+                                <option value="がっこうの こうてい">がっこうの こうてい（校庭）</option>
+                                <option value="じぶんの いえ">じぶんの いえ（家）</option>
+                                <option value="あいての いえ">あいての いえ（家）</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-700 mb-1">こまったこと（せんせい用）</label>
+                            <select id="form-problem" onchange="generateMemos()"
+                                class="w-full text-sm font-bold border-2 border-slate-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                                <option value="しゅくだいを わすれてしまいました。">しゅくだいを わすれてしまいました</option>
+                                <option value="きょうかしょを わすれてしまいました。">きょうかしょを わすれてしまいました</option>
+                                <option value="おなかが いたいです。">おなかが いたいです</option>
+                                <option value="あたまが いたいです。">あたまが いたいです</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Output Panels -->
+                    <div class="space-y-4">
+                        <!-- Note Pattern 1: To Friends -->
+                        <div class="border-2 border-amber-100 rounded-2xl overflow-hidden bg-amber-50/20">
+                            <div
+                                class="bg-amber-100 px-4 py-2.5 border-b-2 border-amber-200 flex justify-between items-center">
+                                <span class="text-xs font-black text-amber-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-paper-plane text-amber-600"></i>
+                                    パターン1：ともだちを さそう おてがみ
+                                </span>
+                                <button onclick="copyGeneratedText('script-friend-raw')"
+                                    class="text-xs text-amber-800 hover:text-amber-900 font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> コピーする
+                                </button>
+                            </div>
+                            <div class="p-4 bg-white">
+                                <pre id="gen-friend-ja"
+                                    class="whitespace-pre-wrap text-sm font-bold leading-relaxed text-slate-900 font-mono"></pre>
+                                <div id="script-friend-raw" class="hidden"></div>
+                            </div>
+                        </div>
+
+                        <!-- Note Pattern 2: To Teacher -->
+                        <div class="border-2 border-rose-100 rounded-2xl overflow-hidden bg-rose-50/20">
+                            <div
+                                class="bg-rose-100 px-4 py-2.5 border-b-2 border-rose-200 flex justify-between items-center">
+                                <span class="text-xs font-black text-rose-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-tie text-rose-600"></i>
+                                    パターン2：せんせいに わたす れんらくの メモ
+                                </span>
+                                <button onclick="copyGeneratedText('script-teacher-raw')"
+                                    class="text-xs text-rose-800 hover:text-rose-900 font-bold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> コピーする
+                                </button>
+                            </div>
+                            <div class="p-4 bg-white">
+                                <pre id="gen-teacher-ja"
+                                    class="whitespace-pre-wrap text-sm font-bold leading-relaxed text-slate-900 font-mono"></pre>
+                                <div id="script-teacher-raw" class="hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. School Rules Tab -->
+            <div id="tab-guide" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border-2 border-emerald-100">
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-2 bg-emerald-100 text-emerald-600 rounded-2xl text-sm"><i
+                                class="fa-solid fa-star text-lg"></i></span>
+                        がっこうの ルールと マナー
+                    </h2>
+                    <p class="text-xs font-bold text-slate-500 mb-6">にほんの しょうがっこうで まいにち おこなう、たいせつな やくそくごとです。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-sky-50 border-2 border-sky-100 rounded-2xl space-y-2">
+                            <h3 class="text-sm font-black text-sky-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-shoe-prints text-sky-600"></i>
+                                1. くつを はきかえよう！
+                            </h3>
+                            <p class="text-xs text-sky-900 leading-relaxed font-medium">
+                                がっこうの げんかん（昇降口・しょうこうぐち）に ついたら、外（そと）の くつを ぬいで、<strong>「うわばき（上履き）」</strong>にはきかえます。
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-amber-50 border-2 border-amber-100 rounded-2xl space-y-2">
+                            <h3 class="text-sm font-black text-amber-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-bell text-amber-600"></i>
+                                2. チャイムが なったら せきに つこう！
+                            </h3>
+                            <p class="text-xs text-amber-900 leading-relaxed font-medium">
+                                チャイムが なったら、じゅぎょう（授業）が はじまる あいずです。あそびをやめて、いそいで じぶんの せきに すわりましょう。
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-rose-50 border-2 border-rose-100 rounded-2xl space-y-2">
+                            <h3 class="text-sm font-black text-rose-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-broom text-rose-600"></i>
+                                3. そうじの じかんは みんなで やろう！
+                            </h3>
+                            <p class="text-xs text-rose-900 leading-relaxed font-medium">
+                                にほんの がっこうでは、じぶんたちで きょうしつや ろうかを そうじ（掃除）します。みんなで きょうりょくして きれいに しましょう。
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-emerald-50 border-2 border-emerald-100 rounded-2xl space-y-2">
+                            <h3 class="text-sm font-black text-emerald-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-pen text-emerald-600"></i>
+                                4. もちものに なまえを かこう！
+                            </h3>
+                            <p class="text-xs text-emerald-900 leading-relaxed font-medium">
+                                えんぴつ、けしごむ、ノート、うわばきなど、じぶんのものには すべて <strong>「なまえ（名前）」</strong>を ひらがなで かきましょう。わすれたときに
+                                じぶんのところにもどってきます。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Global Toast Center (No alert) -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-sm"></i>
+        <span id="toast-message" class="font-bold">メッセージ</span>
+    </div>
+
+    <script>
+        // Core Phrases Array for kids (Elementary School Life)
+        const survivalPhrases = [
+            // Category: 'friends' (① ともだちと あそぶ)
+            {
+                category: 'friends',
+                ja: 'いっしょに <ruby>遊<rt>あそ</rt></ruby>ぼう！',
+                romaji: 'isshoni asobō!',
+                explanation: '休み時間（やすみじかん）や放課後（ほうかご）に、お友達を誘う（さそう）ときに使います。'
+            },
+            {
+                category: 'friends',
+                ja: '<ruby>仲間<rt>なかま</rt></ruby>に 入れて！',
+                romaji: 'nakama ni irete!',
+                explanation: 'ほかの子たちが遊んでいるところに、自分も一緒に入りたいときに言います。'
+            },
+            {
+                category: 'friends',
+                ja: '貸（か）して。 / いいよ。',
+                romaji: 'kashite. / iiyo.',
+                explanation: 'お友達の使っているおもちゃや文房具（ぶんぼうぐ）を使いたいときと、それを許可するときです。'
+            },
+            {
+                category: 'friends',
+                ja: 'ありがとう！',
+                romaji: 'arigatō!',
+                explanation: '親切（しんせつ）にしてもらったときや、ものを貸してもらったときのうれしい気持ちです。'
+            },
+            {
+                category: 'friends',
+                ja: 'ごめんね。',
+                romaji: 'gomen ne.',
+                explanation: 'ぶつかってしまったときや、失敗（しっぱい）してしまったときに謝る（あやまる）言葉です。'
+            },
+            {
+                category: 'friends',
+                ja: 'また あしたね！',
+                romaji: 'mata ashita ne!',
+                explanation: '学校が終わって、お家に帰る（かえる）ときにお友達に言う挨拶（あいさつ）です。'
+            },
+
+            // Category: 'class' (② じゅぎょう)
+            {
+                category: 'class',
+                ja: 'トイレに <ruby>行<rt>い</rt></ruby>っても いいですか？',
+                romaji: 'toire ni ittemo iidesu ka?',
+                explanation: '授業中（じゅぎょうちゅう）にトイレに行きたくなったとき、先生に手を挙げて（てをあげて）言います。'
+            },
+            {
+                category: 'class',
+                ja: 'もう一度（いちど）、言ってください。',
+                romaji: 'mō ichido, itte kudasai.',
+                explanation: '先生やお友達の言ったことが聞き取れなかったり、分からなかったときに使います。'
+            },
+            {
+                category: 'class',
+                ja: '手伝（てつだ）ってください。',
+                romaji: 'tetsudatte kudasai.',
+                explanation: 'プリントの配り方や、折り紙（おりがみ）の折り方などが分からなくて助けてほしいときに言います。'
+            },
+            {
+                category: 'class',
+                ja: '教科書（きょうかしょ）を <ruby>忘<rt>わす</rt></ruby>れてしまいました。',
+                romaji: 'kyōkasho o wasurete shimaimashita.',
+                explanation: '家に教科書を忘れてきてしまったときに、正直（しょうじき）に先生に言う言葉です。'
+            },
+            {
+                category: 'class',
+                ja: '宿題（しゅくだい）は どこですか？',
+                romaji: 'shukudai wa doko desu ka?',
+                explanation: '今日の宿題がどのプリントか、あるいは連絡帳のどこに書けばいいか聞くときです。'
+            },
+            {
+                category: 'class',
+                ja: 'わかりました！ / わかりません。',
+                romaji: 'wakarimashita! / wakarimasen.',
+                explanation: '先生の質問（しつもん）に対して、理解（りかい）できたときと、できなかったときの返事です。'
+            },
+
+            // Category: 'lunch_clean' (③ きゅうしょく・そうじ)
+            {
+                category: 'lunch_clean',
+                ja: 'いただきます！',
+                romaji: 'itadakimasu!',
+                explanation: '給食（きゅうしょく）やお弁当（おべんとう）を食べ始める（たべはじめる）ときに全員で言う大切な挨拶です。'
+            },
+            {
+                category: 'lunch_clean',
+                ja: 'ごちそうさまでした！',
+                romaji: 'gochisōsamedashita!',
+                explanation: 'ごはんを食べ終わった（たべおわった）ときに感謝（かんしゃ）を込めて言う挨拶です。'
+            },
+            {
+                category: 'lunch_clean',
+                ja: 'これを 片（かた）づけても いいですか？',
+                romaji: 'koro o katazukete mo iidesu ka?',
+                explanation: '給食のお皿や牛乳パックを、片づける場所に持って行ってよいか聞くときです。'
+            },
+            {
+                category: 'lunch_clean',
+                ja: 'ほうき（ぞうきん）を 貸（か）してください。',
+                romaji: 'hōki (zōkin) o kashite kudasai.',
+                explanation: '掃除（そうじ）の時間に、使う掃除用具（そうじようぐ）を借りたいときに使います。'
+            },
+            {
+                category: 'lunch_clean',
+                ja: 'ここは 掃除（そうじ）が 終わりました！',
+                romaji: 'koko wa sōji ga owarimashita!',
+                explanation: '自分の担当（たんとう）した場所がきれいに終わったことを、先生や班長（はんちょう）に報告するときです。'
+            },
+            {
+                category: 'lunch_clean',
+                ja: '牛乳（ぎゅうにゅう）を こぼしてしまいました。',
+                romaji: 'gyūnyū o koboshite shimaimashita.',
+                explanation: '給食のときに飲み物や食べ物をこぼしてしまい、雑巾（ぞうきん）で拭く（ふく）のを手伝ってほしいときです。'
+            },
+
+            // Category: 'trouble' (④ こまったとき・せんせいへ)
+            {
+                category: 'trouble',
+                ja: '<ruby>気分<rt>きぶん</rt></ruby>が 悪（わる）いです。',
+                romaji: 'kibun ga warui desu.',
+                explanation: 'お腹が痛い、頭が痛い、吐きそう（はきそう）など、体調が悪いときに先生に伝えます。'
+            },
+            {
+                category: 'trouble',
+                ja: '保健室（ほけんしつ）に 行（い）っても いいですか？',
+                romaji: 'hokenshitsu ni ittemo iidesu ka?',
+                explanation: '怪我（けが）をしたり、熱（ねつ）っぽくて保健室の先生に診てもらいたいときに言います。'
+            },
+            {
+                category: 'trouble',
+                ja: 'お友達（ともだち）に 意地悪（いじわる）を されました。',
+                romaji: 'otomodachi ni ijiwaru o saremashita.',
+                explanation: '叩かれたり（たたかれたり）、嫌なことを言われて悲しい（かなしい）ときに先生に相談します。'
+            },
+            {
+                category: 'trouble',
+                ja: 'ものを なくしてしまいました。',
+                romaji: 'mono o nakushite shimaimashita.',
+                explanation: 'えんぴつや消しゴム、水筒（すいとう）などが見つからなくなって探したいときです。'
+            },
+            {
+                category: 'trouble',
+                ja: 'これは だれの ですか？',
+                romaji: 'kore wa dare no desuka?',
+                explanation: '廊下（ろうか）や床（ゆか）にえんぴつなどが落ちて（おちて）いて、持ち主（もちぬし）を探すときです。'
+            },
+            {
+                category: 'trouble',
+                ja: '英語（えいご）が わかる 先生（せんせい）は いますか？',
+                romaji: 'eigo ga wakaru sensei wa imasuka?',
+                explanation: 'どうしても日本語が通じなくて困り、話が伝わる通訳や別の先生を探したいときに聞きます。'
+            }
+        ];
+
+        // Core Vocabularies
+        const vocabData = [
+            // Category: 'items' (① もちもの・どうぐ)
+            { category: 'items', ja: 'ランドセル', furigana: 'らんどせる', romaji: 'randoseru', explanation: '小学校（しょうがっこう）にいくときに、教科書（きょうかしょ）やノートをいれて せなかに しょって いくカバンです。' },
+            { category: 'items', ja: '上履き', furigana: 'うわばき', romaji: 'uwabaki', explanation: '学校（がっこう）のなかで はく、しろい 室内用（しつないよう）のくつです。じぶんのなまえを かきます。' },
+            { category: 'items', ja: '筆箱', furigana: 'ふでばこ', romaji: 'fudebako', explanation: 'えんぴつ、けしごむ、定規（じょうぎ）、赤ペンなどをいれる ケースのことです。' },
+            { category: 'items', ja: '連絡帳', furigana: 'れんらくちょう', romaji: 'renrakuchō', explanation: 'まいにちの しゅくだい や、もってくるものを かくノートです。せんせいと おやが れんらくを とりあうときにも つかいます。' },
+            { category: 'items', ja: '教科書', furigana: 'きょうかしょ', romaji: 'kyōkasho', explanation: '授業（じゅぎょう）で つかう べんきょうの 本のことです。国語（こくご）や算数（さんすう）など、きょうかごとに あります。' },
+            { category: 'items', ja: '防災頭巾', furigana: 'ぼうさいずきん', romaji: 'bōsaizukin', explanation: 'じしん が おきたときに、あたまを まもるために かぶる クッションのような ずきんです。ふだんは いすのざぶとんに しています。' },
+            { category: 'items', ja: '名札', furigana: 'なふだ', romaji: 'nafuda', explanation: 'じぶんの なまえが かいてある プレートです。学校（がっこう）にいるときは、ふくの むねのあたりに ピンで つけます。' },
+            { category: 'items', ja: 'コップ袋', furigana: 'こっぷぶくろ', romaji: 'koppubukuro', explanation: 'はみがきで つかう コップや はぶらしを いれておく 巾着（きんちゃく）のふくろです。' },
+
+            // Category: 'places' (② がっこうの ばしょ)
+            { category: 'places', ja: '教室', furigana: 'きょうしつ', romaji: 'kyōshitsu', explanation: 'みんなで じゅぎょう（授業）をうけたり、給食（きゅうしょく）を たべたりする へやのことです。' },
+            { category: 'places', ja: '校庭', furigana: 'こうてい', romaji: 'kōtei', explanation: 'がっこうの そとにある ひろいグラウンド（運動場）のことです。休み時間（やすみじかん）に あそんだり、体育（たいいく）をします。' },
+            { category: 'places', ja: '体育館', furigana: 'たいいくかん', romaji: 'taiikukan', explanation: 'あめの日でも たいいく（体育）ができる、ひろい たてものの なかの うんどうじょうです。入学式（にゅうがくしき）などの ぎょうじも やります。' },
+            { category: 'places', ja: '保健室', furigana: 'ほけんしつ', romaji: 'hokenshitsu', explanation: 'ケガをしたり、あたまや おなかが いたくなったときに いく、がっこうの びょういんのような へやです。' },
+            { category: 'places', ja: '図書室', furigana: 'としょしつ', romaji: 'toshoshitsu', explanation: 'たくさん 本が おいてある へやです。しずかに 本を よんだり、かりたりすることができます。' },
+            { category: 'places', ja: '職員室', furigana: 'しょくいんしつ', romaji: 'shokuinshitsu', explanation: '担任（たんにん）の せんせいたちが おしごとを している へやです。はいるときは「しつれいします」と いいます。' },
+            { category: 'places', ja: '給食室', furigana: 'きゅうしょくしつ', romaji: 'kyūshokushitsu', explanation: 'おいしい給食（きゅうしょく）を つくってくれる キッチンです。エプロンをきて おかずを とりに いきます。' },
+            { category: 'places', ja: '下駄箱', furigana: 'げたばこ / しょうこうぐち', romaji: 'getabako / shōkōguchi', explanation: 'がっこうの いりぐちに ある、そとのくつと うわばきを いれる ロッカー（くつばこ）です。' },
+
+            // Category: 'subjects' (③ きょうか・勉強)
+            { category: 'subjects', ja: '国語', furigana: 'こくご', romaji: 'kokugo', explanation: 'にほんご（日本語）の ひらがな、かたかな、かんじ を べんきょうしたり、本を よんだりする じゅぎょうです。' },
+            { category: 'subjects', ja: '算数', furigana: 'さんすう', romaji: 'sansū', explanation: 'すうじ（数字）の たしざん、ひきざん、かけざん、わりざん などを べんきょうする じゅぎょうです。' },
+            { category: 'subjects', ja: '体育', furigana: 'たいいく', romaji: 'taiiku', explanation: 'うんどう（運動）をしたり、走ったり（はしったり）、体操（たいそう）をしたりする がっこうの スポーツのじかんです。' },
+            { category: 'subjects', ja: '音楽', furigana: 'おんがく', romaji: 'ongaku', explanation: 'みんなで うたを うたったり、ピアニカ（鍵盤ハーモニカ）やリコーダーを えんそうする じゅぎょうです。' },
+            { category: 'subjects', ja: '図工', furigana: 'ずこう', romaji: 'zukō', explanation: 'えのぐで えを かいたり、ねんど や はさみ、ダンボールを つかって いろいろな 工作（こうさく）を つくる じかんです。' },
+            { category: 'subjects', ja: '生活', furigana: 'せいかつ', romaji: 'seikatsu', explanation: '１ねんせいと ２ねんせいに ある じゅぎょうです。がっこうの まわりを たんけんしたり、はなや 野菜（やさい）を そだてます。' },
+            { category: 'subjects', ja: '時間割', furigana: 'じかんわり', romaji: 'jikanwari', explanation: 'げつようび から きんようび までの、どのじかんに なにを べんきょうするかが かいてある ひょう（スケジュール）です。' },
+            { category: 'subjects', ja: 'めあて', furigana: 'めあて', romaji: 'meate', explanation: '今日の 授業（じゅぎょう）で、なにを がんばるか という「目標（もくひょう）」のことです。黒板（こくばん）のうえにかきます。' },
+
+            // Category: 'events' (④ がっこうの ぎょうじ)
+            { category: 'events', ja: '入学式', furigana: 'にゅうがくしき', romaji: 'nyūgakushiki', explanation: '１ねんせいに なって、はじめて がっこうに はいるときの おいわいの しき（セレモニー）のことです。' },
+            { category: 'events', ja: '運動会', furigana: 'うんどうかい', romaji: 'undōkai', explanation: 'みんなで あか組（あかぐみ）と しろ組（しろぐみ）に わかれて、かけっこ や ダンスをして きそう たのしい行事です。' },
+            { category: 'events', ja: '遠足', furigana: 'えんそく', romaji: 'ensoku', explanation: 'みんなで バスや 電車（でんしゃ）にのって、こうえん や どうぶつえん に おべんとうを もって あそびにいく 行事です。' },
+            { category: 'events', ja: '避難訓練', furigana: 'ひなんくんれん', romaji: 'hinankunren', explanation: 'じしん や かじ が おきたときに、どのように にげるかを れんしゅうする たいせつな 訓練（くんれん）です。' },
+            { category: 'events', ja: '授業参観', furigana: 'じゅぎょうさんかん', romaji: 'jugyōsankan', explanation: 'おとうさん や おかあさん が 学校（がっこう）にきて、みんなが べんきょうしている ところを みる 日です。' },
+            { category: 'events', ja: '夏休み', furigana: 'なつやすみ', romaji: 'natsuyasumi', explanation: '７がつの おわりから ８がつの おわりまで、がっこうが おやすみに なる、ながい おやすみのことです。' },
+            { category: 'events', ja: '面談', furigana: 'めんだん', romaji: 'mendan', explanation: 'せんせい と おとうさん・おかあさん が、みんなの がっこうでの ようすについて おはなしをする 会合（かいごう）です。' },
+            { category: 'events', ja: '大掃除', furigana: 'おおそうじ', romaji: 'ōsōji', explanation: '学期（がっき）の おわりに、ふだん 掃除（そうじ）しない すみずみまで みんなで きれいに おそうじ することです。' }
+        ];
+
+        // Window load
+        window.onload = function () {
+            renderPhrases('all');
+            renderVocab('all');
+            generateMemos(); // fill the script generator default
+        };
+
+        // Tab system
+        function switchTab(tabId) {
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.add('hidden'));
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-sky-100', 'text-sky-800', 'border-sky-200');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-50', 'border-transparent');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-50', 'border-transparent');
+                activeBtn.classList.add('bg-sky-100', 'text-sky-800', 'border-sky-200');
+            }
+        }
+
+        function filterPhrases(category) {
+            const btns = document.querySelectorAll('.phrase-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-sky-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('phrase-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-sky-500', 'text-white', 'shadow-md');
+            }
+
+            renderPhrases(category);
+        }
+
+        function renderPhrases(category) {
+            const container = document.getElementById('phrases-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? survivalPhrases
+                : survivalPhrases.filter(p => p.category === category);
+
+            filtered.forEach(phrase => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col justify-between items-start gap-3 card-hover";
+                card.innerHTML = `
+                    <div class="w-full space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-black text-slate-400 tracking-wider">会話（かいわ）</span>
+                            <span class="text-[9px] bg-sky-100 text-sky-700 font-black px-2 py-0.5 rounded-full uppercase">
+                                ${getCategoryName(phrase.category)}
+                            </span>
+                        </div>
+                        <h4 class="font-black text-slate-900 text-base md:text-lg leading-relaxed">${phrase.ja}</h4>
+                        <div class="text-xs text-sky-700 italic font-mono font-bold">${phrase.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-sky-50/20 px-3 py-2.5 rounded-xl border-2 border-sky-100/30 flex items-start gap-1.5 mt-1 font-medium">
+                            <span class="text-amber-500 font-black shrink-0">解説（せつめい）:</span>
+                            <span>${phrase.explanation}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getCategoryName(cat) {
+            switch (cat) {
+                case 'friends': return 'ともだち';
+                case 'class': return 'じゅぎょう';
+                case 'lunch_clean': return '給食・掃除';
+                case 'trouble': return 'こまったとき';
+                default: return '一般';
+            }
+        }
+
+        function filterVocab(category) {
+            const btns = document.querySelectorAll('.vocab-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('vocab-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-amber-500', 'text-white', 'shadow-md');
+            }
+
+            renderVocab(category);
+        }
+
+        function renderVocab(category) {
+            const container = document.getElementById('vocab-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? vocabData
+                : vocabData.filter(v => v.category === category);
+
+            filtered.forEach(vocab => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm flex justify-between items-start card-hover";
+                card.innerHTML = `
+                    <div class="space-y-1.5 w-full">
+                        <div class="text-[10px] text-slate-400 font-bold font-mono">ふりがな: ${vocab.furigana}</div>
+                        <h4 class="font-black text-slate-900 text-base flex items-center gap-1">${vocab.ja}</h4>
+                        <div class="text-[10px] text-amber-600 italic font-mono font-bold">${vocab.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border-2 border-slate-100 mt-1 font-medium">${vocab.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function generateMemos() {
+            const myName = document.getElementById('form-my-name').value.trim() || 'あきら';
+            const targetName = document.getElementById('form-target-name').value.trim() || 'たろうくん';
+            const playPlace = document.getElementById('form-play-place').value;
+            const problem = document.getElementById('form-problem').value;
+
+            // Scenario 1: Note to Friend (Invitation to play)
+            const friendMemoText = `${targetName} へ
+
+こんにちは！ ${myName} です。
+
+きょうの がっこうの あとに、
+いっしょに 【${playPlace}】 で あそびませんか？
+
+もし あそべるときは、
+この おてがみ（ノート）に おへんじを かくか、
+休み時間（やすみじかん）に おしえてください。
+
+よろしくおねがいします！`;
+
+            document.getElementById('gen-friend-ja').innerText = friendMemoText;
+            document.getElementById('script-friend-raw').innerText = friendMemoText;
+
+            // Scenario 2: Note to Teacher (I forgot homework/I don't feel well)
+            const teacherMemoText = `${targetName} せんせい へ
+
+いつも おせわに なっております。
+${myName} です。
+
+きょう、 ${problem}
+
+すみませんが、 よろしくおねがいいたします。`;
+
+            document.getElementById('gen-teacher-ja').innerText = teacherMemoText;
+            document.getElementById('script-teacher-raw').innerText = teacherMemoText;
+        }
+
+        // Clipboard action utility (without navigator.clipboard API for iframe compatibility)
+        function copyGeneratedText(divId) {
+            const rawContent = document.getElementById(divId).innerText;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = rawContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("おてがみを コピーしました！");
+        }
+
+        // Custom Toast System (avoiding alert)
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+
+            toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-0 opacity-100 transition duration-300 pointer-events-auto";
+
+            setTimeout(() => {
+                toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none";
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外国人のための日本の暮らし日本語サポートツール</title>
+    <!-- Tailwind CSS for premium responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Noto Sans JP for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        /* Custom scrollbar for list containers */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Smooth scale transition for cards */
+        .card-hover:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-amber-50/30 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header (Designed with warm colors welcoming families/homemakers) -->
+    <header class="bg-gradient-to-r from-teal-600 to-emerald-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-teal-700 p-2.5 rounded-full shadow-inner flex items-center justify-center">
+                    <i class="fa-solid fa-house-chimney text-xl md:text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">しゅふの日常せいかつ<ruby>応援<rt>おうえん</rt></ruby>アプリ
+                    </h1>
+                    <p class="text-xs text-teal-100 mt-1">買い物、学校、病院、ゴミ出しなど、日本での毎日の暮らしをスムーズにする便利ツール</p>
+                </div>
+            </div>
+            <a href="../JpLearning/index.html"
+                class="bg-white hover:bg-rose-50 text-rose-500 font-black text-xs px-4 py-2 rounded-full border-2 border-rose-300 shadow-sm flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-house"></i>
+                <span>ホームに<ruby>戻<rt>もど</rt></ruby>る</span>
+            </a>
+            <div class="bg-teal-900/40 rounded-xl px-4 py-2 border border-teal-500/30 text-xs">
+                <span class="font-semibold text-amber-300">💡 やさしい日本語：</span> 難しい漢字にはすべてフリガナ（ルビ）が付いています
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6">
+
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-1/4 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 sticky top-24 space-y-2">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-2"><ruby>生活<rt>せいかつ</rt>
+                    </ruby>・ツールメニュー</p>
+
+                <button onclick="switchTab('survival')" id="btn-survival"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm transition bg-teal-50 text-teal-700">
+                    <i class="fa-solid fa-comments text-base"></i>
+                    <span>毎日つかう会話フレーズ</span>
+                </button>
+
+                <button onclick="switchTab('vocab')" id="btn-vocab"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-book-bookmark text-base"></i>
+                    <span>暮らしの重要単語集</span>
+                </button>
+
+                <button onclick="switchTab('memo-gen')" id="btn-memo-gen"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-pen-to-square text-base"></i>
+                    <span>連絡帳・あいさつ作成</span>
+                </button>
+
+                <button onclick="switchTab('guide')" id="btn-guide"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-circle-info text-base"></i>
+                    <span>知っておくべき暮らしのルール</span>
+                </button>
+
+                <!-- Supportive advice box -->
+                <div
+                    class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200/60 text-xs text-amber-900 leading-relaxed">
+                    <h4 class="font-bold flex items-center gap-1.5 text-amber-950 mb-1">
+                        <i class="fa-solid fa-heart text-amber-600"></i>
+                        日本の生活に慣れていない方へ
+                    </h4>
+                    <p>日本での買い物や、子育て（学校や幼稚園の手続き）は言葉が通じなくて不安になることが多いと思います。このツールを使って、簡単な一言から少しずつ話してみましょう！</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Tab Content Area -->
+        <section class="flex-grow w-full md:w-3/4">
+
+            <!-- 1. Survival Phrases Tab -->
+            <div id="tab-survival" class="tab-pane space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-teal-100 text-teal-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-comments"></i></span>
+                        毎日つかう会話フレーズ
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">スーパー、子どもの学校や幼稚園、病院、近所づきあいで使う、シンプルで大切な会話表現です。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterPhrases('all')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-teal-600 text-white shadow-sm transition">
+                            すべて
+                        </button>
+                        <button onclick="filterPhrases('shopping')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ① お買い物
+                        </button>
+                        <button onclick="filterPhrases('school')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ② 学校・幼稚園
+                        </button>
+                        <button onclick="filterPhrases('hospital')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ③ 病院・薬局
+                        </button>
+                        <button onclick="filterPhrases('neighborhood')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ④ 近所・ゴミ出し
+                        </button>
+                    </div>
+
+                    <!-- Phrase Grid -->
+                    <div id="phrases-grid" class="grid grid-cols-1 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Vocabulary Tab -->
+            <div id="tab-vocab" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-teal-100 text-teal-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-book-bookmark"></i></span>
+                        暮らしの重要単語集
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">お店のラベル、学校の手紙、体調が悪いとき、家やゴミ捨て場でよく見る大切な言葉です。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterVocab('all')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-teal-600 text-white shadow-sm transition">
+                            すべて
+                        </button>
+                        <button onclick="filterVocab('shopping')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ① お買い物・食品
+                        </button>
+                        <button onclick="filterVocab('school')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ② 学校・子ども
+                        </button>
+                        <button onclick="filterVocab('medical')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ③ 病院・からだ
+                        </button>
+                        <button onclick="filterVocab('living')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ④ 暮らし・ゴミ・町内
+                        </button>
+                    </div>
+
+                    <!-- Vocab Grid -->
+                    <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. School Memo & Greeting Generator -->
+            <div id="tab-memo-gen" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-amber-100 text-amber-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-pen-to-square"></i></span>
+                        連絡帳（れんらくちょう）＆おあいさつ文面作成ツール
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">
+                        必要な情報を入れるだけで、学校の先生に見せる連絡帳のメモや、ご近所に配る挨拶（あいさつ）の文章が自動で完成します。コピーしてノートに書いたり、メモにして渡せます。</p>
+
+                    <!-- Input Form -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-teal-50/20 p-5 rounded-xl border border-teal-100/60 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">お母さん・お父さんの名前 (ひらがな)</label>
+                            <input type="text" id="form-parent-name" placeholder="例：まりあ" value="まりあ"
+                                oninput="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">子どもの名前 (ひらがな)</label>
+                            <input type="text" id="form-child-name" placeholder="例：れお" value="れお"
+                                oninput="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">クラス・学年</label>
+                            <input type="text" id="form-class" placeholder="例：1ねん1くみ" value="1ねん1くみ"
+                                oninput="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">休む・遅れる理由</label>
+                            <select id="form-reason" onchange="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                                <option value="ねつがでたため">熱（ねつ）が出たため</option>
+                                <option value="せきと はなみずが でるため">咳（せき）と鼻水（はなみず）が出るため</option>
+                                <option value="おなかが いたいため">お腹（おなか）が痛いため</option>
+                                <option value="はいしゃに いくため">歯医者（はいしゃ）に行くため（遅刻・早退）</option>
+                                <option value="ようじが あるため">用事（ようじ）があるため</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">学校への連絡方法</label>
+                            <select id="form-school-action" onchange="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                                <option value="おやすみします。">今日はお休みします</option>
+                                <option value="すこし おくれて いきます。">少し遅れて（遅刻して）行きます</option>
+                                <option value="はやく かえらせてください。">早く帰らせて（早退させて）ください</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">住んでいる場所（アパート名・部屋番号など）</label>
+                            <input type="text" id="form-address" placeholder="例：サクラハイツ 201ごうしつ" value="サクラハイツ 201ごうしつ"
+                                oninput="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">今の日本語能力について（あいさつ用）</label>
+                            <select id="form-jp-level" onchange="generateMemos()"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                                <option value="日本語はまだ上手ではありませんが、がんばります。">日本語はあまり話せませんが、一生懸命がんばります</option>
+                                <option value="簡単な日本語なら少し話すことができます。">簡単な日本語なら少し話せます</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Output Panels -->
+                    <div class="space-y-4">
+                        <!-- Scenario 1: School Contact Book Memo -->
+                        <div class="border border-teal-100 rounded-xl overflow-hidden bg-teal-50/20">
+                            <div
+                                class="bg-teal-50 px-4 py-2.5 border-b border-teal-100 flex justify-between items-center">
+                                <span class="text-xs font-bold text-teal-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-book-open-reader text-teal-600"></i>
+                                    パターン1：学校・幼稚園の「連絡帳（れんらくちょう）」に書く文章
+                                </span>
+                                <button onclick="copyGeneratedText('script-school-raw')"
+                                    class="text-xs text-teal-700 hover:text-teal-900 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> コピーする
+                                </button>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                                    <p class="text-xs font-bold text-amber-600 mb-2">手書き用（先生にそのまま見せて読めます）：</p>
+                                    <pre id="gen-school-ja"
+                                        class="whitespace-pre-wrap text-sm font-semibold leading-relaxed text-slate-900 mb-4 font-mono"></pre>
+                                    <p class="text-xs text-slate-400">※「連絡帳」は、朝クラスの誰かに預けて先生に渡してもらうか、直接学校へ持っていきます。</p>
+                                    <div id="script-school-raw" class="hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2: Neighborhood Greeting Note -->
+                        <div class="border border-amber-100 rounded-xl overflow-hidden bg-amber-50/20">
+                            <div
+                                class="bg-amber-50 px-4 py-2.5 border-b border-amber-100 flex justify-between items-center">
+                                <span class="text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-handshake text-amber-600"></i>
+                                    パターン2：ご近所（アパートの隣の人など）に渡す「あいさつ用メモ」
+                                </span>
+                                <button onclick="copyGeneratedText('script-neighbor-raw')"
+                                    class="text-xs text-amber-700 hover:text-amber-900 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> コピーする
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                                    <pre id="gen-neighbor-ja"
+                                        class="whitespace-pre-wrap text-sm text-slate-800 font-mono leading-relaxed font-semibold"></pre>
+                                    <p class="text-xs text-slate-400 mt-3">
+                                        ※引っ越しをした日や、子どもがうるさくして心配なときに、紙に書いてポストに入れるか、直接挨拶の時に見せることができます。</p>
+                                    <div id="script-neighbor-raw" class="hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Household Rules & Mindsets Tab -->
+            <div id="tab-guide" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-rose-100 text-rose-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-shield-halved"></i></span>
+                        日本の生活（せいかつ）でたいせつなルール
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">ゴミの出し方、学校の決まり、日本の近所付き合いでトラブルにならないためのルールです。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-teal-50 border border-teal-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-teal-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash-can text-teal-600"></i>
+                                1. ゴミをすてるルール（ぶんべつ）
+                            </h3>
+                            <p class="text-xs text-teal-900 leading-relaxed">
+                                日本は、住む街（市区町村）によってゴミを捨てるルールが細かく決まっています。
+                            </p>
+                            <ul class="text-xs text-teal-900 space-y-1 pl-4 list-disc font-medium">
+                                <li><strong>「燃（も）えるゴミ」</strong>、<strong>「燃えないゴミ」</strong>、<strong>「資源（しげん）ゴミ（プラスチック、缶、ペットボトル）」</strong>は必ず袋を分けます。
+                                </li>
+                                <li>ゴミを捨てる<strong>曜日と場所</strong>を守りましょう。夜ではなく、捨てる日の<strong>朝の8時くらいまで</strong>に出すのがマナーです。
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-rose-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-school-flag text-rose-600"></i>
+                                2. 学校や幼稚園の「連絡（れんらく）」
+                            </h3>
+                            <p class="text-xs text-rose-900 leading-relaxed">
+                                子どもが休む時、日本の学校では「連絡方法」が決まっています。
+                            </p>
+                            <ul class="text-xs text-rose-900 space-y-1 pl-4 list-disc font-medium">
+                                <li>急なお休みは、<strong>朝の8時〜8時15分まで</strong>に、学校へ電話するか、連絡システム（アプリ）で入力します。</li>
+                                <li>お休みの連絡は<strong>「連絡帳（れんらくちょう）」</strong>に書いて、同じ地区の近所のお友達に持って行ってもらうルールがある学校もあります。</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-amber-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-users text-amber-600"></i>
+                                3. 近所づきあいと「音」のマナー
+                            </h3>
+                            <p class="text-xs text-amber-900 leading-relaxed">
+                                アパートやマンションでは、隣や下の階の人への思いやりが必要です。
+                            </p>
+                            <ul class="text-xs text-amber-900 space-y-1 pl-4 list-disc font-medium">
+                                <li>小さな子どもが走る音や、大きな声は静かなアパートでは響きやすいです。<strong>夜（20時以降）や朝早く</strong>は、テレビの音を小さくしたり走らせないように気をつけましょう。
+                                </li>
+                                <li>あらかじめ「子どもがうるさくてすみません」と挨拶しておくとトラブルが防げます。</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-slate-100 border border-slate-300 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-phone-volume text-slate-600"></i>
+                                4. 緊急（きんきゅう）の電話
+                            </h3>
+                            <p class="text-xs text-slate-800 leading-relaxed">
+                                火事、大きなケガ、どろぼうが入ったなど、命に関わるときの電話番号です。
+                            </p>
+                            <ul class="text-xs text-slate-800 space-y-1.5 pl-4 list-disc font-medium">
+                                <li><strong>火事（かじ）や救急車（きゅうきゅうしゃ）</strong>: <strong
+                                        class="text-red-600 text-sm">「119」</strong>番に電話します。</li>
+                                <li><strong>警察（けいさつ）への通報</strong>: <strong
+                                        class="text-blue-600 text-sm">「110」</strong>番に電話します。</li>
+                                <li>日本語が難しくても、電話を切らずに「中国語（ちゅうごくご）」や「英語（えいご）」と言えば、通訳を入れてくれることもあります。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Global Toast Center -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-sm"></i>
+        <span id="toast-message" class="font-medium">メッセージ</span>
+    </div>
+
+    <script>
+        // Core Phrases Array (Tailored heavily for daily life of foreign homemakers)
+        const survivalPhrases = [
+            // Category: 'shopping' (① お買い物)
+            {
+                category: 'shopping',
+                ja: 'レジ<ruby>袋<rt>ぶくろ</rt></ruby>は<ruby>要<rt>い</rt></ruby>りません。',
+                romaji: 'reji-bukuro wa irimasen.',
+                explanation: 'スーパーやコンビニで袋がいらない（自分でバッグを持っている）ときに使います。'
+            },
+            {
+                category: 'shopping',
+                ja: 'レジ<ruby>袋<rt>ぶくろ</rt></ruby>を1<ruby>枚<rt>まい</rt></ruby>ください。',
+                romaji: 'reji-bukuro o ichi-mai kudasai.',
+                explanation: '袋がほしいときに店員さんに言います（袋は有料：3円〜5円が多いです）。'
+            },
+            {
+                category: 'shopping',
+                ja: 'ポイントカードは<ruby>持<rt>も</rt></ruby>っていません。',
+                romaji: 'pointo kādo wa motte imasen.',
+                explanation: 'お会計（レジ）のときにポイントカードがあるか聞かれたら、こう答えます。'
+            },
+            {
+                category: 'shopping',
+                ja: 'カードで<ruby>払<rt>はら</rt></ruby>えますか？',
+                romaji: 'kādo de haraemasu ka?',
+                explanation: 'クレジットカードで支払いが可能かどうかレジで確認する表現です。'
+            },
+            {
+                category: 'shopping',
+                ja: '<ruby>牛肉<rt>ぎゅうにく</rt></ruby>（あるいは豚肉・鶏肉など）はどこにありますか？',
+                romaji: 'gyūniku (butaniku / toriniku) wa doko ni arimasu ka?',
+                explanation: 'スーパーで目的の食材（牛肉、豚肉、鶏肉など）の売り場が見つからないときに聞きます。'
+            },
+            {
+                category: 'shopping',
+                ja: '賞味期限（しょうみきげん）はいつまでですか？',
+                romaji: 'shōmi kigen wa itsu made desu ka?',
+                explanation: '商品の賞味期限（美味しく食べられる日付）を店員さんに聞きたいときに使います。'
+            },
+
+            // Category: 'school' (② 学校・幼稚園)
+            {
+                category: 'school',
+                ja: '子どもが<ruby>熱<rt>ねつ</rt></ruby>を出したので、今日はお<ruby>休<rt>やす</rt></ruby>みします。',
+                romaji: 'kodomo ga netsu o dashita node, kyō wa oyasumi shimasu.',
+                explanation: '子どもの急な発熱で学校や幼稚園を休ませるとき、電話などで伝える最も重要な言葉です。'
+            },
+            {
+                category: 'school',
+                ja: '連絡帳（れんらくちょう）を書いてきました。確認をお願いします。',
+                romaji: 'renrakuchō o kaite kimashita. kakunin o onegai shimasu.',
+                explanation: 'お休みや予定変更のメモを先生が読む連絡帳に書いたとき、渡しながら言うフレーズです。'
+            },
+            {
+                category: 'school',
+                ja: '持ち物（もちもの）がよく分かりません。教えていただけますか？',
+                romaji: 'mochimono ga yoku wakarimasen. oshiete itadakemasu ka?',
+                explanation: '学校や幼稚園から配られた手紙に書かれている「持って行くもの」が理解できないときに質問するフレーズです。'
+            },
+            {
+                category: 'school',
+                ja: '子どもがお世話になっております。いつもありがとうございます。',
+                romaji: 'kodomo ga osewa ni natte orimasu. itsumo arigatō gozaimasu.',
+                explanation: '学校の懇談会（懇談会）、授業参観などで先生に最初に言う、とても礼儀正しい挨拶です。'
+            },
+            {
+                category: 'school',
+                ja: 'もう一度、ゆっくりお話ししていただけますか？',
+                romaji: 'mō ichido, yukkuri ohanashi shite itadakemasu ka?',
+                explanation: '先生の言っていることが早くて聞き取れなかったとき、ゆっくり話してもらうようお願いする丁寧な言い方です。'
+            },
+            {
+                category: 'school',
+                ja: '子どもが忘れ物（わすれもの）をしたので、届けにきました。',
+                romaji: 'kodomo ga wasuremono o shita node, todoke ni kimashita.',
+                explanation: '水筒、教科書、お弁当などを忘れた子どもに届けるため、学校の事務室や職員室へ行った時の挨拶です。'
+            },
+
+            // Category: 'hospital' (③ 病院・薬局)
+            {
+                category: 'hospital',
+                ja: '子どもが<ruby>熱<rt>ねつ</rt></ruby>を出しました。診察（しんさつ）をお願いします。',
+                romaji: 'kodomo ga netsu o dashita node, shinsatsu o onegai shimasu.',
+                explanation: '小児科（しょうにか）などの受付で、診てほしいことを伝える一番基本的な言葉です。'
+            },
+            {
+                category: 'hospital',
+                ja: '熱は昨日（きのう）から、38度あります。',
+                romaji: 'netsu wa kinō kara, sanjū-hachi-do arimasu.',
+                explanation: '子どもの今の熱の温度と、いつからその熱が続いているのかを伝える言い方です。'
+            },
+            {
+                category: 'hospital',
+                ja: '咳（せき）と鼻水（はなみず）がでます。お腹も痛いと言っています。',
+                romaji: 'seki to hanamizu ga demasu. onaka mo itai to itte imasu.',
+                explanation: 'お医者さんに子どもの風邪の具体的な症状を伝える言い方です。'
+            },
+            {
+                category: 'hospital',
+                ja: '粉薬（こなぐすり）は飲めません。シロップ（あるいは錠剤）にできますか？',
+                romaji: 'konagusuri wa nomemasen. shiroppu (jōzai) ni dekimasu ka?',
+                explanation: '子どもが苦い粉の薬を嫌がるとき、シロップなどの飲みやすいタイプに変更してもらえるか聞くフレーズです。'
+            },
+            {
+                category: 'hospital',
+                ja: 'お薬手帳（おくすりてちょう）と保険証（ほけんしょう）です。お願いします。',
+                romaji: 'okusuri techō to hokenshō desu. onegai shimasu.',
+                explanation: '病院や薬局の受付で、保険証とお薬手帳を一緒に見せるときに渡しながら言う言葉です。'
+            },
+            {
+                category: 'hospital',
+                ja: 'この薬は1日に何回（なんかい）飲めばいいですか？',
+                romaji: 'kono kusuri wa ichi-nichi ni nan-kai nomeba ii desu ka?',
+                explanation: '薬局で薬の正しい飲み方を確認する一番簡単なフレーズです。'
+            },
+
+            // Category: 'neighborhood' (④ 近所・ゴミ出し)
+            {
+                category: 'neighborhood',
+                ja: 'ゴミはどこに捨てればいいですか？',
+                romaji: 'gomi wa doko ni sutereba ii desu ka?',
+                explanation: '引っ越しをした後に、アパートの管理人や近所の人にゴミの収集場所を聞くフレーズです。'
+            },
+            {
+                category: 'neighborhood',
+                ja: 'いつも子どもがうるさくて、すみません。気をつけます。',
+                romaji: 'itsumo kodomo ga urasakute, sumimasen. ki o tsukemasu.',
+                explanation: '下の部屋の人や隣の人に会ったとき、「うるさくしてごめんなさい」という気持ちを伝える挨拶です。'
+            },
+            {
+                category: 'neighborhood',
+                ja: '回覧板（かいらんばん）はどこに回せばいいですか？',
+                romaji: 'kairanban wa doko ni mawaseba ii desu ka?',
+                explanation: '町内やアパートのお知らせ（回覧板）を、誰のポストやドアに入れればよいか隣の人に聞くときに使います。'
+            },
+            {
+                category: 'neighborhood',
+                ja: 'こんにちは。〇〇号室（ごうしつ）の〇〇です。よろしくお願いします。',
+                romaji: 'konnichiwa. 〇〇 gōshitsu no 〇〇 desu. yoroshiku onegai shimasu.',
+                explanation: '引っ越しのご挨拶や、マンション内で近所の人に会ったときの短い自己紹介です。'
+            },
+            {
+                category: 'neighborhood',
+                ja: '荷物（にもつ）を預かっていただいて、ありがとうございました。',
+                romaji: 'nimotsu o azakatte itadaite, arigatō gozaimashita.',
+                explanation: '不在時に隣の人が宅配便の荷物を受け取ってくれたとき、お礼を言いに行くフレーズです。'
+            },
+            {
+                category: 'neighborhood',
+                ja: 'ゴミの分別（ぶんべつ）がよく分からないのですが、教えていただけますか？',
+                romaji: 'gomi no bunbetsu ga yoku wakaranai no desu ga, oshiete itadakemasu ka?',
+                explanation: 'ゴミをどのように分けて袋に入れたらよいか不安なとき、近所の人に優しく教えてもらう言葉です。'
+            }
+        ];
+
+        // Core Vocabularies
+        const vocabData = [
+            // Category: 'shopping' (① お買い物・食品)
+            { category: 'shopping', ja: '消費期限', furigana: 'しょうひきげん', romaji: 'shōhi kigen', explanation: 'この日までに必ず「食べてください」という期限です。過ぎたら捨てましょう。' },
+            { category: 'shopping', ja: '賞味期限', furigana: 'しょうみきげん', romaji: 'shōmi kigen', explanation: 'この日までなら「美味しく食べられます」という期限です。少し過ぎても大丈夫なことが多いです。' },
+            { category: 'shopping', ja: '半額', furigana: 'はんがく', romaji: 'hangaku', explanation: '元の値段の50％引き（半分のお金）です。夕方のスーパーでよく貼られます。' },
+            { category: 'shopping', ja: 'お会計', furigana: 'おかいけい', romaji: 'okaikei', explanation: 'レジでお金を払うことです。支払いのことを指します。' },
+            { category: 'shopping', ja: 'レジ袋', furigana: 'れじぶくろ', romaji: 'reji bukuro', explanation: '買い物した商品を入れるプラスチックの袋です（有料です）。' },
+            { category: 'shopping', ja: '特売', furigana: 'とくばい', romaji: 'tokubai', explanation: 'いつもより安く売っている特別なセールのことです。' },
+            { category: 'shopping', ja: '大容量パック', furigana: 'だいようりょう ぱっく', romaji: 'daiyōryō pakku', explanation: 'お肉などがたくさん入ったお得で大きいパックのことです。' },
+            { category: 'shopping', ja: '無洗米', furigana: 'むせんまい', romaji: 'musenmai', explanation: 'お米を洗う水の手間がいらない、そのまま炊飯器で炊ける便利なお米です。' },
+            { category: 'shopping', ja: '税込 / 税抜', furigana: 'ぜいこみ / ぜいぬき', romaji: 'zeikomi / zeinuki', explanation: '消費税（10%または8%）が入っている価格と、入っていない価格の表記です。' },
+
+            // Category: 'school' (② 学校・子ども)
+            { category: 'school', ja: '連絡帳', furigana: 'れんらくちょう', romaji: 'renrakuchō', explanation: '先生と親が連絡を取り合うノートです。宿題やお休み連絡を書きます。' },
+            { category: 'school', ja: '上履き', furigana: 'うわばき', romaji: 'uwabaki', explanation: '学校の中で履く、室内用の靴（くつ）のことです。' },
+            { category: 'school', ja: '保護者会', furigana: 'ほごしゃかい', romaji: 'hogoshakai', explanation: '学校に保護者（親）が集まる集まり（懇談会など）です。' },
+            { category: 'school', ja: '給食', furigana: 'きゅうしょく', romaji: 'kyūshoku', explanation: '学校が用意してくれるお昼ごはんです。毎月の給食費を払います。' },
+            { category: 'school', ja: 'お弁当', furigana: 'おべんとう', romaji: 'obentō', explanation: '運動会や遠足など、学校が休みの時やイベントの日に自分で作って持たせる昼食です。' },
+            { category: 'school', ja: '集団登校', furigana: 'しゅうだんとうこう', romaji: 'shūdan tōkō', explanation: '近所の子どもたちと一緒にグループで歩いて学校に行くシステムです。' },
+            { category: 'school', ja: '引き渡し訓練', furigana: 'ひきわたしくんれん', romaji: 'hikiwatashi kunren', explanation: '地震などの災害を想定し、親が子どもを直接学校に迎えに行く練習です。' },
+            { category: 'school', ja: 'アレルギー', furigana: 'あれるぎー', romaji: 'arerugī', explanation: '卵や牛乳、小麦など特定の食材を食べるとアレルギー反応（体に異常）が出る、とても大切な確認事項です。' },
+            { category: 'school', ja: '懇談会', furigana: 'こんだんかい', romaji: 'kondankai', explanation: 'クラスの保護者と担任の先生が、学校の様子について話し合う会合です。' },
+
+            // Category: 'medical' (③ 病院・からだ)
+            { category: 'medical', ja: '保険証', furigana: 'ほけんしょう', romaji: 'hokenshō', explanation: '病院でお金を安く（基本3割）するために見せる、国の健康保険証です。' },
+            { category: 'medical', ja: '処方箋', furigana: 'しょほうせん', romaji: 'shohōsen', explanation: '病院の先生が書く、薬局で薬をもらうための大切な紙です。' },
+            { category: 'medical', ja: '発熱', furigana: 'はつねつ', romaji: 'hatsunetsu', explanation: '体温が上がり、熱が出ることです（日本の学校は37.5度以上で休みになることが多いです）。' },
+            { category: 'medical', ja: 'お薬手帳', furigana: 'おくすりてちょう', romaji: 'okusuri techō', explanation: '今まで飲んだ薬を記録しておくための手帳です。薬局で必ず見せます。' },
+            { category: 'medical', ja: '小児科', furigana: 'しょうにか', romaji: 'shōnika', explanation: '赤ちゃんから中学生くらいまでの子ども専門の病院（クリニック）です。' },
+            { category: 'medical', ja: '休診日', furigana: 'きゅうしんび', romaji: 'kyūshinbi', explanation: '病院のお休みの日です（主に水曜日や木曜日、日曜日、祝日が多いです）。' },
+            { category: 'medical', ja: '副作用', furigana: 'ふくさよう', romaji: 'fukusayō', explanation: '薬を飲んだ後に、眠くなったり、お腹がゆるくなるなどの余計な反応のことです。' },
+            { category: 'medical', ja: '問診票', furigana: 'もんしんひょう', romaji: 'monshinhyō', explanation: '診察の前に、今の症状やアレルギーについて書いて提出する紙のことです。' },
+            { category: 'medical', ja: '予防接種', furigana: 'よぼうせっしゅ', romaji: 'yobō sesshu', explanation: '病気にかからないために受けるワクチンのことです（母子手帳に記録します）。' },
+
+            // Category: 'living' (④ 暮らし・ゴミ・町内)
+            { category: 'living', ja: '燃えるゴミ', furigana: 'もえるごみ', romaji: 'moeru gomi', explanation: '生ゴミや紙くずなど、燃やすことができるゴミです（可燃ごみとも言います）。' },
+            { category: 'living', ja: '資源ゴミ', furigana: 'しげんごみ', romaji: 'shigen gomi', explanation: 'ペットボトル、缶、びん、段ボールなど、リサイクルができるゴミのことです。' },
+            { category: 'living', ja: '粗大ゴミ', furigana: 'そだいごみ', romaji: 'sodai gomi', explanation: '家具や自転車など、大きいゴミのことです。捨てるのにお金を払って予約が必要です。' },
+            { category: 'living', ja: '回覧板', furigana: 'かいらんばん', romaji: 'kairanban', explanation: '地域（町内会）の連絡が入った板です。読んだら次の人のポストに入れます。' },
+            { category: 'living', ja: '自治会・町内会', furigana: 'じちかい・ちょうないかい', romaji: 'jichikai / chōnaikai', explanation: 'その地域に住む人たちが作るグループです。お祭りや防災の活動をします。' },
+            { category: 'living', ja: '管理会社', furigana: 'かんりがいしゃ', romaji: 'kanri gaisha', explanation: 'アパートやマンションの水漏れ、鍵（かぎ）の紛失などで困った時に電話する不動産の管理窓口です。' },
+            { category: 'living', ja: '騒音', furigana: 'そうおん', romaji: 'sōon', explanation: 'テレビの大きな音、子どもの足音、深夜の洗濯機など、他人の迷惑になる大きな音のことです。' },
+            { category: 'living', ja: '瓦版 / 広報紙', furigana: 'かわらばん / こうほうし', romaji: 'kawaraban / kōhōshi', explanation: '市役所や区役所から毎月届く、その街の大切なお知らせが載っている紙です。' },
+            { category: 'living', ja: '避難場所', furigana: 'ひなんばしょ', romaji: 'hinan basho', explanation: '大きな地震や台風の時に逃げる、安全な場所（近くの小学校や公園など）のことです。' }
+        ];
+
+        // Window load
+        window.onload = function () {
+            renderPhrases('all');
+            renderVocab('all');
+            generateMemos(); // fill the script generator default
+        };
+
+        // Tab system
+        function switchTab(tabId) {
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.add('hidden'));
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-teal-50', 'text-teal-700');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-50');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-50');
+                activeBtn.classList.add('bg-teal-50', 'text-teal-700');
+            }
+        }
+
+        function filterPhrases(category) {
+            const btns = document.querySelectorAll('.phrase-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('phrase-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+            }
+
+            renderPhrases(category);
+        }
+
+        function renderPhrases(category) {
+            const container = document.getElementById('phrases-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? survivalPhrases
+                : survivalPhrases.filter(p => p.category === category);
+
+            filtered.forEach(phrase => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between items-start gap-3 card-hover";
+                card.innerHTML = `
+                    <div class="w-full space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-bold text-slate-400 tracking-wider">フレーズ</span>
+                            <span class="text-[9px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full uppercase">
+                                ${getCategoryName(phrase.category)}
+                            </span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm md:text-base leading-relaxed">${phrase.ja}</h4>
+                        <div class="text-xs text-teal-700 italic font-mono">${phrase.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-teal-50/20 px-3 py-2.5 rounded-lg border border-teal-100/30 flex items-start gap-1.5 mt-1">
+                            <span class="text-amber-600 font-bold shrink-0">解説:</span>
+                            <span>${phrase.explanation}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getCategoryName(cat) {
+            switch (cat) {
+                case 'shopping': return 'お買い物';
+                case 'school': return '学校・幼稚園';
+                case 'hospital': return '病院・薬局';
+                case 'neighborhood': return '近所・ゴミ出し';
+                default: return '一般';
+            }
+        }
+
+        function filterVocab(category) {
+            const btns = document.querySelectorAll('.vocab-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-teal-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('vocab-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-teal-600', 'text-white', 'shadow-sm');
+            }
+
+            renderVocab(category);
+        }
+
+        function renderVocab(category) {
+            const container = document.getElementById('vocab-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? vocabData
+                : vocabData.filter(v => v.category === category);
+
+            filtered.forEach(vocab => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex justify-between items-start card-hover";
+                card.innerHTML = `
+                    <div class="space-y-1.5 w-full">
+                        <div class="text-[10px] text-slate-400 font-mono">ひらがな: ${vocab.furigana}</div>
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1">${vocab.ja}</h4>
+                        <div class="text-[10px] text-teal-700 italic font-mono">${vocab.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100/60 mt-1">${vocab.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function generateMemos() {
+            const parentName = document.getElementById('form-parent-name').value.trim() || 'まりあ';
+            const childName = document.getElementById('form-child-name').value.trim() || 'れお';
+            const className = document.getElementById('form-class').value.trim() || '1ねん1くみ';
+            const reason = document.getElementById('form-reason').value;
+            const action = document.getElementById('form-school-action').value;
+            const address = document.getElementById('form-address').value.trim() || 'サクラハイツ 201ごうしつ';
+            const jpLevel = document.getElementById('form-jp-level').value;
+
+            // Scenario 1: School Contact Book Text Formulation
+            const schoolMemoText = `いつも おせわに なっております。
+${className} の ${childName} の はは（ちち）の ${parentName} です。
+
+きょう、子どもは ${reason}
+${action}
+
+また、なにか れんらくや しゅくだい が ありましたら、
+れんらくちょう で おしえて いただけると うれしいです。
+よろしく おねがいいたします。`;
+
+            document.getElementById('gen-school-ja').innerText = schoolMemoText;
+            document.getElementById('script-school-raw').innerText = schoolMemoText;
+
+            // Scenario 2: Neighborhood Greeting Note Formulation
+            const neighborMemoText = `こんにちは。
+${address} に ひっこしてきました ${parentName} ともうします。
+
+かぞくには こども（${childName}）が おります。
+いつも こどもが にぎやかで、ごめいわくを かけるかもしれません。
+しずかにするように きをつけます。
+
+わたしの ${jpLevel}
+これから どうぞ よろしくおねがいいたします。`;
+
+            document.getElementById('gen-neighbor-ja').innerText = neighborMemoText;
+            document.getElementById('script-neighbor-raw').innerText = neighborMemoText;
+        }
+
+        // Clipboard action utility
+        function copyGeneratedText(divId) {
+            const rawContent = document.getElementById(divId).innerText;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = rawContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("テキストをコピーしました！");
+        }
+
+        // Custom Toast System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+
+            toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-0 opacity-100 transition duration-300 pointer-events-auto";
+
+            setTimeout(() => {
+                toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none";
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

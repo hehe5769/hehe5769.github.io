@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外国人向けアルバイト求職・日本語学習支援ツール</title>
+    <!-- Tailwind CSS for modern responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Noto Sans JP for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        /* Custom scrollbar for list containers */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Smooth scale transition for cards */
+        .card-hover:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-blue-700 p-2.5 rounded-full shadow-inner flex items-center justify-center">
+                    <i class="fa-solid fa-graduation-cap text-xl md:text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">アルバイト<ruby>求職<rt>きゅうしょく</rt>
+                        </ruby>・<ruby>日本語<rt>にほんご</rt></ruby>サポート</h1>
+                    <p class="text-xs text-blue-100 mt-1">日本語が苦手な方でも安心して仕事を探せる完全日本語支援アプリ</p>
+                </div>
+            </div>
+            <a href="../JpLearning/index.html"
+                class="bg-white hover:bg-rose-50 text-rose-500 font-black text-xs px-4 py-2 rounded-full border-2 border-rose-300 shadow-sm flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-house"></i>
+                <span>ホームに<ruby>戻<rt>もど</rt></ruby>る</span>
+            </a>
+            <div class="bg-blue-900/40 rounded-xl px-4 py-2 border border-blue-500/30 text-xs">
+                <span class="font-semibold text-amber-300">💡 やさしい日本語：</span> 難しい漢字にはすべてフリガナ（ルビ）が付いています
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6">
+
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-1/4 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 sticky top-24 space-y-2">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-2"><ruby>学習<rt>がくしゅう</rt>
+                    </ruby>・ツールメニュー</p>
+
+                <button onclick="switchTab('survival')" id="btn-survival"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm transition bg-blue-50 text-blue-700">
+                    <i class="fa-solid fa-comment-dots text-base"></i>
+                    <span><ruby>必須<rt>ひっす</rt></ruby>会話フレーズ</span>
+                </button>
+
+                <button onclick="switchTab('vocab')" id="btn-vocab"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-book-open text-base"></i>
+                    <span><ruby>仕事<rt>しごと</rt></ruby>の<ruby>重要<rt>じゅうよう</rt></ruby>単語集</span>
+                </button>
+
+                <button onclick="switchTab('resume')" id="btn-resume"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-file-invoice text-base"></i>
+                    <span>自己紹介作成ツール</span>
+                </button>
+
+                <button onclick="switchTab('guide')" id="btn-guide"
+                    class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-600 hover:bg-slate-50 transition">
+                    <i class="fa-solid fa-circle-exclamation text-base"></i>
+                    <span>働くルールとマナー</span>
+                </button>
+
+                <!-- Helpful advice box -->
+                <div
+                    class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200/60 text-xs text-amber-900 leading-relaxed">
+                    <h4 class="font-bold flex items-center gap-1.5 text-amber-950 mb-1">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        アドバイス
+                    </h4>
+                    <p>このツールは外部APIを使わないため、完全に安全です。ローマ字を読みながら何度も繰り返し発音の練習をしてみましょう！</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Tab Content Area -->
+        <section class="flex-grow w-full md:w-3/4">
+
+            <!-- 1. Survival Phrases Tab -->
+            <div id="tab-survival" class="tab-pane space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-blue-100 text-blue-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-comment-dots"></i></span>
+                        <ruby>必須<rt>ひっす</rt></ruby>会話フレーズ
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">電話をかけるとき、面接を受けるとき、そして実際に働き始めたときに使う重要なフレーズです。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterPhrases('all')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm transition">
+                            すべて
+                        </button>
+                        <button onclick="filterPhrases('phone')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ① 電話・応募する
+                        </button>
+                        <button onclick="filterPhrases('interview')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ② 面接で答える
+                        </button>
+                        <button onclick="filterPhrases('working')"
+                            class="phrase-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            ③ 仕事中に使う
+                        </button>
+                    </div>
+
+                    <!-- Phrase Grid -->
+                    <div id="phrases-grid" class="grid grid-cols-1 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Vocabulary Tab -->
+            <div id="tab-vocab" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-book-open"></i></span>
+                        アルバイトの<ruby>重要<rt>じゅうよう</rt></ruby>単語集
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">求人サイトやお店の貼り紙でよく見かける単語です。これらを覚えると仕事探しがとてもスムーズになります。</p>
+
+                    <!-- Filter buttons -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="filterVocab('all')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm transition">
+                            すべて
+                        </button>
+                        <button onclick="filterVocab('job-type')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            職種 (仕事の種類)
+                        </button>
+                        <button onclick="filterVocab('shifts')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            時間・シフト
+                        </button>
+                        <button onclick="filterVocab('benefits')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            給料・手当
+                        </button>
+                        <button onclick="filterVocab('requirements')"
+                            class="vocab-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                            募集の条件
+                        </button>
+                    </div>
+
+                    <!-- Vocab Grid -->
+                    <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Resume & Self-Introduction Generator -->
+            <div id="tab-resume" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-amber-100 text-amber-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-file-invoice"></i></span>
+                        かんたん自己紹介・応募メッセージ作成ツール
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">あなたの情報を入力するだけで、面接でそのまま使える自己紹介のセリフや、店長に送るメッセージの文章が自動で完成します。
+                    </p>
+
+                    <!-- Input Form -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">お名前 (ひらがな または カタカナ)</label>
+                            <input type="text" id="form-name" placeholder="例：り・ちゃん" value="り・ちゃん"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">現在の在留資格（ビザ）</label>
+                            <select id="form-role"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <option value="留学生（りゅうがくせい）">留学生</option>
+                                <option value="家族滞在（かぞくたいたい）">家族滞在</option>
+                                <option value="特定活動（とくていかつどう）">特定活動</option>
+                                <option value="その他（それいがい）">その他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">働ける曜日・時間</label>
+                            <input type="text" id="form-days" placeholder="例：土曜日と日曜日 / 平日の夜" value="土曜日と日曜日"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">希望する仕事の種類</label>
+                            <select id="form-job"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <option value="コンビニ">コンビニ</option>
+                                <option value="飲食店のホール（料理を運ぶ）">飲食店のホール（配膳）</option>
+                                <option value="飲食店のキッチン（皿洗いや調理補助）">飲食店のキッチン（皿洗い・補助）</option>
+                                <option value="ホテルの客室清掃（ベッドメイキング）">ホテルの客室清掃</option>
+                                <option value="工場の仕分け・ピッキング">工場の仕分け・ピッキング</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">今の日本語能力について</label>
+                            <select id="form-jp-level"
+                                class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <option value="まだ上手ではありませんが、一生懸命がんばります！">あまり話せないが、一生懸命がんばる</option>
+                                <option value="簡単な日常会話なら少し話すことができます。">簡単な日常会話なら話せる</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 text-right">
+                            <button onclick="generateScripts()"
+                                class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-3 rounded-xl shadow transition duration-150">
+                                <i class="fa-solid fa-rotate mr-1"></i> 文章を作成・更新する
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Panels -->
+                    <div class="space-y-4">
+                        <!-- Scenario 1: Verbal Presentation during interview -->
+                        <div class="border border-blue-100 rounded-xl overflow-hidden bg-blue-50/20">
+                            <div
+                                class="bg-blue-50 px-4 py-2.5 border-b border-blue-100 flex justify-between items-center">
+                                <span class="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-microphone-lines text-blue-600"></i>
+                                    パターン1：面接のときに話す「自己紹介」（そのまま読めます）
+                                </span>
+                                <button onclick="copyGeneratedText('script-interview-raw')"
+                                    class="text-xs text-blue-700 hover:text-blue-900 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> テキストをコピー
+                                </button>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                                    <p class="text-xs font-bold text-amber-600 mb-2">日本語（ひらがな付き）：</p>
+                                    <p id="gen-intro-ja"
+                                        class="text-sm font-semibold leading-relaxed text-slate-900 mb-4"></p>
+
+                                    <p class="text-xs font-bold text-slate-500 mb-1">発音のガイド（ローマ字）：</p>
+                                    <p id="gen-intro-romaji"
+                                        class="text-xs font-medium italic text-blue-700 leading-relaxed"></p>
+
+                                    <!-- Hidden target for copy action -->
+                                    <div id="script-interview-raw" class="hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2: Written Message template -->
+                        <div class="border border-emerald-100 rounded-xl overflow-hidden bg-emerald-50/20">
+                            <div
+                                class="bg-emerald-50 px-4 py-2.5 border-b border-emerald-100 flex justify-between items-center">
+                                <span class="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-envelope-open-text text-emerald-600"></i>
+                                    パターン2：メールやメッセージ応募用の文章（コピーして送れます）
+                                </span>
+                                <button onclick="copyGeneratedText('script-text-raw')"
+                                    class="text-xs text-emerald-700 hover:text-emerald-900 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> テキストをコピー
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                                    <pre id="gen-message-ja"
+                                        class="whitespace-pre-wrap text-sm text-slate-800 font-mono leading-relaxed"></pre>
+                                    <div id="script-text-raw" class="hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Job Rules & Mindsets Tab -->
+            <div id="tab-guide" class="tab-pane hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <span class="p-1.5 bg-rose-100 text-rose-700 rounded-lg text-sm"><i
+                                class="fa-solid fa-shield-halved"></i></span>
+                        日本でアルバイトをするための大切な法律とルール
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">日本で働く前に絶対に守らなければならないルールです。違反すると日本にいられなくなることがあります。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-rose-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-clock text-rose-600"></i>
+                                1. 週28時間制限（アルバイト制限）
+                            </h3>
+                            <p class="text-xs text-rose-900 leading-relaxed">
+                                留学生や家族滞在の方は、働く前に必ず入国管理局から<strong>「資格外活動許可（しかくがいかつどうきょか）」</strong>をもらう必要があります。
+                            </p>
+                            <p class="text-xs text-rose-900 leading-relaxed font-semibold">
+                                【重要】働くことができる時間は「すべての仕事を合算して<strong>週に28時間以内</strong>」です。この時間を超えて働くと、ビザの更新ができなくなったり強制退去になったりします。
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-emerald-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-id-card text-emerald-600"></i>
+                                2. 面接に必ず持っていく物
+                            </h3>
+                            <p class="text-xs text-emerald-900 leading-relaxed">
+                                面接のときには、手ぶらで行ってはいけません。必ず以下のものを準備してください。
+                            </p>
+                            <ul class="text-xs text-emerald-900 space-y-1.5 pl-4 list-disc font-medium">
+                                <li><strong>在留カード（ざいりゅうかーど）</strong>: 裏面に資格外活動許可が書かれているか確認。</li>
+                                <li><strong>パスポート</strong>: 身元証明のため。</li>
+                                <li><strong>履歴書（りれきしょ）</strong>: 写真を貼り、丁寧に手書きか印刷したものを用意。</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-amber-950 flex items-center gap-1.5">
+                                <i class="fa-solid fa-business-time text-amber-600"></i>
+                                3. 時間は絶対に守る
+                            </h3>
+                            <p class="text-xs text-amber-900 leading-relaxed">
+                                日本の職場では「時間は絶対に守る」という強い文化があります。面接のときには約束した時間の<strong>5分〜10分前</strong>に到着するようにしましょう。
+                            </p>
+                            <p class="text-xs text-amber-900 leading-relaxed">
+                                電車が遅れたり、道に迷ったりして間に合わない場合は、<strong>必ず約束の時間の前に電話で遅れることを伝えてください</strong>。無断で遅刻するのは厳禁です。
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-slate-100 border border-slate-300 rounded-xl space-y-2">
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-triangle-exclamation text-slate-600"></i>
+                                4. 「闇バイト（やみばいと）」に注意
+                            </h3>
+                            <p class="text-xs text-slate-800 leading-relaxed">
+                                インターネットやSNS上で「簡単で高収入」「受け取るだけ」「荷物を運ぶだけ」といった仕事は、犯罪（特殊詐欺など）に関係している<strong>闇バイト</strong>である可能性が非常に高いです。
+                            </p>
+                            <p class="text-xs text-slate-800 leading-relaxed font-semibold text-rose-600">
+                                銀行口座を他人に売る、名義を貸すなどの行為もすべて重大な犯罪になります。怪しいと思ったら絶対に応募しないでください。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Global Toast Center -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-sm"></i>
+        <span id="toast-message" class="font-medium">メッセージ</span>
+    </div>
+
+    <script>
+        // Core Phrases Array
+        const survivalPhrases = [
+            // Category: 'phone' (① 電話・応募する)
+            {
+                category: 'phone',
+                ja: 'もしもし、アルバイトの<ruby>募集<rt>ぼしゅう</rt></ruby>はまだやっていますか？',
+                romaji: 'moshimoshi, aribaito no boshu wa mada yatte imasu ka?',
+                explanation: '電話をかけた最初に、まだアルバイトを募集しているか確認する最も大切なフレーズです。'
+            },
+            {
+                category: 'phone',
+                ja: '<ruby>求人<rt>きゅうじん</rt></ruby>サイトを<ruby>見<rt>み</rt></ruby>てお<ruby>電話<rt>でんわ</rt></ruby>しました。〇〇と<ruby>申<rt>もう</rt></ruby>します。',
+                romaji: 'kyujin saito o mite odenwa shimashita. 〇〇 to moshimasu.',
+                explanation: '自分がどこで求人情報を見つけたか、そして自分の名前を伝えるときの言い方です。'
+            },
+            {
+                category: 'phone',
+                ja: 'あまり<ruby>日本語<rt>にほんご</rt></ruby>ができませんが、ご<ruby>応募<rt>おうぼ</rt></ruby>はできますか？',
+                romaji: 'amari nihongo ga dekimasen ga, goubo wa dekimasu ka?',
+                explanation: '日本語が心配なときに、最初に応募可能かどうかを丁寧に確認するフレーズです。'
+            },
+            {
+                category: 'phone',
+                ja: '<ruby>留学生<rt>りゅうがくせい</rt></ruby>ですが、こちらで<ruby>働<rt>はたら</rt></ruby>くことはできますか？',
+                romaji: 'ryugakusei desu ga, kochira de hataraku koto wa dekimasu ka?',
+                explanation: '自分が留学生であることを先に伝え、採用してもらえるか聞くときに便利です。'
+            },
+            {
+                category: 'phone',
+                ja: '<ruby>面接<rt>めんせつ</rt></ruby>はいつお<ruby>伺<rt>うかが</rt></ruby>いすればよろしいでしょうか？',
+                romaji: 'mensetsu wa itsu oukagai sureba yoroshii deshou ka?',
+                explanation: '面接の日程を相手に決めてもらうために聞く、とても丁寧で礼儀正しいフレーズです。'
+            },
+            {
+                category: 'phone',
+                ja: '<ruby>面接<rt>めんせつ</rt></ruby>の<ruby>時<rt>とき</rt></ruby>に<ruby>何<rt>なに</rt></ruby>を<ruby>持<rt>も</rt></ruby>っていけばいいですか？',
+                romaji: 'mensetsu no toki ni nani o motte ikeba ii desu ka?',
+                explanation: '面接に必要な持ち物（履歴書や在留カードなど）を確認するための聞き方です。'
+            },
+            {
+                category: 'phone',
+                ja: 'すみません。<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れているため、10<ruby>分<rt>ぷん</rt></ruby>ほど<ruby>遅<rt>おそ</rt></ruby>くなります。',
+                romaji: 'sumimasen. densha ga okurete iru tame, jupfun hodo osoku narimasu.',
+                explanation: '遅刻しそうな場合は、必ず「約束の時間の前」にこのフレーズで電話連絡しましょう。'
+            },
+
+            // Category: 'interview' (② 面接で答える)
+            {
+                category: 'interview',
+                ja: '本日、〇〇<ruby>時<rt>じ</rt></ruby>に<ruby>面接<rt>めんせつ</rt></ruby>の<ruby>約束<rt>やくそく</rt></ruby>をしております〇〇です。',
+                romaji: 'honjitsu, 〇〇ji ni mensetsu no yakusoku o shite orimasu 〇〇 desu.',
+                explanation: '面接のお店に着いた時、レジやカウンターのスタッフに最初に伝える挨拶です。'
+            },
+            {
+                category: 'interview',
+                ja: 'はじめまして。〇〇と<ruby>申<rt>もう</rt></ruby>します。〇〇から<ruby>来<rt>き</rt></ruby>ました。',
+                romaji: 'hajimemashite. 〇〇 to moshimasu. 〇〇 kara kimashita.',
+                explanation: '面接室に入って最初にする、一番シンプルで分かりやすい自己紹介の挨拶です。'
+            },
+            {
+                category: 'interview',
+                ja: '<ruby>週<rt>しゅう</rt></ruby>に〇<ruby>回<rt>かい</rt></ruby>、〇<ruby>曜日<rt>ようび</rt></ruby>に<ruby>働<rt>はたら</rt></ruby>くことができます。',
+                romaji: 'shu ni 〇kai, 〇yobi ni hataraku koto ga dekimasu.',
+                explanation: '自分が1週間に何回、何曜日に仕事へ入れるかを伝えるための最も重要な情報です。'
+            },
+            {
+                category: 'interview',
+                ja: '<ruby>資格外活動許可<rt>しかくがいかつどうきょか</rt></ruby>があります。28<ruby>時間<rt>じかん</rt></ruby>まで<ruby>働<rt>はたら</rt></ruby>けます。',
+                romaji: 'shikakugai katsudou kyoka ga arimasu. nijuhachijikan made hatarakemasu.',
+                explanation: '在留資格（学生ビザなど）の制限ルールをしっかり守れることをアピールし、店長を安心させます。'
+            },
+            {
+                category: 'interview',
+                ja: 'アルバイトは<ruby>初<rt>はじめ</rt></ruby>めてですが、<ruby>一生懸命<rt>いっしょうけんめい</rt></ruby>がんばります！',
+                romaji: 'arubaito wa hajimete desu ga, isshoukenmei gambarimasu!',
+                explanation: '未経験でも、やる気や誠実さがあることを伝えるためのポジティブなフレーズです。'
+            },
+            {
+                category: 'interview',
+                ja: 'すみません。もう<ruby>一度<rt>いちど</rt></ruby>、ゆっくりお<ruby>願<rt>ねが</rt></ruby>いします。',
+                romaji: 'sumimasen. mou ichido, yukkuri onegai shimasu.',
+                explanation: '面接官の質問や日本語がよく分からなかった時、丁寧に聞き返すためのフレーズです。'
+            },
+            {
+                category: 'interview',
+                ja: '本日はお<ruby>忙<rt>いそが</rt></ruby>しい<ruby>中<rt>なか</rt></ruby>、ありがとうございました。',
+                romaji: 'honjitsu wa oisogashii naka, arigatou gozaimashita.',
+                explanation: '面接が終わって部屋を出るとき、または電話を切る前に店長に伝える感謝の挨拶です。'
+            },
+
+            // Category: 'working' (③ 仕事中に使う)
+            {
+                category: 'working',
+                ja: 'おはようございます！今日もよろしくお<ruby>願<rt>ねが</rt></ruby>いします！',
+                romaji: 'ohayou gozaimasu! kyou mo yoroshiku onegai shimasu!',
+                explanation: '出勤して職場に入ったとき、一緒に働くスタッフや店長に向けて元気に言う挨拶です。'
+            },
+            {
+                category: 'working',
+                ja: 'お<ruby>先<rt>さき</rt></ruby>に<ruby>失礼<rt>しつれい</rt></ruby>します。お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>でした。',
+                romaji: 'osaki ni shitsurei shimasu. otsukaresama deshita.',
+                explanation: '自分のシフトが終わって、まだ残って働いているスタッフに対してかける退勤時の挨拶です。'
+            },
+            {
+                category: 'working',
+                ja: 'すみません。やり<ruby>方<rt>かた</rt></ruby>がわからないので、教えていただけますか？',
+                romaji: 'sumimasen. yarika ta ga wakaranai node, oshiete itadakemasu ka?',
+                explanation: '仕事中に操作やルールが分からないとき、自己判断せず先輩や店長にすぐ確認する言葉です。'
+            },
+            {
+                category: 'working',
+                ja: '<ruby>私<rt>わたし</rt></ruby>のミスです。本当に<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありませんでした。',
+                romaji: 'watashi no misu desu. hontou ni moushiwake arisen deshita.',
+                explanation: '仕事で失敗をしてしまったとき、素直に謝罪と反省を伝える大切な大人のマナーフレーズです。'
+            },
+            {
+                category: 'working',
+                ja: 'すみません、<ruby>体調<rt>たいちょう</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いので、今日はお<ruby>休<rt>やす</rt></ruby>みさせてください。',
+                romaji: 'sumimasen, taichou ga warui node, kyou wa oyasumi sasete kudasai.',
+                explanation: '病気や怪我で仕事に行けない場合は、シフトが始まる前にできるだけ早く電話で伝えます。'
+            },
+            {
+                category: 'working',
+                ja: '〇〇<ruby>さん<rt></rt></ruby>、これをお願いしてもよろしいですか？',
+                romaji: '〇〇san, kore o onegai shitemo yoroshii desu ka?',
+                explanation: '誰かに仕事を頼んだり、手伝ってほしいときに相手の名前を呼んでから頼む丁寧な言葉です。'
+            },
+            {
+                category: 'working',
+                ja: '<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありません。<ruby>担当<rt>たんとう</rt></ruby>のスタッフを呼びますので、少々お待ちください。',
+                romaji: 'moushiwake arisen. tantou no sutaffu o yobimasu node, shou shou omachi kudasai.',
+                explanation: 'お客さんに何か難しい質問をされたとき、自分で答えずに別の先輩を呼びにいくための接客フレーズです。'
+            },
+            {
+                category: 'working',
+                ja: '今から<ruby>休憩<rt>きゅうけい</rt></ruby>に入ります。失礼します。',
+                romaji: 'ima kara kyuukei ni hairimasu. shitsurei shimasu.',
+                explanation: '休憩時間（ご飯を食べる時間など）に入るときに、周りのスタッフに報告する挨拶です。'
+            },
+            {
+                category: 'working',
+                ja: '<ruby>休憩<rt>きゅうけい</rt></ruby>から戻りました。後半もよろしくお<ruby>願<rt>ねが</rt></ruby>いします！',
+                romaji: 'kyuukei kara modorimashita. kouhan mo yoroshiku onegai shimasu!',
+                explanation: '休憩が終わって、再び仕事（後半のシフト）を始めるときに周りに言う挨拶です。'
+            }
+        ];
+
+        // Core Vocabularies
+        const vocabData = [
+            // Category: 'job-type' (職種 - 仕事の種類)
+            { category: 'job-type', ja: 'アルバイト', furigana: 'あるばいと', romaji: 'arubaito', explanation: 'パート・兼職（短時間の仕事）のことです。' },
+            { category: 'job-type', ja: 'コンビニ', furigana: 'こんびに', romaji: 'konbini', explanation: '年中無休で色々な日用品が買える便利店です。' },
+            { category: 'job-type', ja: '皿洗い', furigana: 'さらあらい', romaji: 'sara-arai', explanation: '飲食店のキッチンで、お皿や器具を洗う簡単な仕事です。' },
+            { category: 'job-type', ja: '仕分け', furigana: 'しわけ', romaji: 'shiwake', explanation: '倉庫などで荷物を送り先や種類ごとに分類する仕事です。' },
+            { category: 'job-type', ja: '清掃', furigana: 'せいそう', romaji: 'seisou', explanation: 'ホテル、商業施設、ビルなどの掃除を行う仕事です。' },
+            { category: 'job-type', ja: '居酒屋', furigana: 'いざかや', romaji: 'izakaya', explanation: 'お酒と食べ物を楽しむ日本の大衆的な料理店です。' },
+            { category: 'job-type', ja: 'レジ', furigana: 'れじ', romaji: 'reji', explanation: 'お客さんのお金を計算してお釣りを出したり、商品を袋に入れたりする機械、またはその仕事です。' },
+            { category: 'job-type', ja: '品出し', furigana: 'しなだし', romaji: 'shinadashi', explanation: 'スーパーやコンビニで、新しい商品を棚（だな）にきれいに並べる仕事です。' },
+            { category: 'job-type', ja: 'ホール', furigana: 'ほーる', romaji: 'hōru', explanation: '飲食店でお客さんの注文（ちゅうもん）を聞いて料理を運んだり、テーブルを片付けたりする仕事です。' },
+            { category: 'job-type', ja: 'キッチン', furigana: 'きっちん', romaji: 'kitchin', explanation: '飲食店の台所で、簡単な料理を作ったり、料理の準備を手伝ったりする仕事です。' },
+            { category: 'job-type', ja: 'デリバリー', furigana: 'でりばりー', romaji: 'deribarī', explanation: '自転車やバイクを使って、お客さんの家に料理や商品を届ける仕事です。' },
+            { category: 'job-type', ja: 'ピッキング', furigana: 'ぴっきんぐ', romaji: 'pikkingu', explanation: '倉庫から指定された商品をリストを見て探し出し、集めてくる簡単な仕事です。' },
+            { category: 'job-type', ja: '検品', furigana: 'けんぴん', romaji: 'kenpin', explanation: '工場や倉庫で、商品に傷がないか、数（かず）が合っているかをチェックする仕事です。' },
+
+            // Category: 'shifts' (時間・シフト)
+            { category: 'shifts', ja: 'シフト', furigana: 'しふと', romaji: 'shifuto', explanation: '勤務（きんむ）する日や時間を決める時間表・カレンダーのことです。' },
+            { category: 'shifts', ja: '平日', furigana: 'へいじつ', romaji: 'heijitsu', explanation: '月曜日から金曜日までのことです。' },
+            { category: 'shifts', ja: '土日祝', furigana: 'どにしゅく', romaji: 'donishuku', explanation: '土曜日、日曜日、および祝日（カレンダーの赤いお休みの日）のことです。' },
+            { category: 'shifts', ja: '深夜', furigana: 'しんや', romaji: 'shinya', explanation: '夜22時から次の日の朝5時までの深夜時間帯です（給料が25%アップします）。' },
+            { category: 'shifts', ja: '週２日', furigana: 'しゅうににち', romaji: 'shu ninichi', explanation: '1週間のうち、2日間だけ出勤することを意味します。' },
+            { category: 'shifts', ja: 'シフト制', furigana: 'しふとせい', romaji: 'shifutosei', explanation: '毎月または2週間ごとに、自分で働きたい日や時間を相談して決める方法です。' },
+            { category: 'shifts', ja: '固定シフト', furigana: 'こていしふと', romaji: 'kotei-shifuto', explanation: '毎週、同じ曜日や同じ時間に必ず働く方法です。' },
+            { category: 'shifts', ja: 'フルタイム', furigana: 'ふるたいむ', romaji: 'furutaimu', explanation: '1日に8時間など、長い時間（社員と同じくらい）たくさん働くことです。' },
+            { category: 'shifts', ja: '短時間', furigana: 'たんじかん', romaji: 'tanjikan', explanation: '1日に3時間や4時間だけ、短い時間働くことです。' },
+            { category: 'shifts', ja: '夜勤', furigana: 'やきん', romaji: 'yakin', explanation: '夜から次の日の朝にかけて、暗い時間帯に行う仕事のことです。' },
+            { category: 'shifts', ja: '残業', furigana: 'ざんぎょう', romaji: 'zangyō', explanation: '最初に約束した時間を超えて、長く働くことです（その分のお金はもらえます）。' },
+
+            // Category: 'benefits' (給料・手当)
+            { category: 'benefits', ja: '時給', furigana: 'じきゅう', romaji: 'jikyu', explanation: '1時間あたりに支払われる基本給与（時給）のことです。' },
+            { category: 'benefits', ja: '交通費支給', furigana: 'こうつうひしきゅう', romaji: 'kotsuhi shikyu', explanation: '家から職場までの電車代やバス代を、会社（お店）が払ってくれる制度です。' },
+            { category: 'benefits', ja: 'まかない有り', furigana: 'まかないあり', romaji: 'makanai ari', explanation: '飲食店などで、無料またはとても安い値段でご飯を食べさせてもらえる特典です。' },
+            { category: 'benefits', ja: '日払い', furigana: 'ひばらい', romaji: 'hibarai', explanation: '働いた分の給料を、月末まで待たずにその日のうちに支払ってもらえる制度です。' },
+            { category: 'benefits', ja: '制服貸与', furigana: 'せいふくたいよ', romaji: 'seifuku taiyo', explanation: '仕事中に着る専用の服（ユニフォーム）を、お店が無料で貸してくれることです。' },
+            { category: 'benefits', ja: '昇給有り', furigana: 'しょうきゅうあり', romaji: 'shōkyū ari', explanation: '仕事をがんばって色々な作業を覚えると、時給（給料）が上がることです。' },
+            { category: 'benefits', ja: '深夜手当', furigana: 'しんやてあて', romaji: 'shinya teate', explanation: '夜22時から翌朝5時の間に働いたとき、時給が自動的に25%高くなる決まりです。' },
+            { category: 'benefits', ja: '週払い', furigana: 'しゅうばらい', romaji: 'shūbarai', explanation: '働いた分の給料を、毎週1回もらうことができる制度です。' },
+
+            // Category: 'requirements' (募集の条件)
+            { category: 'requirements', ja: '未経験歓迎', furigana: 'みけいけんかんげい', romaji: 'mikeiken kangei', explanation: 'その仕事をやったことがない初心者でも喜んで採用（募集）しますという意味です。' },
+            { category: 'requirements', ja: '留学生歓迎', furigana: 'りゅうがくせいかんげい', romaji: 'ryugakusei kangei', explanation: '日本語学校や大学に通っている外国人の留学生を積極的に採用しますという意味です。' },
+            { category: 'requirements', ja: '履歴書不要', furigana: 'りりきしょふよう', romaji: 'ririkisho fuyo', explanation: '面接のときに、自分の名前や学歴を書いた紙（履歴書）を持ってこなくてもいいという意味です。' },
+            { category: 'requirements', ja: '日本語不問', furigana: 'にほんごふもん', romaji: 'nihongo fumon', explanation: '日本語が流暢（上手）に話せなくても仕事ができるため、語学力を気にしませんという意味です。' },
+            { category: 'requirements', ja: '学歴不問', furigana: 'がくれきふもん', romaji: 'gakureki fumon', explanation: 'どんな学校を卒業したかは関係なく、誰でも応募して良いですよという意味です。' },
+            { category: 'requirements', ja: '髪型自由', furigana: 'かみがたじゆう', romaji: 'kamigata jiyū', explanation: '髪の毛の色や長さ、髪型にうるさいルールがなく、自分の好きなスタイルで働けますという意味です。' },
+            { category: 'requirements', ja: '即日勤務', furigana: 'そくじつきんむ', romaji: 'sokujitsu kinmu', explanation: '面接で合格したら、すぐに（数日後からでも）仕事を始めることができるという意味です。' }
+        ];
+
+        // Window load
+        window.onload = function () {
+            renderPhrases('all');
+            renderVocab('all');
+            generateScripts(); // fill the script generator default
+        };
+
+        // Tab system
+        function switchTab(tabId) {
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.add('hidden'));
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'text-blue-700');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-50');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-50');
+                activeBtn.classList.add('bg-blue-50', 'text-blue-700');
+            }
+        }
+
+        // Filter and Render Phrases
+        function filterPhrases(category) {
+            const btns = document.querySelectorAll('.phrase-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('phrase-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            }
+
+            renderPhrases(category);
+        }
+
+        function renderPhrases(category) {
+            const container = document.getElementById('phrases-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? survivalPhrases
+                : survivalPhrases.filter(p => p.category === category);
+
+            filtered.forEach(phrase => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 card-hover";
+                card.innerHTML = `
+                    <div class="flex-grow space-y-2">
+                        <div class="text-xs font-semibold text-slate-400">フレーズ</div>
+                        <h4 class="font-bold text-slate-900 text-base leading-relaxed">${phrase.ja}</h4>
+                        <div class="text-xs text-blue-700 italic font-mono">${phrase.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100 flex items-start gap-1.5">
+                            <span class="text-amber-500 font-bold shrink-0">解説:</span>
+                            <span>${phrase.explanation}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter and Render Vocabulary
+        function filterVocab(category) {
+            const btns = document.querySelectorAll('.vocab-filter-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            const clickedBtn = event ? event.target : null;
+            if (clickedBtn && clickedBtn.classList.contains('vocab-filter-btn')) {
+                clickedBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                clickedBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            }
+
+            renderVocab(category);
+        }
+
+        function renderVocab(category) {
+            const container = document.getElementById('vocab-grid');
+            container.innerHTML = '';
+
+            const filtered = category === 'all'
+                ? vocabData
+                : vocabData.filter(v => v.category === category);
+
+            filtered.forEach(vocab => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex justify-between items-start card-hover";
+                card.innerHTML = `
+                    <div class="space-y-1.5 w-full">
+                        <div class="text-[10px] text-slate-400 font-mono">ひらがな: ${vocab.furigana}</div>
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1">${vocab.ja}</h4>
+                        <div class="text-[10px] text-blue-700 italic font-mono">${vocab.romaji}</div>
+                        <div class="text-xs text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-100/60 mt-1">${vocab.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Simulator Step Engines
+        function resetSimulator() {
+            currentSimIndex = 0;
+            document.getElementById('chat-container').innerHTML = '';
+            updateSimButtons();
+
+            appendSystemMessage("【システム】：下部の「次のステップへ」ボタンを押して、電話が繋がったときのやり取りの練習を開始しましょう。");
+        }
+
+        function appendSystemMessage(msg) {
+            const container = document.getElementById('chat-container');
+            const alertBox = document.createElement('div');
+            alertBox.className = "text-center text-[10px] text-slate-400 py-1 bg-slate-100/50 rounded-lg border border-dashed border-slate-200";
+            alertBox.innerText = msg;
+            container.appendChild(alertBox);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateSimButtons() {
+            const prevBtn = document.getElementById('sim-prev-btn');
+            const nextBtn = document.getElementById('sim-next-btn');
+            const indicator = document.getElementById('sim-step-indicator');
+
+            indicator.textContent = `${currentSimIndex} / ${simulatorSteps.length} ステップ`;
+
+            if (currentSimIndex <= 0) {
+                prevBtn.disabled = true;
+                prevBtn.className = "px-4 py-2 bg-slate-100 text-slate-400 font-bold rounded-xl text-xs cursor-not-allowed transition";
+            } else {
+                prevBtn.disabled = false;
+                prevBtn.className = "px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 font-bold rounded-xl text-xs transition";
+            }
+
+            if (currentSimIndex >= simulatorSteps.length) {
+                nextBtn.innerHTML = `終了です！ <i class="fa-solid fa-check ml-1"></i>`;
+                nextBtn.disabled = true;
+                nextBtn.className = "px-4 py-2 bg-emerald-100 text-emerald-600 font-bold rounded-xl text-xs cursor-not-allowed transition";
+            } else {
+                nextBtn.innerHTML = `次のステップへ <i class="fa-solid fa-arrow-right ml-1"></i>`;
+                nextBtn.disabled = false;
+                nextBtn.className = "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-sm transition";
+            }
+        }
+
+        function simStepNext() {
+            if (currentSimIndex >= simulatorSteps.length) return;
+
+            const step = simulatorSteps[currentSimIndex];
+            const chatContainer = document.getElementById('chat-container');
+
+            const isEmployer = step.speaker === 'employer';
+            const alignmentClass = isEmployer ? 'justify-start' : 'justify-end';
+            const bubbleStyle = isEmployer
+                ? 'bg-blue-600 text-white rounded-tr-2xl rounded-br-2xl rounded-bl-2xl shadow-sm'
+                : 'bg-white text-slate-800 border border-slate-200 shadow-sm rounded-tl-2xl rounded-bl-2xl rounded-br-2xl';
+
+            const userIcon = isEmployer
+                ? `<div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0 shadow-xs border border-blue-200">店長</div>`
+                : `<div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold shrink-0 order-last shadow-xs border border-amber-200">あなた</div>`;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start gap-2.5 ${alignmentClass}`;
+            messageDiv.innerHTML = `
+                ${isEmployer ? userIcon : ''}
+                <div class="flex flex-col max-w-[75%] space-y-1">
+                    <div class="px-4 py-3 ${bubbleStyle}">
+                        <p class="text-sm font-semibold">${step.ja}</p>
+                        <p class="text-[10px] font-mono mt-1 ${isEmployer ? 'text-blue-100' : 'text-blue-600'} italic">${step.romaji}</p>
+                    </div>
+                    <div class="text-[10px] text-slate-400 font-mono italic p-1">
+                        意味: ${step.explanation}
+                    </div>
+                </div>
+                ${!isEmployer ? userIcon : ''}
+            `;
+
+            chatContainer.appendChild(messageDiv);
+
+            if (step.actionHint) {
+                appendSystemMessage(`【次の行動アドバイス】：${step.actionHint}`);
+            }
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            currentSimIndex++;
+            updateSimButtons();
+        }
+
+        function simStepPrev() {
+            if (currentSimIndex <= 0) return;
+
+            const chatContainer = document.getElementById('chat-container');
+            // Remove the system hint and the actual message bubble
+            if (chatContainer.lastChild) chatContainer.removeChild(chatContainer.lastChild);
+            if (chatContainer.lastChild) chatContainer.removeChild(chatContainer.lastChild);
+
+            currentSimIndex--;
+            updateSimButtons();
+        }
+
+        // Automated script script generator
+        function generateScripts() {
+            const name = document.getElementById('form-name').value.trim() || 'り・ちゃん';
+            const role = document.getElementById('form-role').value;
+            const days = document.getElementById('form-days').value.trim() || '土曜日と日曜日';
+            const jobType = document.getElementById('form-job').value;
+            const jpLevel = document.getElementById('form-jp-level').value;
+
+            // Scenario 1: Speech Interview script
+            const introJa = `はじめまして。<ruby>私<rt>わたし</rt></ruby>は ${name} と<ruby>申<rt>もう</rt></ruby>します。 ${role} です。<ruby>希望<rt>きぼう</rt></ruby>する<ruby>仕事<rt>しごと</rt></ruby>は ${jobType} です。私は ${days} に<ruby>働<rt>はたら</rt></ruby>くことができます。日本語は ${jpLevel} どうぞよろしくお<ruby>願<rt>ねが</rt></ruby>いします。`;
+
+            // Roma-ji formulation helper
+            const introRomaji = `Hajimemashite. Watashi wa ${name} to moshimasu. Genzai ${role} desu. Kibou suru shigoto wa ${jobType} desu. Watashi wa ${days} ni hataraku koto ga dekimasu. Nihongo wa ${jpLevel === '簡単な日常会話なら少し話すことができます。' ? 'kantan na nichijou kaiwa nara sukoshi hanasu koto ga dekimasu.' : 'mada amari dekimasen ga, isshokenmei gambarimasu.'} Douzo yoroshiku onegai shimasu.`;
+
+            document.getElementById('gen-intro-ja').innerHTML = introJa;
+            document.getElementById('gen-intro-romaji').innerText = introRomaji;
+
+            // Simple text format for clean copy mechanism
+            const plainIntroText = `はじめまして。私は ${name} と申します。 ${role} です。希望する仕事は ${jobType} です。私は ${days} に働くことができます。日本語は ${jpLevel} どうぞよろしくお願いします。`;
+            document.getElementById('script-interview-raw').innerText = plainIntroText;
+
+            // Scenario 2: Written message template (For Email/SNS)
+            const messageJa = `お忙しいところ恐れ入ります。
+求人広告を拝見し、アルバイト応募のご連絡をいたしました。
+
+【お名前】：${name}
+【在留資格】：${role}
+【希望職種】：${jobType}
+【出勤希望】：${days}
+【日本語レベル】：${jpLevel}
+
+ぜひ一度、面接の機会をいただけますと幸いです。
+お忙しい中、大変恐縮ですがご検討のほどよろしくお願いいたします。`;
+
+            document.getElementById('gen-message-ja').innerText = messageJa;
+            document.getElementById('script-text-raw').innerText = messageJa;
+        }
+
+        // Clipboard action utility
+        function copyGeneratedText(divId) {
+            const rawContent = document.getElementById(divId).innerText;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = rawContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("テキストをコピーしました！");
+        }
+
+        // Custom Toast System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+
+            toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-0 opacity-100 transition duration-300 pointer-events-auto";
+
+            setTimeout(() => {
+                toast.className = "fixed bottom-6 right-6 z-[9999] bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 translate-y-20 opacity-0 transition duration-300 pointer-events-none";
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
