@@ -14,6 +14,31 @@
     cursor: pointer;
   }
 
+  /* 醒目的预约按钮样式 */
+  .hero-cta {
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+  }
+
+  .btn-highlight {
+    display: inline-block;
+    padding: 15px 35px;
+    background: #ff0055;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.3s;
+    font-size: 1.2em;
+    box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+  }
+
+  .btn-highlight:hover {
+    background: #ff3377;
+    transform: scale(1.05);
+  }
+
   .menu-toggle span {
     background: white;
     height: 3px;
@@ -82,7 +107,7 @@
         <li><a href="companyInfo.html">会社概要</a></li>
         <li><a href="example.html">サンプル</a></li>
         <li><a href="recruit.html">お問い合わせ</a></li>
-        <li><a href="https://liveproject-w6ny.onrender.com" target="_blank">予約管理システム</a></li>
+        <li><a href="https://fujimirv.jptungri.shop/" target="_blank">予約管理システム</a></li>
       </ul>
     </nav>
   </header>
@@ -90,14 +115,22 @@
   <section id="home" class="hero">
     <div class="hero-content">
       <h1>未来を創造するテクノロジー</h1>
+
       <p>AI・Web・クラウドで、ビジネスの可能性を広げる</p>
+      <div class="hero-cta">
+
+        <a href="https://fujimirv.jptungri.shop/" target="_blank" class="btn-highlight">予約管理システムを利用する</a>
+      </div>
     </div>
+
   </section>
 
   <section id="about" class="section">
     <h2>会社概要</h2>
     <p>Jptungri株式会社は、AI開発、Webアプリケーション制作、ITコンサルティングを提供する最先端企業です。</p>
   </section>
+
+
 
   <section id="services" class="section dark">
     <h2>サービス</h2>
