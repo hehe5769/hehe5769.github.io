@@ -39,7 +39,7 @@
       <p>所在地： 東京都千代田区丸の内</p>
       <p>事業内容： AI開発 / Webアプリ制作 / ITコンサルティング</p>
       <p>私たちは最高のソリューションを提供します。</p>
-      <a href="#services" class="btn">サービスを見る</a>
+      <a href="index.html#services" class="btn">サービスを見る</a>
     </div>
   </section>
 
@@ -99,5 +99,13 @@
   menuToggle.addEventListener("click", () => {
     menuToggle.classList.toggle("active");
     navLinks.classList.toggle("active");
+  });
+
+  // 点击导航项后自动关闭移动端菜单
+  document.querySelectorAll("#nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      menuToggle.classList.remove("active");
+      navLinks.classList.remove("active");
+    });
   });
 </script>

@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="css/index.css">
     <style>
         /* ======== ベース設定 ======== */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        section[id], [id] {
+            scroll-margin-top: 85px;
+        }
+
         body {
             margin: 0;
             font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
@@ -542,6 +551,7 @@
             <ul id="nav-links">
                 <li><a href="index.html">ホーム</a></li>
                 <li><a href="companyInfo.html">会社概要</a></li>
+                <li><a href="index.html#services">サービス</a></li>
                 <li><a href="example.html" class="active">作品紹介</a></li>
                 <li><a href="recruit.html">お問い合わせ</a></li>
             </ul>
@@ -966,6 +976,14 @@
         menuToggle.addEventListener("click", () => {
             menuToggle.classList.toggle("active");
             navLinks.classList.toggle("active");
+        });
+
+        // 点击导航项后自动关闭移动端菜单
+        document.querySelectorAll("#nav-links a").forEach(link => {
+            link.addEventListener("click", () => {
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+            });
         });
     </script>
 </body>

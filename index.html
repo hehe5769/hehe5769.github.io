@@ -20,8 +20,9 @@
 
     <nav>
       <ul id="nav-links">
-        <li><a href="index.html" class="active">ホーム</a></li>
+        <li><a href="index.html#home" class="active">ホーム</a></li>
         <li><a href="companyInfo.html">会社概要</a></li>
+        <li><a href="index.html#services">サービス</a></li>
         <li><a href="example.html">作品紹介</a></li>
         <li><a href="recruit.html">お問い合わせ</a></li>
       </ul>
@@ -33,6 +34,7 @@
       <h1>未来を創造するテクノロジー</h1>
 
       <p>AI・Web・クラウドで、ビジネスの可能性を広げる</p>
+      <a href="recruit.html" class="btn">お問い合わせはこちら</a>
     </div>
 
   </section>
@@ -40,6 +42,7 @@
   <section id="about" class="section">
     <h2>会社概要</h2>
     <p>Jptungri株式会社は、AI開発、Webアプリケーション制作、ITコンサルティングを提供する最先端企業です。</p>
+    <a href="companyInfo.html" class="btn" style="margin-top: 15px;">会社概要の詳細を見る</a>
   </section>
 
 
@@ -65,11 +68,11 @@
   <section id="contact" class="section">
     <h2>お問い合わせ</h2>
     <p>ご質問やご相談など、お気軽にお問い合わせください。</p>
-    <a href="mailto:info@neotech.jp" class="btn">メールを送る</a>
+    <a href="recruit.html" class="btn">お問い合わせフォームへ</a>
   </section>
 
   <footer>
-    <p>&copy; 2025 Jptungri Inc. All rights reserved.</p>
+    <p>&copy; 2026 Jptungri株式会社 All rights reserved. | <a href="companyInfo.html">会社概要</a> | <a href="recruit.html">お問い合わせ</a></p>
   </footer>
 
   <script>
@@ -80,6 +83,14 @@
     menuToggle.addEventListener("click", () => {
       menuToggle.classList.toggle("active");
       navLinks.classList.toggle("active");
+    });
+
+    // 点击导航项后自动关闭移动端菜单
+    document.querySelectorAll("#nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+      });
     });
   </script>
 </body>
