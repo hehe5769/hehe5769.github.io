@@ -275,3 +275,52 @@ footer {
     color: #95a5a6;
     font-size: 0.9rem;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .upload-box {
+        padding: 1.8rem 1rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .actions-bar {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .actions-bar input,
+    .actions-bar button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 1rem;
+    }
+
+    .modal-content {
+        width: 94%;
+        margin: 8% auto;
+        padding: 1.2rem;
+    }
+}

@@ -1,9 +1,20 @@
 /* ベース設定 */
-body {
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
   color: #fff;
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ======== 統一ヘッダー (Global Unified Header) ======== */
@@ -175,7 +186,9 @@ nav a.active::after {
 
 /* Hero セクション */
 .hero {
-  height: 100vh;
+  min-height: 85vh;
+  height: auto;
+  padding: 140px 20px 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,78 +204,150 @@ nav a.active::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
+  max-width: 850px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero h1 {
-  font-size: 3em;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.3;
   margin-bottom: 20px;
+  word-break: break-word;
 }
 
 .hero p {
-  font-size: 1.2em;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.7;
   margin-bottom: 30px;
+  word-break: break-word;
+  color: #d8e5ec;
 }
 
 .btn {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 12px 28px;
   background: #00ffd5;
   color: #000;
   border-radius: 30px;
   text-decoration: none;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 213, 0.3);
 }
 
 .btn:hover {
   background: #00bfa5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 213, 0.45);
 }
 
 /* セクション共通 */
 .section {
-  padding: 80px 20px;
+  padding: 70px 20px;
   text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .section h2 {
-  font-size: 2em;
-  margin-bottom: 30px;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 25px;
+  color: #00ffd5;
+}
+
+.section p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #d1e2e9;
+  max-width: 750px;
+  margin: 0 auto 30px;
 }
 
 .dark {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+  max-width: 100%;
+  width: 100%;
 }
 
 .services-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 0;
 }
 
 .service-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 213, 0.2);
   border-radius: 12px;
-  padding: 20px;
-  width: 280px;
+  padding: 28px 22px;
   backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
 .service-card:hover {
   transform: translateY(-5px);
+  border-color: #00ffd5;
+  box-shadow: 0 8px 25px rgba(0, 255, 213, 0.25);
+}
+
+.service-card h3 {
+  color: #00ffd5;
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.service-card p {
+  color: #cbdbe3;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* フッター */
 footer {
-  padding: 30px 20px;
-  background: #000;
+  padding: 35px 20px;
+  background: rgba(5, 12, 16, 0.95);
   text-align: center;
   font-size: 0.9em;
-  color: #aaa;
+  color: #8aa1ad;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+footer a {
+  color: #00ffd5;
+  text-decoration: none;
+}
+
+/* モバイル追加調整 */
+@media (max-width: 768px) {
+  .hero {
+    padding: 110px 16px 60px;
+    min-height: 75vh;
+  }
+
+  .section {
+    padding: 50px 16px;
+  }
+
+  .services-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .service-card {
+    padding: 22px 18px;
+  }
 }

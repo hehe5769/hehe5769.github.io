@@ -1,10 +1,20 @@
 /* 基本样式 */
-body {
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
   color: #333;
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 
@@ -182,7 +192,9 @@ nav a.active::after {
 
 /* Hero Section */
 .hero {
-  height: 100vh;
+  min-height: 80vh;
+  height: auto;
+  padding: 130px 20px 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,142 +210,175 @@ nav a.active::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
+  max-width: 850px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero h1 {
-  font-size: 3em;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.3;
   margin-bottom: 20px;
   color: #fff;
+  word-break: break-word;
 }
 
 .hero p {
-  font-size: 1.2em;
-  margin-bottom: 30px;
+  font-size: clamp(1rem, 2.5vw, 1.2em);
+  line-height: 1.7;
+  margin-bottom: 16px;
   color: #fff;
+  word-break: break-word;
 }
 
 .btn {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 12px 28px;
   background: #00ffd5;
   color: #000;
   border-radius: 30px;
   text-decoration: none;
-  transition: background 0.3s;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 213, 0.3);
 }
 
 .btn:hover {
   background: #00bfa5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 213, 0.45);
 }
 
 /* 主内容 */
 .container {
+  width: calc(100% - 32px);
   max-width: 1000px;
-  margin: auto;
+  margin: 50px auto;
   background: #fff;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  border-radius: 12px;
+  padding: 35px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* 社长介绍 */
 .president-card {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  margin-top: 20px;
+  align-items: center;
+  gap: 25px;
+  margin-top: 25px;
   flex-wrap: wrap;
 }
 
 .president-photo img {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #00aaff;
+  border: 4px solid #00ffd5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .president-text {
   flex: 1;
+  min-width: 250px;
 }
 
 .president-text h3 {
   margin-top: 0;
   font-size: 1.5em;
-  color: #0077aa;
+  color: #0e3b43;
 }
 
 .president-text p {
-  font-size: 1.1em;
-  line-height: 1.6;
+  font-size: 1.05em;
+  line-height: 1.7;
+  color: #444;
 }
 
 /* 合作伙伴展示 */
 #partners {
-  padding: 60px 20px;
-  background: #f9f9f9;
+  margin-top: 40px;
+  padding: 35px 20px;
+  background: #f7fafc;
+  border-radius: 10px;
   color: #333;
 }
 
 #partners h2 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #1a2f38;
 }
 
 .torihikiScroll {
   display: flex;
   overflow-x: auto;
-  gap: 30px;
-  padding: 10px;
-  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding: 10px 5px 15px;
   -webkit-overflow-scrolling: touch;
 }
 
 .torihikiItem {
   flex: 0 0 auto;
-  min-width: 180px;
+  min-width: 170px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 15px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  scroll-snap-align: start;
+  gap: 12px;
+  border: 1px solid #edf2f7;
 }
 
 .torihikiImage {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   border-radius: 6px;
 }
 
 .torihikiItem p {
   margin: 0;
-  font-size: 1em;
-  color: #333;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* フッター */
+footer {
+  padding: 35px 20px;
+  background: rgba(5, 12, 16, 0.95);
+  text-align: center;
+  font-size: 0.9em;
+  color: #8aa1ad;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+footer a {
+  color: #00ffd5;
+  text-decoration: none;
 }
 
 /* 响应式设计 */
 @media screen and (max-width: 768px) {
-
-
-  /* Hero Section */
-  .hero h1 {
-    font-size: 2em;
+  .hero {
+    padding: 110px 16px 50px;
+    min-height: 70vh;
   }
 
-  .hero p {
-    font-size: 1em;
+  .container {
+    width: calc(100% - 24px);
+    margin: 30px auto;
+    padding: 24px 18px;
   }
 
   /* 社长卡片 */
@@ -341,16 +386,20 @@ nav a.active::after {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 15px;
   }
 
-  /* 合作伙伴滚动 */
-  .torihikiScroll {
-    flex-direction: column;
-    align-items: center;
+  .president-photo img {
+    width: 120px;
+    height: 120px;
+  }
+
+  #partners {
+    padding: 25px 12px;
   }
 
   .torihikiItem {
-    min-width: 150px;
-    margin-bottom: 15px;
+    min-width: 140px;
+    padding: 12px;
   }
 }
