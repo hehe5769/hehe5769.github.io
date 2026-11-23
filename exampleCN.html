@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>作品与开发案例介绍 | Jptungri株式会社</title>
-    <meta name="description" content="Jptungri株式会社的作品与开发案例介绍页面。重点展示预约管理系统、人事管理系统、综合运动俱乐部以及多文化共生日语教室等核心项目。">
+    <meta name="description" content="Jptungri株式会社的作品与开发案例介绍页面。重点展示预约管理系统、人事管理系统、综合运动俱乐部、多文化共生日语教室以及电商购物商城等核心项目。">
     <link rel="stylesheet" href="css/index.css">
     <style>
         /* ======== 基础样式 ======== */
@@ -174,11 +174,11 @@
             gap: 8px;
         }
 
-        /* ======== 头部核心4系统导航卡片 ======== */
+        /* ======== 头部核心5系统导航卡片 ======== */
         .featured-hero-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
             margin-bottom: 70px;
         }
 
@@ -186,7 +186,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(0, 255, 213, 0.2);
             border-radius: 12px;
-            padding: 24px 20px;
+            padding: 22px 18px;
             text-align: left;
             transition: all 0.3s ease;
             display: flex;
@@ -208,8 +208,8 @@
 
         .quick-card-badge {
             display: inline-block;
-            font-size: 0.75rem;
-            padding: 3px 10px;
+            font-size: 0.72rem;
+            padding: 3px 9px;
             border-radius: 12px;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -241,17 +241,23 @@
             border: 1px solid rgba(251, 146, 60, 0.4);
         }
 
+        .badge-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
         .quick-card h3 {
             margin: 0 0 8px;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .quick-card p {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: #b0c4cf;
             line-height: 1.6;
             margin: 0 0 16px;
@@ -259,7 +265,7 @@
         }
 
         .quick-card .card-cta {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: #00ffd5;
             font-weight: 600;
             display: flex;
@@ -596,21 +602,21 @@
                 <a href="exampleEN.html" title="English">🇬🇧</a>
             </div>
             <h1>核心产品与开发案例展示</h1>
-            <p>Jptungri株式会社自主策划、架构与开发的核心业务系统与平台案例展示。涵盖预约匹配平台、企业人事管理、社区体育俱乐部及公益多语言教育平台，提供高可靠、强实用的技术解决方案。</p>
+            <p>Jptungri株式会社自主策划、架构与开发的核心业务系统与平台案例展示。涵盖预约匹配平台、企业人事管理、社区体育俱乐部、公益多语言教育以及在线电商购物商城，提供高可靠、强实用的技术解决方案。</p>
             <div class="notice-banner">
                 <span>⚡</span>
                 <span>由于演示系统部署于云端节能环境，初次访问可能需要 30 秒至 1 分钟唤醒，敬请谅解。</span>
             </div>
         </div>
 
-        <!-- ======== 4大核心系统快捷导航卡片 ======== -->
+        <!-- ======== 5大核心系统快捷导航卡片 ======== -->
         <div class="featured-hero-grid">
             <!-- 1. 预约系统 -->
             <a href="#reservation-system" class="quick-card">
                 <div>
                     <span class="quick-card-badge badge-cyan">SaaS / 智能匹配</span>
                     <h3>📅 预约管理系统</h3>
-                    <p>连接客户、施工服务商与运营管理者的三层全流程工单预约与自动比价平台。</p>
+                    <p>客户、施工服务商与运营管理者的三层全流程工单预约与自动比价平台。</p>
                 </div>
                 <div class="card-cta">查看详情 <span>&darr;</span></div>
             </a>
@@ -641,6 +647,16 @@
                     <span class="quick-card-badge badge-orange">多文化共生 / 公益教育</span>
                     <h3>🏫 日语教室门户</h3>
                     <p>面向在日外籍人士的三阶课程、三语无缝切换与零门槛手机一键预约。</p>
+                </div>
+                <div class="card-cta">查看详情 <span>&darr;</span></div>
+            </a>
+
+            <!-- 5. 购物商城 -->
+            <a href="#shopping-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-purple">电商商城 / E-Commerce</span>
+                    <h3>🛒 在线购物商城</h3>
+                    <p>商品智能检索、购物车结算、订单履约追踪与个人中心管理。</p>
                 </div>
                 <div class="card-cta">查看详情 <span>&darr;</span></div>
             </a>
@@ -896,17 +912,76 @@
         </section>
 
         <!-- ============================================================ -->
+        <!-- 5. ふじみ野 在线购物商城 (EC Shopping Platform) -->
+        <!-- ============================================================ -->
+        <section id="shopping-system" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🛒 在线购物商城 (Fujimino EC Store)</h2>
+                    <p class="project-subtitle">商品多维检索・购物车快速结算・库存与订单履约全流程电商平台</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://shop.fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 访问购物商城</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tech-stack-row">
+                <span class="tech-tag">电子商务商城系统</span>
+                <span class="tech-tag">商品多分类与搜索</span>
+                <span class="tech-tag">动态购物车计算</span>
+                <span class="tech-tag">订单履约与配送状态</span>
+                <span class="tech-tag">会员个人中心</span>
+                <span class="tech-tag">移动端流式交互</span>
+            </div>
+
+            <p class="project-intro-text">
+                提供从商品浏览、分类检索、加入购物车、一键结算下单到物流状态跟踪的一体化在线购物（EC）解决方案。<br>
+                界面深度针对移动端触控体验进行优化，支持商品多条件筛选、图文规格参数详情、库存状态同步联动以及个人中心订单历史追溯，具备现代电商运营所需的核心完备功能。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🛍️ 商品目录与多维智能搜索</h4>
+                    <p>支持按品类分级归类、关键词快速检索、热销/最新排序，高保真商品图库配合详实规格描述提升购买转化率。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🛒 便捷购物车与高效结算</h4>
+                    <p>支持实时增减商品数量、小计运费自动运算，提供简洁轻快的结账流程，有效降低购物车中途放弃率。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📦 订单状态追踪与物流履约</h4>
+                    <p>订单生成后实时流转（待付款、待发货、已发货、已完成），配合订单状态变更通知，提升消费者信任感。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>👤 会员中心与复购管理</h4>
+                    <p>提供个人订单流水查询、收藏夹商品留存、收货地址多簿管理，为建立用户粘性与促进二次复购提供技术支撑。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://shop.fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    🛍️ <strong>商城概述：</strong> 结构清晰、反应迅捷的现代电商前端解决方案，从选品到结算带来丝滑顺畅的线上购物体验。
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
         <!-- 其余制作成果与工具 (紧凑排版) -->
         <!-- ============================================================ -->
         <section class="secondary-section">
             <h3>🛠️ 其他开发成果与实用工具</h3>
-            <p>本公司既往研发的各类原型系统、电商演示及数据工具。</p>
+            <p>本公司既往研发的各类原型系统、工具及数据分析演示。</p>
             <div class="other-projects-grid">
                 <a href="https://warehouse-management-system-max8.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
                     <span>📦 仓库管理系统</span>
-                </a>
-                <a href="https://shopping-web-l1dz.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
-                    <span>🛒 电商购物系统</span>
                 </a>
                 <a href="stockFliterCN.html" class="other-btn">
                     <span>📈 量子选股猎人</span>
