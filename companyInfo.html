@@ -3,10 +3,278 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>会社概要 | 株式会社Jptungri・tech</title>
+  <title>会社概要 | Jptungri株式会社（宇宙最強）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== 浮夸专用追加样式 ===== */
 
+    /* Hero 区背景覆盖 */
+    .hero {
+      background: linear-gradient(135deg, #0b0c10 0%, #1f2833 50%, #0d1b2a 100%) !important;
+      min-height: 90vh !important;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 7vw, 4rem) !important;
+      text-shadow: 0 0 30px rgba(0,255,213,0.8), 0 0 60px rgba(0,255,213,0.4);
+      animation: glowPulse 2.5s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 20px rgba(0,255,213,0.6), 0 0 40px rgba(0,255,213,0.3); }
+      to   { text-shadow: 0 0 40px rgba(0,255,213,1),   0 0 80px rgba(0,255,213,0.6); }
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: #adf7ee;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    /* 会社概要 info table */
+    .company-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 32px 0 10px;
+    }
+
+    .info-item {
+      background: rgba(0,255,213,0.06);
+      border: 1px solid rgba(0,255,213,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    .info-item .label {
+      font-size: 0.75rem;
+      color: #00ffd5;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .info-item .value {
+      font-size: 0.98rem;
+      color: #e8f4f1;
+      font-weight: 500;
+    }
+
+    /* ===== President Section ===== */
+    .president-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin: 20px 0 30px;
+    }
+
+    .president-photo-wrap {
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .president-photo-wrap img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #00ffd5;
+      box-shadow: 0 0 20px rgba(0,255,213,0.5), 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .president-badge {
+      display: inline-block;
+      margin-top: 10px;
+      background: #00ffd5;
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .president-bio h3 {
+      font-size: 1.6rem;
+      color: #0e3b43;
+      margin: 0 0 4px;
+    }
+
+    .president-bio .president-title {
+      font-size: 0.85rem;
+      color: #00bfa5;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .president-bio p {
+      font-size: 1.0rem;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    /* 名言 blockquote */
+    .ceo-quote {
+      background: linear-gradient(135deg, #e8fffb, #f0fff9);
+      border-left: 4px solid #00ffd5;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 1.05rem;
+      color: #0e3b43;
+      font-style: italic;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,255,213,0.1);
+    }
+
+    .ceo-quote::before {
+      content: "「";
+      font-size: 2rem;
+      color: #00ffd5;
+      line-height: 0;
+      vertical-align: -0.4em;
+      margin-right: 4px;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 30px 0 10px;
+      justify-content: center;
+    }
+
+    .stat-box {
+      flex: 1 1 160px;
+      background: linear-gradient(135deg, #0b2a2d, #113a40);
+      border: 1px solid rgba(0,255,213,0.3);
+      border-radius: 12px;
+      padding: 20px 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .stat-box .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #00ffd5;
+      display: block;
+      text-shadow: 0 0 10px rgba(0,255,213,0.5);
+    }
+
+    .stat-box .stat-label {
+      font-size: 0.8rem;
+      color: #adf7ee;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* Section header */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #0e3b43;
+      border-left: 4px solid #00ffd5;
+      padding-left: 12px;
+      margin: 36px 0 16px;
+    }
+
+    /* Timeline */
+    .timeline {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #00ffd5, transparent);
+    }
+
+    .timeline li {
+      padding: 10px 10px 10px 48px;
+      position: relative;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 14px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #00ffd5;
+      box-shadow: 0 0 8px rgba(0,255,213,0.6);
+    }
+
+    .timeline .year {
+      font-weight: 800;
+      color: #00bfa5;
+      margin-right: 8px;
+    }
+
+    /* Partners section */
+    #partners {
+      margin-top: 40px;
+      padding: 30px 20px;
+      background: #f7fafc;
+      border-radius: 10px;
+    }
+
+    /* Warning disclaimer */
+    .disclaimer {
+      margin: 24px 0 0;
+      padding: 12px 16px;
+      background: rgba(255, 220, 50, 0.1);
+      border: 1px solid rgba(255, 220, 50, 0.4);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: #7a6a00;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .company-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .president-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .ceo-quote {
+        text-align: left;
+      }
+
+      .stats-bar {
+        gap: 10px;
+      }
+
+      .stat-box {
+        flex: 1 1 130px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -30,62 +298,196 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- ======== Hero Section ======== -->
   <section class="hero">
     <div class="hero-content">
+      <p class="hero-tagline">🌍 銀河最強のAIカンパニー 🚀</p>
       <h1>会社概要</h1>
-      <p>会社名： Jptungri株式会社</p>
-      <p>設立： 1997年1月1日</p>
-      <p>資本金： 100000000億</p>
-      <p>所在地： 東京都千代田区丸の内</p>
-      <p>事業内容： AI開発 / Webアプリ制作 / ITコンサルティング</p>
-      <p>私たちは最高のソリューションを提供します。</p>
-      <a href="index.html#services" class="btn">サービスを見る</a>
+      <p>人類の未来を書き換えるため、宇宙規模の野心を胸に創業。<br>
+        気づいたら東証上場。気づいたら世界征服まであと少し。</p>
+
+      <div class="company-info-grid">
+        <div class="info-item">
+          <div class="label">🏢 会社名</div>
+          <div class="value">Jptungri株式会社（宇宙支店もあります）</div>
+        </div>
+        <div class="info-item">
+          <div class="label">📅 設立</div>
+          <div class="value">1997年1月1日（元旦から仕事始め）</div>
+        </div>
+        <div class="info-item">
+          <div class="label">💰 資本金</div>
+          <div class="value">100,000,000,000,000 億円<br><small style="color:#adf7ee;font-size:0.75rem;">※ 多すぎて経理もよくわかってない</small></div>
+        </div>
+        <div class="info-item">
+          <div class="label">📍 本社所在地</div>
+          <div class="value">東京都千代田区丸の内<br><small style="color:#adf7ee;font-size:0.75rem;">（月面支社・火星支社は建設中）</small></div>
+        </div>
+        <div class="info-item">
+          <div class="label">🧠 事業内容</div>
+          <div class="value">AI開発 / Web制作 / ITコンサル / 世界平和</div>
+        </div>
+        <div class="info-item">
+          <div class="label">🏆 受賞歴</div>
+          <div class="value">「最もアツいスタートアップ賞」3年連続<br>
+            「社長が一番ロマンチスト賞」初代受賞</div>
+        </div>
+      </div>
+
+      <a href="index.html#services" class="btn">🚀 伝説のサービスを見る</a>
     </div>
   </section>
 
-  <!-- Main Content -->
+  <!-- ======== Main Content ======== -->
   <div class="container">
-    <h2>社長紹介</h2>
-    <div class="president-card">
-      <div class="president-photo">
 
-        <img src="images/6332e2e46840daa70158e4cf385c11c.jpg" alt="社長">
+    <!-- 实績数字 -->
+    <div class="stats-bar">
+      <div class="stat-box">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">処理できるAI案件数<br>（理論値）</span>
       </div>
-      <div class="president-text">
-        <h3>Tungri</h3>
-        <p>中国・出身。
-          100歳で単身来日、アルバイト三昧の日々を経て、AIスタートアップ「Jptungri株式会社」を創業。
-          資金ゼロ、人脈ゼロからの挑戦。今では東証上場企業をクライアントに持つ、注目の若手CEO。</p>
+      <div class="stat-box">
+        <span class="stat-num">0.001秒</span>
+        <span class="stat-label">社長が天才を<br>自覚するまでの時間</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">42名</span>
+        <span class="stat-label">社員数<br>（猫を含む）</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">9,999,999</span>
+        <span class="stat-label">顧客満足度<br>（上限を設けてない）</span>
       </div>
     </div>
 
+    <!-- CEO 介绍 -->
+    <h2 class="section-title">👑 伝説の創業者・代表取締役</h2>
+    <div class="president-section">
+      <div class="president-photo-wrap">
+        <img src="images/6332e2e46840daa70158e4cf385c11c.jpg" alt="社長 Tungri">
+        <div class="president-badge">🔥 生ける伝説</div>
+      </div>
+      <div class="president-bio">
+        <h3>Tungri（タングリ）</h3>
+        <div class="president-title">代表取締役 CEO・CTO・CFO・CHO・宇宙事業部長 兼 コーヒー担当</div>
+
+        <p>
+          中国・内モンゴル出身。<strong>御年100歳</strong>にして単身来日。
+          所持金は餃子代のみ。日本語は「アリガトウ」と「ラーメン」だけだったにもかかわらず、
+          コンビニバイト→深夜のプログラミング独学→AIスタートアップ創業という
+          <strong>だれも信じないサクセスストーリー</strong>をわずか3年で達成。
+        </p>
+
+        <p>
+          「お金がないなら、稼げばいい。人脈がないなら、AIに友達になってもらえばいい。」という
+          独自の哲学を持ち、東証上場後も自分でコードを書き続ける異常なほどのエンジニア気質。
+          睡眠時間は<strong>平均14分</strong>（本人談）。
+          趣味は「宇宙の法則を考えること」と「ラーメンを食べながらAIを訓練すること」。
+        </p>
+
+        <div class="ceo-quote">
+          コードは詩だ。バグは哲学だ。デプロイは宇宙への挑戦だ。<br>
+          ――そして残業代は、夢で払う。」
+        </div>
+
+        <p style="font-size:0.85rem;color:#888;">
+          ※ 上記は一部誇張を含みます。残業代はちゃんと払っています（たぶん）。
+        </p>
+      </div>
+    </div>
+
+    <!-- 社史 -->
+    <h2 class="section-title">📖 Jptungri 伝説の社史</h2>
+    <ul class="timeline">
+      <li>
+        <span class="year">1997年</span>
+        1月1日元旦、Tungri が「今日から天才になる」と宣言し創業。
+        資金ゼロ、オフィスはマック（マクドナルド）の隅。
+      </li>
+      <li>
+        <span class="year">2001年</span>
+        初めてのクライアントを獲得。報酬はラーメン一杯だったが、
+        「大切なのはご縁だ」と名言を残す。
+      </li>
+      <li>
+        <span class="year">2008年</span>
+        リーマンショックをものともせず「逆に今がチャンス」と言い放ち、
+        社員3名に増員。全員が Tungri の知人の知人の犬の知り合い。
+      </li>
+      <li>
+        <span class="year">2015年</span>
+        AI事業に本格参入。「AIは未来だ。未来は俺のものだ」という
+        プレスリリースが業界内でバズり、一夜にして有名企業に。
+      </li>
+      <li>
+        <span class="year">2020年</span>
+        コロナ禍でも業績が伸び続け、メディアから「なぜ？」と取材が殺到。
+        Tungri の回答：「コロナには感染したが、成長には感染し返した。」
+      </li>
+      <li>
+        <span class="year">2024年</span>
+        東証プライム上場。セレモニーでTungriは涙のスピーチの代わりに
+        コードをひとつコミットし「これが答えだ」と言って退壇。
+      </li>
+      <li>
+        <span class="year">2026年（現在）</span>
+        月面支社の建設計画を発表。「次は火星だ」と宣言するも、
+        経理部から「予算は？」と聞かれ3秒フリーズ。
+      </li>
+    </ul>
+
+    <!-- 社訓 -->
+    <h2 class="section-title">📜 Jptungri の社訓（五箇条）</h2>
+    <div style="background:#f7fafc;border-radius:10px;padding:24px 28px;margin-bottom:10px;">
+      <ol style="line-height:2.2;font-size:1.0rem;color:#2d3748;padding-left:20px;">
+        <li>コードに愛を込めよ。エラーにも愛を込めよ（どうせまた出る）。</li>
+        <li>「できません」という言葉は禁止。「まだできていません」と言え。</li>
+        <li>残業はするな。ただし、夢は24時間語れ。</li>
+        <li>クライアントを神様と思え。ただし、神様にも断ることはある。</li>
+        <li>Tungriを信じよ。Tungriは未来を信じている。</li>
+      </ol>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ このページの内容は一部フィクションを含みます。資本金の桁数・睡眠14分・月面支社は誇張表現です。<br>
+      弊社は実在します。サービスも実在します。ご安心ください（社長のロマンは本物です）。
+    </div>
+
+    <!-- Partners -->
     <div id="partners">
-      <h2>パートナー企業</h2>
+      <h2>🤝 パートナー企業（皆さんご存知の〇〇社ではありません）</h2>
       <div class="torihikiScroll">
         <div class="torihikiItem">
           <img src="images/cat.jpg" alt="" class="torihikiImage">
-          <p>Jptungri東海</p>
+          <p>Jptungri東海<br><small style="color:#888">猫が社長</small></p>
         </div>
         <div class="torihikiItem">
           <img src="images/monkey.jpg" alt="" class="torihikiImage">
-          <p>Jptungri東日本</p>
+          <p>Jptungri東日本<br><small style="color:#888">サルも敏腕</small></p>
         </div>
         <div class="torihikiItem">
           <img src="images/cat2.jpg" alt="" class="torihikiImage">
-          <p>Jptungri北海道</p>
+          <p>Jptungri北海道<br><small style="color:#888">雪でも猫</small></p>
         </div>
         <div class="torihikiItem">
           <img src="images/cat1.jpg" alt="" class="torihikiImage">
-          <p>Jptungri西日本</p>
+          <p>Jptungri西日本<br><small style="color:#888">たこ焼きより速い</small></p>
         </div>
-        <!-- More partner items -->
+        <div class="torihikiItem" style="background:#fff;border:1px dashed #ccc;min-width:170px;justify-content:center;color:#aaa;font-size:0.85rem;text-align:center;">
+          🌍 銀河支社<br><small>建設計画中</small>
+        </div>
       </div>
     </div>
   </div>
 
   <footer>
-    <p>© 2025 Jptungri株式会社 | All Rights Reserved.</p>
+    <p>© 2026 Jptungri株式会社（宇宙制覇まであと少し） All Rights Reserved. |
+      <a href="companyInfo.html">会社概要</a> | <a href="recruit.html">お問い合わせ</a>
+    </p>
+    <p style="font-size:0.78rem;margin-top:6px;color:#556;">
+      本サイトのギャグにより被った精神的ダメージについて弊社は一切責任を負いません。
+    </p>
   </footer>
 
 </body>
