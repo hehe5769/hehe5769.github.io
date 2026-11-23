@@ -20,9 +20,9 @@
 
     <nav>
       <ul id="nav-links">
-        <li><a href="index.html#home" class="active">ホーム</a></li>
+        <li><a href="#home" class="active">ホーム</a></li>
         <li><a href="companyInfo.html">会社概要</a></li>
-        <li><a href="index.html#services">サービス</a></li>
+        <li><a href="#services">サービス</a></li>
         <li><a href="example.html">作品紹介</a></li>
         <li><a href="recruit.html">お問い合わせ</a></li>
       </ul>
@@ -85,12 +85,37 @@
       navLinks.classList.toggle("active");
     });
 
-    // 点击导航项后自动关闭移动端菜单
+    // 导航点击处理（平滑滚动、多次点击响应、移动端自动收起）
     document.querySelectorAll("#nav-links a").forEach(link => {
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href === "#home" || href === "index.html#home") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          history.pushState(null, null, "#home");
+        } else if (href === "#services" || href === "index.html#services") {
+          e.preventDefault();
+          const target = document.getElementById("services");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+            history.pushState(null, null, "#services");
+          }
+        }
         menuToggle.classList.remove("active");
         navLinks.classList.remove("active");
       });
+    });
+
+    // 页面加载时若带有 #services 等锚点，确保准确平滑定位
+    window.addEventListener("load", () => {
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
     });
   </script>
 </body>

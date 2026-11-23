@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="css/index.css">
     <style>
         /* ======== 基础样式 ======== */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        section[id], [id] {
+            scroll-margin-top: 85px;
+        }
+
         body {
             margin: 0;
             font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -542,6 +551,7 @@
             <ul id="nav-links">
                 <li><a href="index.html">首页</a></li>
                 <li><a href="companyInfo.html">公司简介</a></li>
+                <li><a href="index.html#services">服务</a></li>
                 <li><a href="exampleCN.html" class="active">作品介绍</a></li>
                 <li><a href="recruit.html">联系我们</a></li>
             </ul>
@@ -966,6 +976,19 @@
         menuToggle.addEventListener("click", () => {
             menuToggle.classList.toggle("active");
             navLinks.classList.toggle("active");
+        });
+
+        // 导航点击处理（当前页回到顶部、移动端菜单自动收起）
+        document.querySelectorAll("#nav-links a").forEach(link => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href === "exampleCN.html") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+            });
         });
     </script>
 </body>

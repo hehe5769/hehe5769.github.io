@@ -978,9 +978,14 @@
             navLinks.classList.toggle("active");
         });
 
-        // 点击导航项后自动关闭移动端菜单
+        // 导航点击处理（当前页回到顶部、移动端菜单自动收起）
         document.querySelectorAll("#nav-links a").forEach(link => {
-            link.addEventListener("click", () => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href === "example.html") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
                 menuToggle.classList.remove("active");
                 navLinks.classList.remove("active");
             });

@@ -213,7 +213,8 @@
             <ul id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="companyInfo.html">Company Info</a></li>
-                <li><a href="example.html" class="active">Examples</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="exampleEN.html" class="active">Examples</a></li>
                 <li><a href="recruit.html">Contact</a></li>
             </ul>
         </nav>
@@ -368,6 +369,19 @@
         menuToggle.addEventListener("click", () => {
             menuToggle.classList.toggle("active");
             navLinks.classList.toggle("active");
+        });
+
+        // Close menu and handle smooth scroll to top on self link
+        document.querySelectorAll("#nav-links a").forEach(link => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href === "exampleEN.html") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+            });
         });
     </script>
 </body>
