@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>成品展示ページ | Jptungri株式会社</title>
+    <title>作品与开发案例介绍 | Jptungri株式会社</title>
+    <meta name="description" content="Jptungri株式会社的作品与开发案例介绍页面。重点展示预约管理系统、人事管理系统、综合运动俱乐部以及多文化共生日语教室等核心项目。">
     <link rel="stylesheet" href="css/index.css">
     <style>
-        /* ======== ベース設定 ======== */
+        /* ======== 基础样式 ======== */
         body {
             margin: 0;
-            font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             color: #fff;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #0b171c 0%, #152731 50%, #1f3744 100%);
+            min-height: 100vh;
         }
 
-
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #00ffd5;
+            letter-spacing: 0.5px;
         }
 
         nav ul {
-            padding-right: 60px;
+            padding-right: 40px;
             list-style: none;
             display: flex;
-            gap: 25px;
+            gap: 24px;
+            margin: 0;
         }
 
         nav a {
@@ -34,6 +37,7 @@
             color: #fff;
             transition: color 0.3s;
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         nav a:hover {
@@ -41,9 +45,6 @@
         }
 
         /* ======== 汉堡菜单 ======== */
-
-
-        /* ======== 响应式 ======== */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -59,21 +60,26 @@
             transition: all 0.3s ease;
         }
 
+        /* ======== 响应式 ======== */
         @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
             nav ul {
                 display: none;
                 flex-direction: column;
                 position: absolute;
                 top: 60px;
-                left: 41%;
+                left: 50%;
                 transform: translateX(-50%);
-                background: #1e2a38;
+                background: #14242e;
                 border-radius: 8px;
-                width: 80%;
-                /* 宽度为屏幕的80% */
+                width: 90%;
                 text-align: center;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                padding: 15px 0;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+                padding: 20px 0;
+                border: 1px solid rgba(0, 255, 213, 0.2);
             }
 
             nav ul.active {
@@ -99,167 +105,463 @@
             .menu-toggle.active span:nth-child(3) {
                 transform: rotate(-45deg) translateY(-8px);
             }
-
-            .system-images img {
-                width: 100%;
-            }
-
-            .system-intro {
-                padding: 40px 15px;
-            }
-
-            .feature-list {
-                text-align: left;
-                font-size: 0.95em;
-            }
-
-            .system-intro h2 {
-                font-size: 1.5em;
-            }
-
-            .system-intro p {
-                font-size: 1em;
-                line-height: 1.6;
-            }
-
-            .system-images figcaption {
-                font-size: 0.9em;
-            }
         }
 
-
-
-        /* ======== Main（展示部分） ======== */
+        /* ======== Main Container ======== */
         main {
-            padding: 160px 20px 80px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-        }
-
-        main h1 {
-            font-size: 2.2em;
-            color: #00ffd5;
-            margin-bottom: 10px;
-        }
-
-        main p {
-            font-size: 1.1em;
-            color: #ddd;
-            margin-bottom: 40px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: #00ffd5;
-            color: #000;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #00bfa5;
-            transform: translateY(-3px);
-        }
-
-        section.system-intro {
-            background: rgba(255, 255, 255, 0.05);
-            margin: 80px auto;
-            padding: 60px 20px;
-            border-radius: 12px;
-            max-width: 1000px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);
-        }
-
-        .system-intro {
-            text-align: center;
-            padding: 60px 20px;
-            max-width: 900px;
+            padding: 130px 20px 80px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .system-intro strong {
-            color: #00ffd5;
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .system-intro h2 {
-            color: #00ffd5;
-            font-size: 1.9em;
-            margin-bottom: 30px;
-        }
-
-
-        .system-intro p {
-            color: #f1f1f1;
-            font-size: 1.1em;
-            line-height: 1.7;
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
             margin-bottom: 20px;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
+        .lang-switch a {
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            display: inline-block;
+        }
 
-        .feature-list {
-            text-align: left;
-            max-width: 850px;
-            margin: 0 auto 50px;
-            color: #ddd;
+        .lang-switch a:hover {
+            transform: scale(1.2);
+            opacity: 0.9;
+        }
+
+        .page-header h1 {
+            font-size: 2.4em;
+            color: #00ffd5;
+            margin: 10px 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header p {
+            font-size: 1.1em;
+            color: #d1e2e9;
+            max-width: 800px;
+            margin: 0 auto;
             line-height: 1.8;
         }
 
-        .feature-list h3 {
-            color: #00ffd5;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .feature-list ul {
-            list-style: "✔ ";
-            padding-left: 20px;
-        }
-
-        /* ======== 图片容器 ======== */
-        .system-images {
+        .notice-banner {
+            background: rgba(0, 255, 213, 0.08);
+            border: 1px solid rgba(0, 255, 213, 0.3);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 25px auto 0;
+            max-width: 760px;
+            font-size: 0.92rem;
+            color: #c9f5ec;
+            text-align: center;
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            /* 多张图片自动换行 */
+            gap: 8px;
+        }
+
+        /* ======== 头部核心4系统导航卡片 ======== */
+        .featured-hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-bottom: 70px;
+        }
+
+        .quick-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 213, 0.2);
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffd5;
+            box-shadow: 0 8px 25px rgba(0, 255, 213, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .quick-card-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            align-self: flex-start;
+        }
+
+        .badge-cyan {
+            background: rgba(0, 255, 213, 0.15);
+            color: #00ffd5;
+            border: 1px solid rgba(0, 255, 213, 0.4);
+        }
+
+        .badge-blue {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+        }
+
+        .badge-green {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+
+        .badge-orange {
+            background: rgba(251, 146, 60, 0.15);
+            color: #fb923c;
+            border: 1px solid rgba(251, 146, 60, 0.4);
+        }
+
+        .quick-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.25rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-card p {
+            font-size: 0.9rem;
+            color: #b0c4cf;
+            line-height: 1.6;
+            margin: 0 0 16px;
+            flex-grow: 1;
+        }
+
+        .quick-card .card-cta {
+            font-size: 0.88rem;
+            color: #00ffd5;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ======== 详情展示区块 ======== */
+        .project-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 45px 35px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+
+        .project-section.highlight {
+            border-color: rgba(0, 255, 213, 0.35);
+            background: linear-gradient(180deg, rgba(0, 255, 213, 0.04) 0%, rgba(255, 255, 255, 0.03) 100%);
+        }
+
+        .project-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .project-title-area h2 {
+            font-size: 1.9rem;
+            color: #00ffd5;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-subtitle {
+            font-size: 1rem;
+            color: #b8d0dc;
+            margin: 0;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #00ffd5;
+            color: #07181f;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 213, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #26ffe0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 213, 0.5);
+        }
+
+        .tech-stack-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0 25px;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2f1f8;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 14px;
+        }
+
+        .project-intro-text {
+            color: #e0ecf2;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        /* ======== 功能网格 ======== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .feature-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-box:hover {
+            border-color: rgba(0, 255, 213, 0.4);
+        }
+
+        .feature-box h4 {
+            margin: 0 0 10px;
+            color: #00ffd5;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-box p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: #b5c7d2;
+            line-height: 1.6;
+        }
+
+        /* ======== 图片展示区 ======== */
+        .system-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 35px;
         }
 
         .system-images figure {
             margin: 0;
-            text-align: center;
-            width: 90%;
-            max-width: 800px;
-            /* 桌面端最大宽度 */
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .system-images figure:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 213, 0.5);
         }
 
         .system-images img {
-            width: 50%;
-            /* 自适应 figure 宽度 */
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s;
-        }
-
-        .system-images img:hover {
-            transform: scale(1.03);
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
         }
 
         .system-images figcaption {
-            margin-top: 10px;
-            font-size: 0.95em;
-            color: #ddd;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+            color: #d2e4ee;
+            text-align: center;
+            background: rgba(15, 32, 39, 0.8);
+        }
+
+        /* ======== 浏览器拟态卡片 ======== */
+        .system-preview-card {
+            background: linear-gradient(145deg, #10212a, #162c37);
+            border: 1px solid rgba(0, 255, 213, 0.25);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+            text-align: left;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .preview-url-bar {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #8ed6c8;
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+        /* ======== 其余项目与工具折叠/紧凑区 ======== */
+        .secondary-section {
+            margin-top: 70px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .secondary-section h3 {
+            color: #b5cdd8;
+            font-size: 1.4rem;
+            margin: 0 0 12px;
+        }
+
+        .secondary-section p {
+            color: #8fa6b2;
+            font-size: 0.95rem;
+            margin: 0 0 25px;
+        }
+
+        .other-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .other-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e0ecf2;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .other-btn:hover {
+            background: rgba(0, 255, 213, 0.12);
+            border-color: rgba(0, 255, 213, 0.4);
+            color: #00ffd5;
+            transform: translateY(-2px);
+        }
+
+        /* ======== 页脚 ======== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(5, 12, 16, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #7b94a2;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #00ffd5;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 100px 15px 50px;
+            }
+
+            .page-header h1 {
+                font-size: 1.8em;
+            }
+
+            .project-section {
+                padding: 25px 18px;
+            }
+
+            .project-title-area h2 {
+                font-size: 1.45rem;
+            }
+
+            .system-images img {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -277,125 +579,355 @@
             <ul id="nav-links">
                 <li><a href="index.html">首页</a></li>
                 <li><a href="companyInfo.html">公司简介</a></li>
-                <li><a href="example.html">作品示例</a></li>
+                <li><a href="exampleCN.html" style="color: #00ffd5;">作品介绍</a></li>
                 <li><a href="recruit.html">联系我们</a></li>
-                <li><a href="https://fujimirv.jptungri.shop/" target="_blank">预约管理系统</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- ======== Main ======== -->
     <main>
-        <h1>成品展示页面</h1>
-        <span style="
-    margin-left: auto;
-    align-items: center;
-    gap: 6px;
-    font-size: 1.4rem;
-    color: white;
-">
-            🌐
-            <a href="exampleCN.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇨🇳</a>
-            <a href="example.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇯🇵</a>
-            <a href="exampleEN.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇬🇧</a>
-        </span>
-        <p>您可以通过下方按钮访问各个已完成的演示页面。<br>由于服务器启动需要一定时间，访问时可能需要等待 1〜2 分钟，敬请谅解。</p>
-        <div class="buttons">
-            <a href="https://liveproject-w6ny.onrender.com" class="btn">预约管理系统</a>
-            <a href="counting.html" class="btn">订单汇总系统</a>
-            <a href="stockFliterCN.html" class="btn">量子选股猎人</a>
+        <!-- 页面标题与多语言切换 -->
+        <div class="page-header">
+            <div class="lang-switch">
+                <span>🌐 语言切换:</span>
+                <a href="exampleCN.html" title="中文版">🇨🇳</a>
+                <a href="example.html" title="日本語版">🇯🇵</a>
+                <a href="exampleEN.html" title="English">🇬🇧</a>
+            </div>
+            <h1>核心产品与开发案例展示</h1>
+            <p>Jptungri株式会社自主策划、架构与开发的核心业务系统与平台案例展示。涵盖预约匹配平台、企业人事管理、社区体育俱乐部及公益多语言教育平台，提供高可靠、强实用的技术解决方案。</p>
+            <div class="notice-banner">
+                <span>⚡</span>
+                <span>由于演示系统部署于云端节能环境，初次访问可能需要 30 秒至 1 分钟唤醒，敬请谅解。</span>
+            </div>
         </div>
 
-        <!-- ======== 预约管理系统介绍部分 ======== -->
-        <section class="system-intro">
-            <h2>📅 预约管理系统介绍</h2>
-            <p> 本公司自主开发的「预约管理系统」基于 <strong>Spring Boot</strong> 与 <strong>PostgreSQL</strong> 构建，
-                采用客户、业者、管理员三层结构，实现高效且安全的预约管理运作。 </p>
-            <p> 客户可以在线创建、修改、取消预约；业者可以通过地图或搜索功能快速找到最合适的案件；
-                管理员则能在仪表盘上实时掌握整体预约状况。 </p>
-            <p> 系统以直观的界面与简洁的操作性为核心，大幅提升业务效率，最大限度地减少人为错误。 </p>
+        <!-- ======== 4大核心系统快捷导航卡片 ======== -->
+        <div class="featured-hero-grid">
+            <!-- 1. 预约系统 -->
+            <a href="#reservation-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-cyan">SaaS / 智能匹配</span>
+                    <h3>📅 预约管理系统</h3>
+                    <p>连接客户、施工服务商与运营管理者的三层全流程工单预约与自动比价平台。</p>
+                </div>
+                <div class="card-cta">查看详情 <span>&darr;</span></div>
+            </a>
 
-            <!-- ======== 图片展示区 ======== -->
+            <!-- 2. 人事管理系统 -->
+            <a href="#hr-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-blue">企业数字化 / HR Tech</span>
+                    <h3>👥 人事管理系统</h3>
+                    <p>员工台账、考勤打卡统计、请休假申请与多级工作流在线审批。</p>
+                </div>
+                <div class="card-cta">查看详情 <span>&darr;</span></div>
+            </a>
+
+            <!-- 3. 运动俱乐部 -->
+            <a href="#sports-club" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-green">社区门户 / 运动平台</span>
+                    <h3>🏃 综合运动俱乐部</h3>
+                    <p>多运动项目介绍、实时日程日历、在线名额预约与精彩图集分享。</p>
+                </div>
+                <div class="card-cta">查看详情 <span>&darr;</span></div>
+            </a>
+
+            <!-- 4. 日语教室 -->
+            <a href="#japanese-school" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-orange">多文化共生 / 公益教育</span>
+                    <h3>🏫 日语教室门户</h3>
+                    <p>面向在日外籍人士的三阶课程、三语无缝切换与零门槛手机一键预约。</p>
+                </div>
+                <div class="card-cta">查看详情 <span>&darr;</span></div>
+            </a>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 1. 预约管理系统 (Reservation System) -->
+        <!-- ============================================================ -->
+        <section id="reservation-system" class="project-section highlight">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>📅 预约管理系统 (Reservation & Matching System)</h2>
+                    <p class="project-subtitle">客户・业者・管理员三层协同架构，全流程工单智能匹配与履约管理平台</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://fujimirv.jptungri.shop/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 访问预约系统</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tech-stack-row">
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Spring Security</span>
+                <span class="tech-tag">Leaflet / Map API</span>
+                <span class="tech-tag">自动邮件通知</span>
+                <span class="tech-tag">响应式网页设计</span>
+            </div>
+
+            <p class="project-intro-text">
+                本系统面向各类上门维修、保洁家政等生活服务场景量身打造，涵盖在线预约、多业者报价对比、工单分派、地图寻单到完工确认的全闭环管理。<br>
+                顾客可直观发布与取消预约，对比最具性价比的报价单；业者可通过地图按距离筛选附近优质案件并即时制定报价；管理员则在全景大盘中实时掌控订单与资金流向。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>👤 客户门户</h4>
+                    <p>提供极简预约流程，支持 24 小时在线下单、修改与取消。系统自动汇总多家业者报价单，一键横向比选最优性价比方案。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>👷 业者地图寻单端</h4>
+                    <p>集成地理信息检索，通过地图直观展示案件距离与施工详情，支持在线快速出具报价单，并随时同步现场处理进度。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📊 管理员全景大盘</h4>
+                    <p>全盘动态可视化工单流转状态（新建、待确认、已确认、已完成），支持按时间/状态维度统计分析，并提供 CSV 报表导出。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🔒 多层安全权限鉴权</h4>
+                    <p>基于 Spring Security 实现严格的角色权限划分（RBAC），确保客户、业者、管理人员各自拥有独立清晰的数据隔离与安全防护。</p>
+                </div>
+            </div>
+
             <div class="system-images">
-                <img src="images/emplyoeeMap1.png" alt="客户页面演示" style="height: 36rem; width: 58rem;">
-                <img src="images/mainRV.png" alt="管理页面演示">
+                <figure>
+                    <img src="images/emplyoeeMap1.png" alt="业者端 案件地图">
+                    <figcaption>🗺️ 业者端地图寻单：基于地理距离与区域快速锁定合适案件</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/mainRV.png" alt="管理员控制台">
+                    <figcaption>📊 管理员全景看板：全生命周期订单状态与数据概览</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/clientChoose.png" alt="报价单对比界面">
+                    <figcaption>📑 报价单横向比对：直观挑选最具性价比的施工服务方案</figcaption>
+                </figure>
             </div>
         </section>
 
-        <div class="feature-list">
-            <h3>主要功能：</h3>
-            <ul>
-                <li><strong>客户门户：</strong>
-                    客户可自行直观地进行预约创建、修改、取消操作。通过邮件通知功能可即时掌握状态更新，并可自动比较和选择最具性价比的报价单。</li>
-                <li><strong>业者界面：</strong> 可通过地图或搜索功能快速精准地找到符合条件的案件。可直观查看距离、区域、案件内容，实现最优案件匹配。
-                </li>
-                <li><strong>管理员仪表盘：</strong> 实时可视化客户、业者、预约数据。支持按状态分类统计显示与 CSV 导出，便于一目了然地掌握运营状况。</li>
-                <li><strong>多层安全认证：</strong> 通过 Spring Security 实现稳固的身份验证与权限控制，确保客户、业者、管理员各自拥有恰当的访问级别。</li>
-                <li><strong>状态管理系统：</strong> 「新建・确认中・已确认・已完成」等状态可一键即时更新，全员实时共享进度信息。</li>
-                <li><strong>响应式设计：</strong> 完全兼容 PC、平板与智能手机等所有设备，从任何地方都能流畅操作。</li>
-                <li><strong>自动邮件通知：</strong> 自动发送预约确认、完成报告、更新信息等通知，提高客户沟通效率，优化服务质量。</li>
-            </ul>
+        <!-- ============================================================ -->
+        <!-- 2. 人事管理系统 (HR Management System) -->
+        <!-- ============================================================ -->
+        <section id="hr-system" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>👥 人事管理系统 (Fujimino HR System)</h2>
+                    <p class="project-subtitle">员工档案・考勤打卡・请休假审批全流程一体化数字 HR 解决方案</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://hr.fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 访问人事系统</span>
+                    </a>
+                </div>
+            </div>
 
-            <h3>未来扩展计划：</h3>
-            <ul>
-                <li>通过图表进行统计分析（预约数量、客户趋势等）</li>
-                <li>多语言支持（中文／日文／英文）</li>
-            </ul>
-        </div>
+            <div class="tech-stack-row">
+                <span class="tech-tag">现代 Web 前端</span>
+                <span class="tech-tag">RESTful API</span>
+                <span class="tech-tag">考勤工时计算引擎</span>
+                <span class="tech-tag">多级审批工作流</span>
+                <span class="tech-tag">角色权限体系 (RBAC)</span>
+                <span class="tech-tag">云端高可用部署</span>
+            </div>
 
-        <section class="system-intro">
-            <h2>👤 客户页面介绍</h2>
-            <p> 在「预约管理系统」的客户页面中，用户可在线轻松进行<strong>预约的创建、查看与取消</strong>。<br><br>
-                系统采用简洁直观的设计，即使是首次使用者也能轻松上手。预约内容实时更新，修改或取消仅需一键完成。<br><br>
-                此外，系统在<strong>登录认证、邮件验证、密码保护</strong>等方面均具备完善的安全措施，确保使用过程安全可靠。<br><br>
-                同时，客户还可从多个报价单中<strong>比较并选择最具性价比的方案</strong>。<br> ※
-                由于使用免费服务器，访问时可能需要等待 1〜2 分钟，敬请谅解。 </p>
+            <p class="project-intro-text">
+                专为企事业单位与组织团队打造的高效人事管理平台，旨在推动人事实务全流程无纸化与规范化。<br>
+                支持员工电子档案管理、在线考勤打卡与工时统计，结合多级假期审批流与薪酬核算导出，大幅提升跨部门协作效率并降低人力管理成本。
+            </p>
 
-            <!-- ======== 客户页面图片 ======== -->
-            <div class="system-images">
-                <figure> <img src="images/clientBook.png" alt="客户预约创建页面">
-                    <figcaption>预约创建页面：轻松在线登记预约信息</figcaption>
-                </figure>
-                <figure> <img src="images/clientHistory.png" alt="客户预约记录页面">
-                    <figcaption>预约记录页面：随时查看过去的预约与取消情况</figcaption>
-                </figure>
-                <figure> <img src="images/clientChoose.png" alt="报价选择页面">
-                    <figcaption>报价选择页面：从多个报价中挑选最优惠的方案</figcaption>
-                </figure>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🗂️ 员工全生命周期档案</h4>
+                    <p>涵盖基本资料、所属部门、职务职级、入职状态及履历变更，支持灵活的组织架构拓展与多维度人事检索。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⏱️ 考勤打卡与工时统计</h4>
+                    <p>支持在线打卡与排班出勤记录，自动核算常规工时、加班与缺勤情况，大幅减轻月末考勤汇总的工作负荷。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📝 假期申请与多级审批</h4>
+                    <p>年休假、事假、病假等各类假种在线填报，即时推送上级主管与人事部门审批，申请进度实时清晰可见。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📈 劳务数据分析与导出</h4>
+                    <p>提供月度出勤台账与请假明细 CSV 导出，无缝对接企业薪酬计算软件与财务流程。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://hr.fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    💻 <strong>系统概述：</strong> 基于云端的现代化 B 端 SaaS 管理台，提供直观的员工个人中心与 HR 运维后台，助力企业组织高效运转。
+                </div>
             </div>
         </section>
 
-        <section class="system-intro">
-            <h2>👷 业者页面介绍</h2>
-            <p> 在「预约管理系统」的业者页面中，用户可实时进行<strong>案件的查看、管理与处理</strong>。<br><br>
-                可通过地图或搜索功能快速找到符合条件的案件，并能轻松完成报价单制作、状态更新及处理记录的登记，从而大幅提升日常工作效率。<br><br>
-                同时可查看客户的预约内容与修改记录，必要时可迅速进行应对与协调。<br> 通过安全的登录验证与权限管理，有效保护机密信息。<br><br> ※
-                由于使用免费服务器，访问时可能需要等待 1〜2 分钟，敬请谅解。 </p>
+        <!-- ============================================================ -->
+        <!-- 3. ふじみ野 综合运动俱乐部 (Sports Club Platform) -->
+        <!-- ============================================================ -->
+        <section id="sports-club" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🏃 综合运动俱乐部 (Fujimino Sports Club)</h2>
+                    <p class="project-subtitle">推动社区健康与运动交流的综合性体育门户与在线预约平台</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 访问运动俱乐部</span>
+                    </a>
+                </div>
+            </div>
 
-            <!-- ======== 业者页面图片 ======== -->
-            <div class="system-images">
-                <figure>
-                    <img src="images/emplyoeeMap1.png" alt="案件地图">
-                    <figcaption>案件地图：从地图中快速查找合适的工作</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/emplyoeeBook.png" alt="报价页面">
-                    <figcaption>报价页面：根据案件内容制作报价单</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/emplyoeeBook.png" alt="报价页面">
-                    <figcaption>报价页面：根据案件内容制作报价单</figcaption>
-                </figure>
+            <div class="tech-stack-row">
+                <span class="tech-tag">HTML5 / CSS3</span>
+                <span class="tech-tag">交互式 JavaScript</span>
+                <span class="tech-tag">活动日程日历</span>
+                <span class="tech-tag">在线预约名额</span>
+                <span class="tech-tag">移动端友好</span>
+            </div>
+
+            <p class="project-intro-text">
+                ふじみ野市地域综合性体育运动俱乐部官方平台。<br>
+                集羽毛球、跑步、体能训练、青少年运动等多项目课程介绍于一体，提供动态日程日历、在线体验预约、活动通知与精彩图集展示，营造充满活力与凝聚力的社区体育氛围。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🏸 丰富运动项目与课程</h4>
+                    <p>分级设置多门类体育项目与指导内容，从零基础爱好者到进阶选手均可找到适合自身的训练计划。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📅 动态活动日程日历</h4>
+                    <p>直观展现每周例行训练、交流赛及户外活动安排，活动场地、时间与所需装备一目了然。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📲 在线预约与体验报名</h4>
+                    <p>支持市民与会员随时随地通过手机预约体验名额，平台自动管理活动名额上限，避免过度预约。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📸 社区活动风采相册</h4>
+                    <p>呈现俱乐部日常训练精彩抓拍与赛事荣誉照片，增强会员归属感，扩大社区体育影响力。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    🏆 <strong>门户概述：</strong> 充满动感活力的社区体育互动平台，拉近运动爱好者与本地体育资源的距离。
+                </div>
             </div>
         </section>
 
-        <div class="system-images">
-            <img src="images/dashboard_demo.jpg" alt="管理员页面演示">
-        </div>
+        <!-- ============================================================ -->
+        <!-- 4. 日语教室 (Japanese Language Education) -->
+        <!-- ============================================================ -->
+        <section id="japanese-school" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🏫 大家之家 日语教室 (Minna no Ie Japanese Class)</h2>
+                    <p class="project-subtitle">面向在日外籍人士的多文化共生公益日语教育门户与一键免登录预约平台</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://jp.fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 访问日语教室</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tech-stack-row">
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">三语实时切换引擎 (日 / 简易日 / 英)</span>
+                <span class="tech-tag">预约系统直连</span>
+                <span class="tech-tag">Google Maps API 导航</span>
+                <span class="tech-tag">EmailJS 表单集成</span>
+            </div>
+
+            <p class="project-intro-text">
+                由一般社团法人 多文化共生推进项目主办的官方公益日语教室网站。<br>
+                为方便ふじみ野市及周边外籍居民融入当地生活，网站采用温馨亲和的日式设计风格，原生支持「标准日语」「简单日语（带平假名助读）」与「英文」三语无缝切换，并与预约系统直接连通，手机即可一键免费预约课程。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>📚 三阶递进式课程体系</h4>
+                    <p>详细介绍针对生活日常口语的「周日班」、零基础发音启蒙的「周三班」以及与本地居民喝茶畅聊的「交流咖啡厅」。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🌐 无障碍多语言即时切换</h4>
+                    <p>贴心提供适合初学者的“简单日语”模式，大幅降低外籍朋友的阅读门槛，体现高度的人文关怀。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⚡ 预约系统直连（24h 免费）</h4>
+                    <p>点击相应班级即可直接调起在线预约系统，无繁琐流程，随时随地锁定学习席位。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🗺️ 地图导航与即时咨询</h4>
+                    <p>嵌入真实校区地理定位与路线指引，配合常见问题解答（FAQ）与免后端邮件表单，咨询反馈迅速可靠。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://jp.fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    🤝 <strong>项目概述：</strong> 融合公共福祉与数字化创新的典范，以科技力量推动多元文化社区的和谐共融。
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 其余制作成果与工具 (紧凑排版) -->
+        <!-- ============================================================ -->
+        <section class="secondary-section">
+            <h3>🛠️ 其他开发成果与实用工具</h3>
+            <p>本公司既往研发的各类原型系统、电商演示及数据工具。</p>
+            <div class="other-projects-grid">
+                <a href="https://warehouse-management-system-max8.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
+                    <span>📦 仓库管理系统</span>
+                </a>
+                <a href="https://shopping-web-l1dz.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
+                    <span>🛒 电商购物系统</span>
+                </a>
+                <a href="stockFliterCN.html" class="other-btn">
+                    <span>📈 量子选股猎人</span>
+                </a>
+                <a href="counting.html" class="other-btn">
+                    <span>📑 订单汇总系统</span>
+                </a>
+                <a href="countingJP.html" class="other-btn">
+                    <span>📊 订单汇总系统 (JP)</span>
+                </a>
+                <a href="jpLearning.html" class="other-btn">
+                    <span>📖 日语学习器</span>
+                </a>
+            </div>
+        </section>
     </main>
+
+    <!-- ======== Footer ======== -->
+    <footer>
+        <p>&copy; 2026 Jptungri株式会社 All rights reserved. | <a href="companyInfo.html">公司简介</a> | <a href="recruit.html">联系我们</a></p>
+    </footer>
 
     <script>
         // 汉堡菜单开关

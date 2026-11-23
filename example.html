@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>成品展示ページ | Jptungri株式会社</title>
+    <title>作品・開発実績紹介 | Jptungri株式会社</title>
+    <meta name="description" content="Jptungri株式会社の開発実績・作品紹介ページです。予約管理システム、人事管理システム、スポーツクラブポータル、多文化共生日本語教室など主要ソリューションをご紹介します。">
     <link rel="stylesheet" href="css/index.css">
     <style>
         /* ======== ベース設定 ======== */
@@ -12,21 +13,23 @@
             margin: 0;
             font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
             color: #fff;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #0b171c 0%, #152731 50%, #1f3744 100%);
+            min-height: 100vh;
         }
 
-
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #00ffd5;
+            letter-spacing: 0.5px;
         }
 
         nav ul {
-            padding-right: 60px;
+            padding-right: 40px;
             list-style: none;
             display: flex;
-            gap: 25px;
+            gap: 24px;
+            margin: 0;
         }
 
         nav a {
@@ -34,6 +37,7 @@
             color: #fff;
             transition: color 0.3s;
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         nav a:hover {
@@ -41,9 +45,6 @@
         }
 
         /* ======== 汉堡菜单 ======== */
-
-
-        /* ======== 响应式 ======== */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -59,21 +60,26 @@
             transition: all 0.3s ease;
         }
 
+        /* ======== 响应式 ======== */
         @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
             nav ul {
                 display: none;
                 flex-direction: column;
                 position: absolute;
                 top: 60px;
-                left: 41%;
+                left: 50%;
                 transform: translateX(-50%);
-                background: #1e2a38;
+                background: #14242e;
                 border-radius: 8px;
-                width: 80%;
-                /* 宽度为屏幕的80% */
+                width: 90%;
                 text-align: center;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                padding: 15px 0;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+                padding: 20px 0;
+                border: 1px solid rgba(0, 255, 213, 0.2);
             }
 
             nav ul.active {
@@ -99,167 +105,463 @@
             .menu-toggle.active span:nth-child(3) {
                 transform: rotate(-45deg) translateY(-8px);
             }
-
-            .system-images img {
-                width: 100%;
-            }
-
-            .system-intro {
-                padding: 40px 15px;
-            }
-
-            .feature-list {
-                text-align: left;
-                font-size: 0.95em;
-            }
-
-            .system-intro h2 {
-                font-size: 1.5em;
-            }
-
-            .system-intro p {
-                font-size: 1em;
-                line-height: 1.6;
-            }
-
-            .system-images figcaption {
-                font-size: 0.9em;
-            }
         }
 
-
-
-        /* ======== Main（展示部分） ======== */
+        /* ======== Main Container ======== */
         main {
-            padding: 160px 20px 80px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-        }
-
-        main h1 {
-            font-size: 2.2em;
-            color: #00ffd5;
-            margin-bottom: 10px;
-        }
-
-        main p {
-            font-size: 1.1em;
-            color: #ddd;
-            margin-bottom: 40px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: #00ffd5;
-            color: #000;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #00bfa5;
-            transform: translateY(-3px);
-        }
-
-        section.system-intro {
-            background: rgba(255, 255, 255, 0.05);
-            margin: 80px auto;
-            padding: 60px 20px;
-            border-radius: 12px;
-            max-width: 1000px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);
-        }
-
-        .system-intro {
-            text-align: center;
-            padding: 60px 20px;
-            max-width: 900px;
+            padding: 130px 20px 80px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .system-intro strong {
-            color: #00ffd5;
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .system-intro h2 {
-            color: #00ffd5;
-            font-size: 1.9em;
-            margin-bottom: 30px;
-        }
-
-
-        .system-intro p {
-            color: #f1f1f1;
-            font-size: 1.1em;
-            line-height: 1.7;
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
             margin-bottom: 20px;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
+        .lang-switch a {
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            display: inline-block;
+        }
 
-        .feature-list {
-            text-align: left;
-            max-width: 850px;
-            margin: 0 auto 50px;
-            color: #ddd;
+        .lang-switch a:hover {
+            transform: scale(1.2);
+            opacity: 0.9;
+        }
+
+        .page-header h1 {
+            font-size: 2.4em;
+            color: #00ffd5;
+            margin: 10px 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header p {
+            font-size: 1.1em;
+            color: #d1e2e9;
+            max-width: 800px;
+            margin: 0 auto;
             line-height: 1.8;
         }
 
-        .feature-list h3 {
-            color: #00ffd5;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .feature-list ul {
-            list-style: "✔ ";
-            padding-left: 20px;
-        }
-
-        /* ======== 图片容器 ======== */
-        .system-images {
+        .notice-banner {
+            background: rgba(0, 255, 213, 0.08);
+            border: 1px solid rgba(0, 255, 213, 0.3);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 25px auto 0;
+            max-width: 760px;
+            font-size: 0.92rem;
+            color: #c9f5ec;
+            text-align: center;
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            /* 多张图片自动换行 */
+            gap: 8px;
+        }
+
+        /* ======== Top Featured Quick Navigation Cards ======== */
+        .featured-hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-bottom: 70px;
+        }
+
+        .quick-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 213, 0.2);
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffd5;
+            box-shadow: 0 8px 25px rgba(0, 255, 213, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .quick-card-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            align-self: flex-start;
+        }
+
+        .badge-cyan {
+            background: rgba(0, 255, 213, 0.15);
+            color: #00ffd5;
+            border: 1px solid rgba(0, 255, 213, 0.4);
+        }
+
+        .badge-blue {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+        }
+
+        .badge-green {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+
+        .badge-orange {
+            background: rgba(251, 146, 60, 0.15);
+            color: #fb923c;
+            border: 1px solid rgba(251, 146, 60, 0.4);
+        }
+
+        .quick-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.25rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-card p {
+            font-size: 0.9rem;
+            color: #b0c4cf;
+            line-height: 1.6;
+            margin: 0 0 16px;
+            flex-grow: 1;
+        }
+
+        .quick-card .card-cta {
+            font-size: 0.88rem;
+            color: #00ffd5;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ======== Detailed Project Presentation Section ======== */
+        .project-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 45px 35px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+
+        .project-section.highlight {
+            border-color: rgba(0, 255, 213, 0.35);
+            background: linear-gradient(180deg, rgba(0, 255, 213, 0.04) 0%, rgba(255, 255, 255, 0.03) 100%);
+        }
+
+        .project-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .project-title-area h2 {
+            font-size: 1.9rem;
+            color: #00ffd5;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-subtitle {
+            font-size: 1rem;
+            color: #b8d0dc;
+            margin: 0;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #00ffd5;
+            color: #07181f;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 213, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #26ffe0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 213, 0.5);
+        }
+
+        .tech-stack-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0 25px;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2f1f8;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 14px;
+        }
+
+        .project-intro-text {
+            color: #e0ecf2;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        /* ======== Feature Grid ======== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .feature-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-box:hover {
+            border-color: rgba(0, 255, 213, 0.4);
+        }
+
+        .feature-box h4 {
+            margin: 0 0 10px;
+            color: #00ffd5;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-box p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: #b5c7d2;
+            line-height: 1.6;
+        }
+
+        /* ======== Image Showcase ======== */
+        .system-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 35px;
         }
 
         .system-images figure {
             margin: 0;
-            text-align: center;
-            width: 90%;
-            max-width: 800px;
-            /* 桌面端最大宽度 */
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .system-images figure:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 213, 0.5);
         }
 
         .system-images img {
-            width: 50%;
-            /* 自适应 figure 宽度 */
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s;
-        }
-
-        .system-images img:hover {
-            transform: scale(1.03);
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
         }
 
         .system-images figcaption {
-            margin-top: 10px;
-            font-size: 0.95em;
-            color: #ddd;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+            color: #d2e4ee;
+            text-align: center;
+            background: rgba(15, 32, 39, 0.8);
+        }
+
+        /* ======== UI Mockup Card for non-image systems ======== */
+        .system-preview-card {
+            background: linear-gradient(145deg, #10212a, #162c37);
+            border: 1px solid rgba(0, 255, 213, 0.25);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+            text-align: left;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .preview-url-bar {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #8ed6c8;
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+        /* ======== Other Works Accordion / Secondary Grid ======== */
+        .secondary-section {
+            margin-top: 70px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .secondary-section h3 {
+            color: #b5cdd8;
+            font-size: 1.4rem;
+            margin: 0 0 12px;
+        }
+
+        .secondary-section p {
+            color: #8fa6b2;
+            font-size: 0.95rem;
+            margin: 0 0 25px;
+        }
+
+        .other-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .other-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e0ecf2;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .other-btn:hover {
+            background: rgba(0, 255, 213, 0.12);
+            border-color: rgba(0, 255, 213, 0.4);
+            color: #00ffd5;
+            transform: translateY(-2px);
+        }
+
+        /* ======== Footer ======== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(5, 12, 16, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #7b94a2;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #00ffd5;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 100px 15px 50px;
+            }
+
+            .page-header h1 {
+                font-size: 1.8em;
+            }
+
+            .project-section {
+                padding: 25px 18px;
+            }
+
+            .project-title-area h2 {
+                font-size: 1.45rem;
+            }
+
+            .system-images img {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -277,142 +579,356 @@
             <ul id="nav-links">
                 <li><a href="index.html">ホーム</a></li>
                 <li><a href="companyInfo.html">会社概要</a></li>
-                <li><a href="example.html">サンプル</a></li>
+                <li><a href="example.html" style="color: #00ffd5;">作品紹介</a></li>
                 <li><a href="recruit.html">お問い合わせ</a></li>
-
             </ul>
         </nav>
     </header>
 
     <!-- ======== Main ======== -->
     <main>
-        <h1>成品展示ページ</h1>
-        <span style="
-    margin-left: auto;
-    align-items: center;
-    gap: 6px;
-    font-size: 1.4rem;
-    color: white;
-">
-            🌐
-            <a href="exampleCN.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇨🇳</a>
-            <a href="example.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇯🇵</a>
-            <a href="exampleEN.html"
-                style="text-decoration: none; color: white; transition: transform 0.2s; display: inline-block;">🇬🇧</a>
-        </span>
-        <p>以下のボタンから、それぞれの完成品デモページにアクセスできます。<br>サーバーの起動に時間がかかるため、アクセス時に1〜2分お待ちいただく場合があります。ご了承ください。</p>
-        <div class="buttons">
-            <!-- <a href="mobileMap.html" class="btn">🗺️ 地点マップ</a>
-            <a href="exampleShow.html" class="btn">🧑‍💻 ロシア中古車デモ</a> -->
-            <a href="https://warehouse-management-system-max8.onrender.com/" class="btn">管理システム</a>
-            <a href="https://fujimirv.jptungri.shop/" class="btn">予約システム</a>
-            <a href="https://shopping-web-l1dz.onrender.com/" class="btn">ショッピングシステム</a>
-            <a href="stockFliterJP.html" class="btn">Quantum銘柄ハンター</a>
-            <a href="japaneseSchool.html" class="btn">日本語教室</a>
-            <a href="material/JpLearning/index.html" class="btn">日本語素材</a>
-            <a href="countingJP.html" class="btn">SummaryシステムJP</a>
-            <a href="counting.html" class="btn">订单汇总系统</a>
-            <a href="jpLearning.html" class="btn">日語学習器</a>
-
+        <!-- ページヘッダー -->
+        <div class="page-header">
+            <div class="lang-switch">
+                <span>🌐 言語切替:</span>
+                <a href="exampleCN.html" title="中文版">🇨🇳</a>
+                <a href="example.html" title="日本語版">🇯🇵</a>
+                <a href="exampleEN.html" title="English">🇬🇧</a>
+            </div>
+            <h1>プロダクト・開発実績紹介</h1>
+            <p>Jptungri株式会社が企画・設計・開発を手がけた主要WebシステムおよびWebプラットフォームのご紹介です。地域密着型サービスから業務基幹システムまで、実用的かつ高信頼なソリューションを提供しています。</p>
+            <div class="notice-banner">
+                <span>⚡</span>
+                <span>クラウド環境の省電力待機により、初回アクセス時に起動まで約30秒〜1分ほど要する場合がございます。</span>
+            </div>
         </div>
 
-        <!-- ======== 予約管理システム紹介セクション ======== -->
-        <section class="system-intro">
-            <h2>📅 予約管理システムのご紹介</h2>
-            <p> 弊社独自開発の「予約管理システム」は、<strong>Spring Boot</strong> と <strong>PostgreSQL</strong>
-                を基盤とした三層構造（顧客・業者・管理者）により、効率的で安全な予約運営を実現します。 </p>
-            <p> 顧客はオンラインで予約を作成・変更・キャンセルでき、業者は地図または検索機能から最適な案件を素早く特定。管理者はダッシュボードで全体状況をリアルタイムで把握できます。 </p>
-            <p> 直感的なUIとシンプルな操作性により、業務効率を大幅に向上させ、人的ミスを最小限に抑えます。 </p>
+        <!-- ======== 主要4システム クイックナビゲーション ======== -->
+        <div class="featured-hero-grid">
+            <!-- 1. 予約システム -->
+            <a href="#reservation-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-cyan">SaaS / マッチング</span>
+                    <h3>📅 予約管理システム</h3>
+                    <p>顧客・施工業者・管理者を結ぶ三層マッチング＆自動見積もり比較プラットフォーム。</p>
+                </div>
+                <div class="card-cta">詳細を見る <span>&darr;</span></div>
+            </a>
 
-            <!-- ======== 图片预留区 ======== -->
-            <div class="system-images">
-                <!-- 👇 在这里粘贴你的截图 -->
+            <!-- 2. 人事管理システム -->
+            <a href="#hr-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-blue">業務DX / HR Tech</span>
+                    <h3>👥 人事管理システム</h3>
+                    <p>従業員台帳、出退勤打刻・勤怠追跡、休暇申請とワークフロー承認の一元化。</p>
+                </div>
+                <div class="card-cta">詳細を見る <span>&darr;</span></div>
+            </a>
 
-                <img src="images/emplyoeeMap1.png" alt="顧客画面デモ">
+            <!-- 3. 運動クラブ -->
+            <a href="#sports-club" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-green">地域ポータル / コミュニティ</span>
+                    <h3>🏃 総合スポーツクラブ</h3>
+                    <p>多種目プログラム紹介、スケジュールカレンダー、オンライン参加予約機能。</p>
+                </div>
+                <div class="card-cta">詳細を見る <span>&darr;</span></div>
+            </a>
 
-                <img src="images/mainRV.png" alt="管理画面デモ">
-            </div>
-        </section>
-        <div class="feature-list">
-            <h3>主要機能：</h3>
-            <ul>
-                <li><strong>顧客ポータル：</strong>
-                    顧客自身で予約の作成・変更・キャンセルを直感的に操作可能。メール通知機能により、ステータス更新を即時把握。最もコストパフォーマンスの高い見積書を自動比較・選択できます。</li>
-                <li><strong>業者向けインターフェース：</strong> 地図上または検索機能から、条件に合う案件を迅速かつ正確に特定可能。距離・エリア・案件内容を直感的に確認でき、最適な案件マッチングを実現。
-                </li>
-                <li><strong>管理者ダッシュボード：</strong> 顧客・業者・予約データをリアルタイムで可視化。ステータス別の統計表示やCSVエクスポートにも対応し、運営状況を一目で把握できます。</li>
-                <li><strong>多層セキュリティ認証：</strong> Spring Securityによる堅牢な認証・権限制御を実装。顧客・業者・管理者ごとに適切なアクセスレベルを確保。</li>
-                <li><strong>ステータス管理システム：</strong> 「新規・確認中・確認済み・完了」などの状態をワンクリックで即時更新。進捗状況をチーム全体でリアルタイム共有。</li>
-                <li><strong>レスポンシブデザイン：</strong> PC・タブレット・スマートフォンの全デバイスに完全対応。どこからでもスムーズに操作可能。</li>
-                <li><strong>自動メール通知：</strong> 予約確認・完了報告・更新情報などを自動送信。顧客とのコミュニケーションを効率化し、サービス品質を向上。</li>
-            </ul>
-
-            <h3>今後の拡張予定：</h3>
-            <ul>
-
-                <li>グラフによる統計分析（予約件数、顧客傾向など）</li>
-                <li>多言語対応（日本語／英語／中国語）</li>
-            </ul>
+            <!-- 4. 日本語教室 -->
+            <a href="#japanese-school" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-orange">教育支援 / 多文化共生</span>
+                    <h3>🏫 日本語教室ポータル</h3>
+                    <p>外国人住民向け3クラス案内、3言語即時切替、簡単ネット予約システム直結。</p>
+                </div>
+                <div class="card-cta">詳細を見る <span>&darr;</span></div>
+            </a>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- 1. 予約管理システム (Reservation System) -->
+        <!-- ============================================================ -->
+        <section id="reservation-system" class="project-section highlight">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>📅 予約管理システム (Reservation & Matching System)</h2>
+                    <p class="project-subtitle">顧客・業者・管理者の三層構造による業務効率化＆自動マッチング基盤</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://fujimirv.jptungri.shop/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 予約システムを開く</span>
+                    </a>
+                </div>
+            </div>
 
-        <section class="system-intro">
-            <h2>👤 顧客用ページのご紹介</h2>
-            <p> 「予約管理システム」の顧客ページでは、利用者がオンライン上で<strong>予約の作成・確認・キャンセル</strong>を簡単に行えます。<br><br>
-                シンプルで直感的なデザインを採用しており、初めての方でも迷うことなくスムーズに操作可能。予約内容はリアルタイムで反映され、変更やキャンセルもワンクリックで完了します。<br><br>
-                また、<strong>ログイン認証・メール確認・パスワード保護</strong>など、セキュリティ面にも万全を期しており、安心してご利用いただけます。<br><br>
-                さらに、複数の見積書の中から<strong>最もコストパフォーマンスの高いプラン</strong>を比較・選択できる機能も搭載。<br> ※
-                無料プランのサーバーを使用しているため、アクセス時に1〜2分ほどお待ちいただく場合があります。あらかじめご了承ください。 </p> <!-- ======== 顧客ページ画像预留区 ======== -->
+            <div class="tech-stack-row">
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Spring Security</span>
+                <span class="tech-tag">Leaflet / Map API</span>
+                <span class="tech-tag">自動メール通知</span>
+                <span class="tech-tag">レスポンシブWeb</span>
+            </div>
+
+            <p class="project-intro-text">
+                本システムは、出張・修繕・家政等の各種生活サービスにおける予約から見積比較、業者マッチング、履践状況管理までをワンストップで完結できる独自開発プラットフォームです。<br>
+                利用者はオンライン上で直感的に予約登録・キャンセルが行え、業者は地図上の案件位置や距離をもとに迅速に応答。管理者は専用ダッシュボードからすべての予約・見積状況をリアルタイムに可視化できます。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>👤 顧客専用ポータル</h4>
+                    <p>直感的なフォームで24時間いつでも予約作成・変更・取消が可能。複数業者からの見積もりを自動比較し、最も費用対効果の高いプランを選択できます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>👷 業者向け案件マップ</h4>
+                    <p>地図検索機能により、現場の距離・地域・作業内容をビジュアルに把握。迅速な見積書作成と現場ステータス更新をスムーズに行えます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📊 管理者ダッシュボード</h4>
+                    <p>全案件のリアルタイム状況（新規・確認中・確定・完了）を一目で把握。CSVデータエクスポートや顧客・業者のアカウント一元管理に対応。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🔒 堅牢なセキュリティ認証</h4>
+                    <p>Spring Securityを採用し、顧客・業者・管理者ごとの多層アクセス権限を徹底分離。安全で信頼性の高いデータ運用を実現しています。</p>
+                </div>
+            </div>
+
+            <!-- 画像ギャラリー -->
             <div class="system-images">
-                <figure> <img src="images/clientBook.png" alt="顧客予約作成画面">
-                    <figcaption>予約作成画面：オンラインで簡単に予約を登録できます</figcaption>
+                <figure>
+                    <img src="images/emplyoeeMap1.png" alt="業者用 案件マップ画面">
+                    <figcaption>🗺️ 業者向け案件マップ：現場位置と距離から案件を即座に特定</figcaption>
                 </figure>
-                <figure> <img src="images/clientHistory.png" alt="顧客予約履歴画面">
-                    <figcaption>予約履歴画面：過去の予約やキャンセル状況をいつでも確認可能</figcaption>
+                <figure>
+                    <img src="images/mainRV.png" alt="管理画面ダッシュボード">
+                    <figcaption>📊 管理者ダッシュボード：全体状況・ステータスを一括監視</figcaption>
                 </figure>
-                <figure> <img src="images/clientChoose.png" alt="見積書選択画面">
-                    <figcaption>見積書選択画面：複数の見積から最もお得なプランを選択</figcaption>
+                <figure>
+                    <img src="images/clientChoose.png" alt="見積書選択画面">
+                    <figcaption>📑 見積書比較画面：複数業者の見積から最適なプランを選択</figcaption>
                 </figure>
             </div>
         </section>
 
+        <!-- ============================================================ -->
+        <!-- 2. 人事管理システム (HR Management System) -->
+        <!-- ============================================================ -->
+        <section id="hr-system" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>👥 人事管理システム (Fujimino HR System)</h2>
+                    <p class="project-subtitle">従業員台帳・勤怠打刻・休暇申請承認を一元化する次世代HRソリューション</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://hr.fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 人事システムを開く</span>
+                    </a>
+                </div>
+            </div>
 
+            <div class="tech-stack-row">
+                <span class="tech-tag">Webフロントエンド</span>
+                <span class="tech-tag">RESTful API</span>
+                <span class="tech-tag">勤怠管理エンジン</span>
+                <span class="tech-tag">多段階承認ワークフロー</span>
+                <span class="tech-tag">ロール権限管理 (RBAC)</span>
+                <span class="tech-tag">クラウドホスティング</span>
+            </div>
 
-        <section class="system-intro">
-            <h2>👷 業者用ページのご紹介</h2>
-            <p> 「予約管理システム」の業者ページでは、<strong>担当案件の確認・管理・対応</strong>をリアルタイムで行えます。<br><br>
-                地図上または検索機能から条件に合う案件をすぐに見つけられるほか、見積書の作成やステータス更新、対応履歴の記録も直感的に操作可能。日々の業務効率を大幅に向上させます。<br><br>
-                また、顧客の予約内容や変更履歴を確認し、必要に応じて迅速な対応・調整を行うことができます。<br> 安全なログイン認証と権限管理により、機密情報を確実に保護します。<br><br> ※
-                無料サーバーを使用しているため、アクセス時に1〜2分ほどお待ちいただく場合があります。ご了承ください。 </p>
+            <p class="project-intro-text">
+                企業や各種組織における人事業務のペーパーレス化と運用効率化を目的に開発された人事管理システム（HR SaaS）です。<br>
+                従業員のプロファイル管理、日々の出退勤打刻や勤務時間集計、有給・病気等の休暇申請から上長・人事による承認フローまでを完全オンライン化し、人的ミスを最小限に抑え組織運営を強力に後押しします。
+            </p>
 
-            <!-- ======== 業者页面图片预留区 ======== -->
-            <div class="system-images">
-                <figure>
-                    <img src="images/emplyoeeMap1.png" alt="予約Map">
-                    <figcaption>予約Mapから仕事を探す</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/emplyoeeBook.png" alt="予約画面">
-                    <figcaption>見積書を作り</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/emplyoeeHistory.png" alt="予約画面">
-                    <figcaption>履歴</figcaption>
-                </figure>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🗂️ 従業員台帳・プロファイル管理</h4>
+                    <p>氏名・所属部署・役職・連絡先・入社履歴などを一元管理。組織改編や人事異動にも柔軟に対応可能な拡張設計です。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⏱️ 勤怠打刻＆実働時間トラッキング</h4>
+                    <p>ワンクリック出退勤打刻に対応。残業時間や所定外労働時間を自動計算し、タイムシートの確認・集計の手間を大幅削減します。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📝 休暇申請＆ワークフロー承認</h4>
+                    <p>年次有給休暇や慶弔休暇をスマホ・PCから即時申請。直属上司や人事担当者への承認通知とステータス追跡がスムーズに行えます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📈 労務データ出力＆分析</h4>
+                    <p>月次勤怠データや休暇取得状況のCSV出力に対応。給与計算ソフトウェアや外部会計サービスとの連携基盤としても機能します。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://hr.fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    💻 <strong>システム概要：</strong> クラウド上で直感的に操作できる管理コンソール。従業員ポータルとHR管理者コンソールを統合し、ペーパーレスなオフィスワークを支援します。
+                </div>
             </div>
         </section>
 
+        <!-- ============================================================ -->
+        <!-- 3. ふじみ野 総合スポーツクラブ (Sports Club Platform) -->
+        <!-- ============================================================ -->
+        <section id="sports-club" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🏃 ふじみ野 総合スポーツクラブ (Fujimino Sports Club)</h2>
+                    <p class="project-subtitle">地域コミュニティの健康と活力をつなぐスポーツ情報＆オンライン予約ポータル</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 スポーツクラブを開く</span>
+                    </a>
+                </div>
+            </div>
 
+            <div class="tech-stack-row">
+                <span class="tech-tag">HTML5 / CSS3</span>
+                <span class="tech-tag">モダンJavaScript</span>
+                <span class="tech-tag">インタラクティブカレンダー</span>
+                <span class="tech-tag">オンライン参加受付</span>
+                <span class="tech-tag">モバイル最適化</span>
+            </div>
 
+            <p class="project-intro-text">
+                ふじみ野市地域で活動する総合スポーツクラブの公式ポータルサイトです。<br>
+                バドミントン、ランニング、体幹トレーニング、ジュニア運動教室など多彩な種目プログラムの紹介をはじめ、開催スケジュールカレンダーの閲覧、練習会・体験レッスンへのオンライン参加予約を直感的に行えます。
+            </p>
 
-        <div class="system-images">
-            <img src="images/dashboard_demo.jpg" alt="管理画面デモ">
-        </div>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>🏸 多種目プログラム＆種目紹介</h4>
+                    <p>初心者から競技志向の方まで、目的やレベルに応じた各競技プログラムやコーチ紹介を視覚的に分かりやすく掲載しています。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📅 イベントスケジュールカレンダー</h4>
+                    <p>定期練習や大会、イベント日程をカレンダー形式でリアルタイムに更新。開催場所や持参物などの詳細も手軽に確認できます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📲 オンライン参加予約＆体験申込</h4>
+                    <p>Web上から24時間いつでも体験参加やビジター利用の予約が可能。参加枠の管理もスムーズに行えます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📸 コミュニティギャラリー＆活動発信</h4>
+                    <p>練習風景や試合のハイライト写真を掲載し、クラブの活気と温かいコミュニティの雰囲気を広く届けています。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    🏆 <strong>ポータル概要：</strong> 地域住民やスポーツ愛好家が気軽に集い、健康的なライフスタイルを応援するアクティブな公式Webサイトです。
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 4. みんなのいえ 日本語教室 (Japanese Language Education) -->
+        <!-- ============================================================ -->
+        <section id="japanese-school" class="project-section">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🏫 みんなのいえ 日本語教室 (Minna no Ie Japanese Class)</h2>
+                    <p class="project-subtitle">多文化共生を支える公的日本語教室ポータル＆オンライン無料予約システム</p>
+                </div>
+                <div class="project-actions">
+                    <a href="https://jp.fujimino.space/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span>🔗 日本語教室を開く</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tech-stack-row">
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">多言語エンジン (日本語 / やさしい日本語 / English)</span>
+                <span class="tech-tag">予約システム直結</span>
+                <span class="tech-tag">Google Maps API</span>
+                <span class="tech-tag">EmailJS お問い合わせ</span>
+            </div>
+
+            <p class="project-intro-text">
+                一般社団法人 多文化共生推進プロジェクトが運営する無料日本語教室の公式ポータルサイトです。<br>
+                ふじみ野市周辺に暮らす外国籍住民の方々が安心して学べるよう、温かみのあるデザインとともに「日本語」「やさしい日本語」「英語」の3言語切り替えに対応。弊社の予約システムとシームレスに直結し、スマートフォンから誰でも簡単にクラス予約が行えます。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>📚 3つのレベル別クラス案内</h4>
+                    <p>日常会話を学ぶ「日曜クラス」、初心者向けの「水曜クラス」、お茶を飲みながら交流する「おしゃべりカフェ」の3つの講座情報をわかりやすく提供。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🌐 3言語リアルタイム切り替え</h4>
+                    <p>日本語・やさしい日本語（ふりがな・平易な表現）・英語を瞬時に切り替え可能。外国人利用者にとって極めて高いアクセシビリティを誇ります。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⚡ 予約システム直結（24h受付）</h4>
+                    <p>受講したいクラスを選択するだけで、オンライン予約システムへ直接遷移。待機時間なしで無料予約を完了できます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🗺️ アクセス案内＆お問い合わせ</h4>
+                    <p>教室の所在地（埼玉県ふじみ野市亀久保）のGoogle Mapルート案内、よくある質問（FAQ）、EmailJSによる即時問い合わせフォームを完備。</p>
+                </div>
+            </div>
+
+            <div class="system-preview-card">
+                <div class="preview-header">
+                    <span class="preview-dot dot-red"></span>
+                    <span class="preview-dot dot-yellow"></span>
+                    <span class="preview-dot dot-green"></span>
+                    <span class="preview-url-bar">https://jp.fujimino.space/</span>
+                </div>
+                <div style="color: #b0c9d7; font-size: 0.95rem; line-height: 1.7;">
+                    🤝 <strong>プロジェクト概要：</strong> 地域福祉・多文化共生をITで後押しする公共性の高いプラットフォーム。誰もが使いやすいユニバーサルデザインを採用しています。
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- その他の開発実績・ツール (コンパクト配置) -->
+        <!-- ============================================================ -->
+        <section class="secondary-section">
+            <h3>🛠️ その他の制作実績・ツール</h3>
+            <p>弊社が過去に開発・公開したプロトタイプやWebアプリケーション、便利ツールです。</p>
+            <div class="other-projects-grid">
+                <a href="https://warehouse-management-system-max8.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
+                    <span>📦 倉庫管理システム</span>
+                </a>
+                <a href="https://shopping-web-l1dz.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
+                    <span>🛒 ショッピングシステム</span>
+                </a>
+                <a href="stockFliterJP.html" class="other-btn">
+                    <span>📈 Quantum銘柄ハンター</span>
+                </a>
+                <a href="countingJP.html" class="other-btn">
+                    <span>📊 注文集計サマリー (JP)</span>
+                </a>
+                <a href="counting.html" class="other-btn">
+                    <span>📑 订单汇总系统 (CN)</span>
+                </a>
+                <a href="jpLearning.html" class="other-btn">
+                    <span>📖 日本語学習器</span>
+                </a>
+            </div>
+        </section>
     </main>
 
-
+    <!-- ======== Footer ======== -->
+    <footer>
+        <p>&copy; 2026 Jptungri株式会社 All rights reserved. | <a href="companyInfo.html">会社概要</a> | <a href="recruit.html">お問い合わせ</a></p>
+    </footer>
 
     <script>
         // 汉堡菜单开关
