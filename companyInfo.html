@@ -8,80 +8,22 @@
   <link rel="stylesheet" href="css/style.css">
 
 </head>
-<style>
-  .menu-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-  }
-
-  .menu-toggle span {
-    background: white;
-    height: 3px;
-    width: 25px;
-    margin: 4px 0;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-
-  @media (max-width: 768px) {
-    nav ul {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      left: 41%;
-      transform: translateX(-50%);
-      background: #1e2a38;
-      border-radius: 8px;
-      width: 80%;
-      /* 宽度为屏幕的80% */
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      padding: 15px 0;
-    }
-
-    nav ul.active {
-      display: flex;
-    }
-
-    nav ul li {
-      margin: 10px 0;
-    }
-
-    .menu-toggle {
-      display: flex;
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
-  }
-</style>
 
 <body>
   <header>
-    <div class="logo">Jptungri株式会社</div>
-    <div class="menu-toggle" id="menu-toggle">
+    <a href="index.html" class="logo">Jptungri株式会社</a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="メニュー開閉">
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </button>
 
     <nav>
       <ul id="nav-links">
         <li><a href="index.html">ホーム</a></li>
-        <li><a href="companyInfo.html">会社概要</a></li>
-        <li><a href="example.html">サンプル</a></li>
+        <li><a href="companyInfo.html" class="active">会社概要</a></li>
+        <li><a href="example.html">作品紹介</a></li>
         <li><a href="recruit.html">お問い合わせ</a></li>
       </ul>
     </nav>

@@ -9,38 +9,171 @@ body {
 
 
 
+/* ======== 統一ヘッダー (Global Unified Header) ======== */
 header {
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 20px 40px;
+  background: rgba(11, 23, 28, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 16px 40px;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
+  border-bottom: 1px solid rgba(0, 255, 213, 0.18);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 700;
   color: #00ffd5;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.logo:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
 }
 
 nav ul {
-  padding-right: 60px;
   list-style: none;
   display: flex;
-  gap: 25px;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
   text-decoration: none;
-  color: #fff;
-  transition: color 0.3s;
+  color: #d8e5ec;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 6px 4px;
+  position: relative;
+  transition: color 0.25s ease;
 }
 
-nav a:hover {
+nav a:hover,
+nav a.active {
   color: #00ffd5;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #00ffd5;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 255, 213, 0.6);
+}
+
+/* 汉堡按钮 */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 1px center;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(2px, -1px);
+  background: #00ffd5;
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(2px, 1px);
+  background: #00ffd5;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  header {
+    padding: 14px 20px;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(13, 27, 34, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 24px 20px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(0, 255, 213, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+
+  nav ul.active {
+    display: flex;
+    animation: fadeInDown 0.25s ease forwards;
+  }
+
+  nav a {
+    font-size: 1.05rem;
+    padding: 10px 0;
+    display: block;
+  }
+
+  nav a.active::after {
+    display: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

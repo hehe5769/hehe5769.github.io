@@ -17,96 +17,6 @@
             min-height: 100vh;
         }
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #00ffd5;
-            letter-spacing: 0.5px;
-        }
-
-        nav ul {
-            padding-right: 40px;
-            list-style: none;
-            display: flex;
-            gap: 24px;
-            margin: 0;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #fff;
-            transition: color 0.3s;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        nav a:hover {
-            color: #00ffd5;
-        }
-
-        /* ======== 汉堡菜单 ======== */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            background: white;
-            height: 3px;
-            width: 25px;
-            margin: 4px 0;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        /* ======== 响应式 ======== */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #14242e;
-                border-radius: 8px;
-                width: 90%;
-                text-align: center;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-                padding: 20px 0;
-                border: 1px solid rgba(0, 255, 213, 0.2);
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            nav ul li {
-                margin: 10px 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translateY(8px);
-            }
-
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translateY(-8px);
-            }
-        }
-
         /* ======== Main Container ======== */
         main {
             padding: 130px 20px 80px;
@@ -575,17 +485,17 @@
 <body>
     <!-- ======== Header ======== -->
     <header>
-        <div class="logo">Jptungri株式会社</div>
-        <div class="menu-toggle" id="menu-toggle">
+        <a href="index.html" class="logo">Jptungri株式会社</a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="切换菜单">
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </button>
         <nav>
             <ul id="nav-links">
                 <li><a href="index.html">首页</a></li>
                 <li><a href="companyInfo.html">公司简介</a></li>
-                <li><a href="exampleCN.html" style="color: #00ffd5;">作品介绍</a></li>
+                <li><a href="exampleCN.html" class="active">作品介绍</a></li>
                 <li><a href="recruit.html">联系我们</a></li>
             </ul>
         </nav>
