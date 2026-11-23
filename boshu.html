@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>募集要項 | Jptungri株式会社</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== 募集要項 ページ固有スタイル ===== */
+
+    .boshu-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 110px 20px 80px;
+    }
+
+    /* ページタイトル */
+    .page-title-wrap {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .page-title-wrap .eyebrow {
+      display: inline-block;
+      background: rgba(0,255,213,0.12);
+      color: #00ffd5;
+      border: 1px solid rgba(0,255,213,0.3);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 16px;
+      margin-bottom: 14px;
+    }
+
+    .page-title-wrap h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: #fff;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+
+    .page-title-wrap p {
+      font-size: 1rem;
+      color: #adc8d8;
+      line-height: 1.8;
+    }
+
+    /* 职位卡片 */
+    .shoku-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .shoku-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,255,213,0.25);
+      border-radius: 14px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .shoku-card:hover {
+      border-color: #00ffd5;
+      background: rgba(0,255,213,0.07);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,255,213,0.15);
+    }
+
+    .shoku-icon {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .shoku-card h3 {
+      color: #00ffd5;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+
+    .shoku-card p {
+      color: #adc8d8;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 要項テーブル */
+    .boshu-table-wrap {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+
+    .boshu-table-wrap h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      padding: 20px 28px;
+      background: rgba(0,255,213,0.07);
+      border-bottom: 1px solid rgba(0,255,213,0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .boshu-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .boshu-table tr {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .boshu-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .boshu-table th {
+      width: 200px;
+      padding: 20px 24px;
+      text-align: left;
+      vertical-align: top;
+      color: #00ffd5;
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      background: rgba(0,255,213,0.04);
+      border-right: 1px solid rgba(0,255,213,0.12);
+    }
+
+    .boshu-table td {
+      padding: 20px 24px;
+      color: #ddeef5;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .boshu-table td .note {
+      display: block;
+      font-size: 0.82rem;
+      color: #7ea8bb;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .boshu-table td .note::before {
+      content: "※ ";
+    }
+
+    .badge-shoku {
+      display: inline-block;
+      background: rgba(0,255,213,0.12);
+      color: #00ffd5;
+      border: 1px solid rgba(0,255,213,0.3);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      margin-right: 8px;
+      margin-bottom: 4px;
+    }
+
+    .holiday-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .holiday-list li {
+      padding: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .holiday-list li::before {
+      content: "✦";
+      color: #00ffd5;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.75rem;
+    }
+
+    /* 注意書き */
+    .caution-box {
+      background: rgba(255,220,50,0.07);
+      border: 1px solid rgba(255,220,50,0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      font-size: 0.88rem;
+      color: #d8c870;
+      line-height: 1.8;
+    }
+
+    .caution-box ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 48px 24px;
+      background: rgba(0,255,213,0.05);
+      border: 1px solid rgba(0,255,213,0.2);
+      border-radius: 16px;
+      margin-top: 10px;
+    }
+
+    .cta-section h2 {
+      color: #fff;
+      font-size: 1.5rem;
+      margin: 0 0 10px;
+    }
+
+    .cta-section p {
+      color: #adc8d8;
+      margin: 0 0 24px;
+      font-size: 0.95rem;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .boshu-main {
+        padding: 90px 14px 60px;
+      }
+
+      .shoku-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .boshu-table {
+        display: block;
+      }
+
+      .boshu-table tbody {
+        display: block;
+      }
+
+      .boshu-table tr {
+        display: block;
+        padding: 0;
+      }
+
+      .boshu-table th {
+        display: block;
+        width: 100%;
+        padding: 14px 18px 6px;
+        border-right: none;
+        border-bottom: none;
+        white-space: normal;
+      }
+
+      .boshu-table td {
+        display: block;
+        padding: 4px 18px 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+
+      .boshu-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .boshu-table th {
+        font-size: 0.82rem;
+        letter-spacing: 0.03em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======== Header ======== -->
+  <header>
+    <a href="index.html" class="logo">Jptungri株式会社</a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="メニュー開閉">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav>
+      <ul id="nav-links">
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="companyInfo.html">会社概要</a></li>
+        <li><a href="index.html#services">サービス</a></li>
+        <li><a href="example.html">作品紹介</a></li>
+        <li><a href="boshu.html" class="active">募集要項</a></li>
+        <li><a href="recruit.html">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======== Main ======== -->
+  <main class="boshu-main">
+
+    <!-- Page Title -->
+    <div class="page-title-wrap">
+      <div class="eyebrow">RECRUITMENT</div>
+      <h1>募集要項</h1>
+      <p>Jptungri株式会社では、未来を共に創るメンバーを随時募集しています。<br>
+        あなたの挑戦を、私たちは全力でサポートします。</p>
+    </div>
+
+    <!-- 職種カード -->
+    <div class="shoku-grid">
+      <div class="shoku-card">
+        <span class="shoku-icon">🧠</span>
+        <h3>総合職</h3>
+        <p>企画・開発・営業・コンサルなど幅広いフィールドで活躍。<br>ビジネスの中核を担うポジション。</p>
+      </div>
+      <div class="shoku-card">
+        <span class="shoku-icon">🗂️</span>
+        <h3>バックオフィス職</h3>
+        <p>人事・経理・法務・総務など、会社を支える縁の下の力持ち。<br>安定した基盤を守るポジション。</p>
+      </div>
+    </div>
+
+    <!-- 注意書き -->
+    <div class="caution-box">
+      ⚠️ ご応募前にご確認ください
+      <ul>
+        <li>国籍・性別・大学・学部・学科は一切不問です。</li>
+        <li>総合職とバックオフィス職の <strong>選考の併願は不可</strong> となります。いずれか一方をお選びください。</li>
+      </ul>
+    </div>
+
+    <!-- 要項テーブル -->
+    <div class="boshu-table-wrap">
+      <h2>📋 募集要項・労働条件</h2>
+      <table class="boshu-table">
+        <tbody>
+
+          <tr>
+            <th>募集職種</th>
+            <td>
+              <span class="badge-shoku">総合職</span>
+              <span class="badge-shoku">バックオフィス職</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>応募資格</th>
+            <td>
+              大学または大学院の学士号・修士号・博士号のいずれかを
+              <strong>2028年7月末までに取得予定</strong>の方（既卒も可）、
+              かつ <strong>就労経験がない方</strong>
+              <span class="note">国籍、性別、大学、学部、学科は不問</span>
+              <span class="note">総合職とバックオフィス職選考の併願は不可</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>契約期間</th>
+            <td>
+              期間の定めなし（正社員）
+            </td>
+          </tr>
+
+          <tr>
+            <th>勤務時間</th>
+            <td>
+              9:15 〜 17:30（休憩 1時間）
+              <span class="note">標準勤務時間：7時間15分</span>
+              <span class="note">フレックスタイム制度導入部署多数あり</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>時間外労働</th>
+            <td>
+              あり（月間平均残業時間：<strong>11.4時間</strong>）
+              <span class="note">2025年度の法定労働時間外（8時間を超える時間外）実績。
+                本社および国内支社勤務の従業員（管理職および顧問・嘱託社員を除く）。</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>休日・休暇</th>
+            <td>
+              <ul class="holiday-list">
+                <li>土曜日・日曜日・祝日</li>
+                <li>年末年始（6日）</li>
+                <li>年次有給休暇（<strong>初年度20日付与</strong>・入社初日より取得可）</li>
+                <li>夏季休暇</li>
+                <li>病気休暇（有給）</li>
+                <li>特別休暇（時短推進特別休暇・育児参加・ボランティア・慶弔 等）</li>
+                <li>育児休業制度</li>
+                <li>介護休暇制度</li>
+              </ul>
+              <span class="note">年次有給休暇は入社日より即時付与。夏季休暇は別途付与。</span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>📩 エントリー・お問い合わせ</h2>
+      <p>ご不明な点やエントリーのご相談は、お問い合わせフォームよりお気軽にどうぞ。</p>
+      <a href="recruit.html" class="btn">お問い合わせフォームへ →</a>
+    </div>
+
+  </main>
+
+  <!-- ======== Footer ======== -->
+  <footer>
+    <p>© 2026 Jptungri株式会社 All Rights Reserved. |
+      <a href="companyInfo.html">会社概要</a> |
+      <a href="boshu.html">募集要項</a> |
+      <a href="recruit.html">お問い合わせ</a>
+    </p>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      menuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+    });
+
+    document.querySelectorAll("#nav-links a").forEach(link => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href === "boshu.html") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+      });
+    });
+  </script>
+</body>
+
+</html>
