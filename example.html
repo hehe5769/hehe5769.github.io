@@ -166,6 +166,12 @@
             border: 1px solid rgba(168, 85, 247, 0.4);
         }
 
+        .badge-red {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.4);
+        }
+
         .quick-card h3 {
             margin: 0 0 8px;
             font-size: 1.15rem;
@@ -402,6 +408,65 @@
             flex-grow: 1;
         }
 
+        /* ======== Video Showcase Container ======== */
+        .video-showcase-wrap {
+            margin-top: 35px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(0, 255, 213, 0.25);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-header-bar {
+            background: rgba(16, 33, 42, 0.95);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .video-title-text {
+            font-size: 0.95rem;
+            color: #c4dbe6;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            max-height: 580px;
+            display: block;
+            outline: none;
+            background: #000;
+        }
+
+        .video-caption {
+            padding: 14px 20px;
+            background: rgba(15, 32, 39, 0.9);
+            font-size: 0.92rem;
+            color: #d1e5ef;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            line-height: 1.6;
+        }
+
         /* ======== Other Works Accordion / Secondary Grid ======== */
         .secondary-section {
             margin-top: 70px;
@@ -625,6 +690,16 @@
                     <span class="quick-card-badge badge-purple">ECサイト / Eコマース</span>
                     <h3>🛒 オンラインショップ</h3>
                     <p>商品カタログ、スマート検索、カート決済、在庫・受注管理システム。</p>
+                </div>
+                <div class="card-cta">詳細を見る <span>&darr;</span></div>
+            </a>
+
+            <!-- 6. 組み込みスマート家庭安防システム -->
+            <a href="#security-system" class="quick-card">
+                <div>
+                    <span class="quick-card-badge badge-red">IoT / 組み込み・クラウド</span>
+                    <h3>🛡️ スマート家庭安防システム</h3>
+                    <p>水漏れ・ガス漏れ・防犯検知を統合。クラウド＆スマホへ即時通知。</p>
                 </div>
                 <div class="card-cta">詳細を見る <span>&darr;</span></div>
             </a>
@@ -939,6 +1014,81 @@
         </section>
 
         <!-- ============================================================ -->
+        <!-- 6. 組み込み＆クラウド連携 スマート家庭安防システム -->
+        <!-- ============================================================ -->
+        <section id="security-system" class="project-section highlight">
+            <div class="project-header">
+                <div class="project-title-area">
+                    <h2>🛡️ 組み込み＆クラウド連携 スマート家庭安防システム</h2>
+                    <p class="project-subtitle">Embedded IoT & Cloud-Connected Smart Home Security System</p>
+                </div>
+                <div class="project-actions">
+                    <span class="tech-tag" style="background: rgba(244, 63, 94, 0.18); border-color: rgba(244, 63, 94, 0.45); color: #fda4af; font-weight: 600;">
+                        📹 実機デモ動画公開中
+                    </span>
+                </div>
+            </div>
+
+            <div class="tech-stack-row">
+                <span class="tech-tag">組み込みシステム開発 (Embedded System)</span>
+                <span class="tech-tag">クラウドサーバー (Cloud Server)</span>
+                <span class="tech-tag">スマホアプリ連携 (Mobile App)</span>
+                <span class="tech-tag">水漏れ・浸水検知センサー</span>
+                <span class="tech-tag">可燃性ガス漏れ検知センサー</span>
+                <span class="tech-tag">人体感知・防犯侵入センサー</span>
+                <span class="tech-tag">リアルタイム警報＆プッシュ通知</span>
+                <span class="tech-tag">リモートステータス監視</span>
+            </div>
+
+            <p class="project-intro-text">
+                各種環境センサーと通信マイコンを搭載した「組み込み端末」・データを集約する「クラウドサーバー」・ユーザーが常に手元で確認できる「スマートフォンアプリ」を有機的に連携させた、高信頼なスマートホームセキュリティ（家庭安防）システムです。<br>
+                住宅内で発生する重大な生活災害である<strong>「水漏れ・浸水事故」「可燃性ガスの漏洩による火災・中毒」「不法侵入（防犯）」</strong>の3大リスクを24時間体制でリアルタイムセンシング。異常が発生した瞬間、現場の端末による警報アラートを作動させると同時に、クラウドサーバーを経由してスマートフォンアプリへ即座に緊急プッシュ通知を発信。外出先や就寝時であっても異変を逃さず、迅速な初期消火・元栓遮断・通報などの被害最小化アクションを可能にします。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>💧 水漏れ・浸水検知センサー</h4>
+                    <p>キッチン下、洗濯機まわり、給湯設備周辺の微細な水滴や浸水を高感度プローブでキャッチ。階下への漏水トラブルや建物の腐食被害を未然に防ぎます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>⚠️ 可燃性ガス漏れ検知</h4>
+                    <p>都市ガスやプロパンガスなど可燃性ガスの濃度を常時監視。一定の閾値を超えた危険状態を即時に検知し、火災や爆発事故の発生を未然に遮断します。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🚨 防犯・不法侵入アラート</h4>
+                    <p>留守中の不審な動体を検知する人体感知センサー（PIR）やドア開閉トリガーと連動。不正な侵入者を検知した瞬間に警報を発動し、防犯性を大幅に高めます。</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📱 スマホアプリへのリアルタイム通知</h4>
+                    <p>各センサーの監視データはクラウドを通じてスマートフォンアプリに直結。異常発生時の即時プッシュ通知はもちろん、日々の安心ステータスも遠隔から確認できます。</p>
+                </div>
+            </div>
+
+            <!-- 動画デモプレイヤー -->
+            <div class="video-showcase-wrap">
+                <div class="video-header-bar">
+                    <div class="video-title-text">
+                        <span>▶️</span>
+                        <span>システム実動デモ動画：組み込みデバイス＆クラウド連携 家庭安防動作実演</span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #7ea8bb;">
+                        MP4形式 / 動作検証デモ
+                    </div>
+                </div>
+                <div class="video-container">
+                    <video controls playsinline preload="metadata">
+                        <source src="images/基於嵌入式和雲服務器的家庭安防系統.mp4" type="video/mp4">
+                        お使いのブラウザはビデオタグに対応していません。
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <span>💡</span>
+                    <span>実機デモ実演：センサーによる異常検知からクラウドサーバー連携、スマートフォンアプリへのリアルタイム通知受信までの一連の流れをご確認いただけます。</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
         <!-- その他の開発実績・ツール (コンパクト配置) -->
         <!-- ============================================================ -->
         <section class="secondary-section">
@@ -946,7 +1096,7 @@
             <p>弊社が過去に開発・公開したプロトタイプやWebアプリケーション、便利ツールです。</p>
             <div class="other-projects-grid">
                 <a href="https://warehouse-management-system-max8.onrender.com/" target="_blank" rel="noopener noreferrer" class="other-btn">
-                    <span>📦 倉庫管理システム</span>
+                    <span>🤝 マッチングシステム</span>
                 </a>
                 <a href="stockFliterJP.html" class="other-btn">
                     <span>📈 Quantum銘柄ハンター</span>
